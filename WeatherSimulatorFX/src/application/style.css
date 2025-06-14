@@ -1,0 +1,25 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.launch {
+	-fx-background-color: #820302;
+	
+}
+.play-button {
+     -fx-opacity: 0;
+    -fx-text-fill: red;
+    -fx-font-size: 54px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.play-button:hover {
+    -fx-text-fill: green;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.menuBar {
+    -fx-background-color: #aafa02;
+    -fx-text-fill: white;
+    -fx-font-style: bold;
+    -fx-font-size: 26px;
+    -fx-opacity: 0;
+}

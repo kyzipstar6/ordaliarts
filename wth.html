@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Climate Simulator</title>
+  <style>
+    body {
+
+      background-size: cover;
+      font-family: sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+    tab {
+      display: none;
+    }
+    tab.active {
+      display: block;
+    }
+    nav button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather Simulator</h1>
+  <nav>
+    <button onclick="switchTab('monsoon')">Monsoonic</button>
+    <button onclick="switchTab('hilltop')">Hilltop</button>
+    <button onclick="switchTab('oceanic')">Oceanic</button>
+  </nav>
+
+  <div id="monsoon" class="tab active">
+    <h2>Current weather at Khadi desert</h2>
+    <p id="desert-data">Loading...</p>
+  </div>
+  <div id="hilltop" class="tab">
+    <h2>Weather at the top of a hill</h2>
+    <p id="summit-data">Loading...</p>
+  </div>
+  <div id="oceanic" class="tab">
+    <h2>Weather at the highlands af an oceanic influenced region</h2>
+    <p id="oceanic-data">Loading...</p>
+  </div>
+
+  <script>
+    function switchTab(climate) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(climate).classList.add('active');
+    }
+
+    // Example random simulation for each climate
+    function desertWeather(id) {
+      const temp = temp1;
+      const hum = hum1;
+      const wind = wspeed;
+      document.getElementById(id).innerText = `Temp: ${temp}°C, Humidity: ${hum}%, Wind: ${wind} km/h`;
+    }
+function highlandsweather(id) {
+      const temp = (Math.random() * 30 + 0).toFixed(1);
+      const hum = (Math.random() * 60 + 0).toFixed(1);
+      const wind = (Math.random() * 50).toFixed(1);
+      document.getElementById(id).innerText = `Temp: ${temp}°C, Humidity: ${hum}%, Wind: ${wind} km/h`;
+    }
+function oceanicweather(id) {
+      const temp = (Math.random() * 20  ).toFixed(1);
+      const hum = (Math.random() * 70 + 20).toFixed(1);
+      const wind = (Math.random() * 40).toFixed(1);
+      document.getElementById(id).innerText = `Temp: ${temp}°C, Humidity: ${hum}%, Wind: ${wind} km/h`;
+    }
+
+    setInterval(() => {
+      desertWeather('desert-data');
+      oceanicweather('oceanic-data');
+      highlandsweather('summit-data');
+    }, 3000);
+  </script>
+<script>
+let temp1 = 27;
+setInterval(() => {
+    temp1 +0.007;
+},10);
+let hum1 =40;
+setInterval(() => {
+    hum1 -0.007;
+},1000);
+let higherBound = 60;
+let lowerBound = 20;
+let quickWind = 0;
+let wspeed1 = 0;
+let wspeed2 = 0;
+let STABILIZED_FILTER_RATIO = 0.9985;
+let RATIO_WSPEEDS = 0.9985;
+let ran = 0;
+function ran() {
+    if(Math.random()>0.01 && Math.random()<0.35) ran = -0.1;
+    if (ran < 0) ran =0;
+    else ran = 0.05;
+}
+
+const wspeed = 0;
+setInterval(() => {
+  wspeed1 = Math.random() * 200;
+wspeed = wspeed + ran;
+ran();
+  if (
+    wspeed1 < upperBound &&
+    wspeed1 > lowerBound &&
+    wspeed2 < upperBound &&
+    wspeed2 > lowerBound &&
+    wspeed1 / wspeed2 <= RATIO_WSPEEDS
+  ) {
+    filter = wspeed2;
+  }
+
+  filterRecord = filter;
+
+  if (
+    wspeed1 < upperBound &&
+    wspeed1 > lowerBound &&
+    wspeed2 < upperBound &&
+    wspeed2 > lowerBound &&
+    wspeed1 / filter <= STABILIZED_FILTER_RATIO
+  ) {
+    quickWind = wspeed1;
+  }
+}, 10);
+</script>
+<style>
+    h2{
+        color: #8fa043;
+    }
+    button{
+        background-color: #42a5b3;
+    }
+    body{
+        background-image: url(Auroria.png);
+    }
+    </style>
+</body>
+</html>
