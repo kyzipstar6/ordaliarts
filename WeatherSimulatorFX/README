@@ -1,0 +1,17 @@
+Simulate real weather as you wish with this Weather Simulator. To run the .jar file. Push at least in a folder named "Weather
+Simulator FX" the folowing files and folders:
+
+- Stages (contains some background images and app-text)
+ -runhistory (so you can use "Data writting" feature).
+- WeatherSimulatorFX.jar 
+
+Copy the folder to your Documents direcory. Then create a shortcut in your desktop to set quick access to the application.
+
+Optional you can download i.ico and set a custom .ico art by changing your created shortcut'S image.
+
+If you think you can inprove this Simulator by creating new models or adding to the Application new features or media, you
+are keenly welcome. That is why I am sharing with you the src folder.
+
+Let me know any observations on the models or if you would like to add any feature!
+
+Cesar
