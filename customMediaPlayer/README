@@ -1,0 +1,5 @@
+Play .mp3 and other audio files and with this simple java application. Furthermore, you can customize the name of the application
+and set a background for it.
+
+To Use it, downolad the folder and keep allways the folder named "custom Media Player". You need as well at least Java SE 23
+installed in your computer to run the .jar file.
