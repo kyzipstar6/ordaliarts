@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cesar Gomez Torres - Website</title>
+    <style>
+        a {
+            display: inline-block;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            text-decoration:none;
+            transition: transform 0.2s ease;
+        }
+        a:active{
+            transform: skewX(-40 deg);
+            color: black;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-image: 
+            url("pc/prt.png");
+            background-size:10cm;
+            background-position: right;
+            background-repeat: no-repeat;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+        }
+        nav a:hover {
+            color: #4CAF50;
+        }
+        section {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 1rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>César Gómez Torres</h1>
+        <p>Welcome to my personal website!</p>
+    </header>
+
+    <nav>
+        <a href="#about">About Me</a>
+        <a href="#content">My Content</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hello! My name is César Gómez. I am a service driver with a passion for creating applications that make life easier.
+            I like as well make applications that simulate real conditons. I specialize in Java applications.</p>
+        <p>Other skills I have is some language gift (I speak four languages: Spanish, German, English and Catalan).</p>
+         <p>I have lived in Germany (2 years) and in Spain.</p>
+        <p>I am pleased to share my content bellow with you. Feel share to explore. Hope you see it as exciting as me!</p>
+    </section>
+
+    <section id="content">
+        <h2>My Content</h2>
+        <p>Here are some Applications I created:</p>
+        <ul>
+             <li><a href="wsim.html" target="_blank">Application: Weather conditions simulator</a></li>
+            <li><a href="media-player.html" target="_blank">Application: Light-weight Media Player</a></li>
+            <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">Youtube Channel: Real-life adventures</a></li>
+            <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">Youtube Channel: Videogames</a></li>
+        </ul>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>If you’d like to get in touch, feel free to use the form below:</p>
+        <form action="https://example.com/form-handler" method="POST">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+            
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" rows="4" required></textarea><br><br>
+            
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 César Gómez Torres. All rights reserved.</p>
+    </footer>
+</body>
+</html>
