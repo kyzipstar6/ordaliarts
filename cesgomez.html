@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <div class="language-switcher">
+  <button onclick="setLanguage('en')">
+    <img src="us-flag.png" alt="English" />
+  </button>
+  <button onclick="setLanguage('is')">
+    <img src="iceland-flag.png" alt="Icelandic" />
+  </button>
+</div>
+    <script>
+  function setLanguage(lang) {
+    // You can implement a language loading system here
+    alert("Switching language to: " + lang);
+    // Redirect to /en or /is version, or update content dynamically
+    // Example:
+    // window.location.href = `/${lang}/index.html`;
+  }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cesar Gomez Torres - Website</title>
@@ -57,6 +74,28 @@
             bottom: 0;
             width: 100%;
         }
+        .language-switcher {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.language-switcher button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.language-switcher img {
+  width: 24px;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
     </style>
 </head>
 <body>
