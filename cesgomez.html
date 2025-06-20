@@ -6,18 +6,17 @@
     <img src="https://flagcdn.com/w40/us.png" alt="English" />
 
   </button>
-  <button onclick="setLanguage('is')">
+  <button onclick="setLanguage(Is)">
     <img src="https://flagcdn.com/w40/is.png" alt="Icelandic" />
   </button>
 </div>
     
     <script>
   function setLanguage(lang) {
-    // You can implement a language loading system here
-    alert("Switching language to: " + lang);
-
+    window.location.href = `/${lang}/index.html`;
   }
 </script>
+  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cesar Gomez Torres - Website</title>
