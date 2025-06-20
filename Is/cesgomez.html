@@ -6,7 +6,22 @@
   <title>César Gómez Torres</title>
 </head>
 <body>
+>
+    <div class="language-switcher">
+  <button onclick="setLanguage('en')">
+    <img src="https://flagcdn.com/w40/us.png" alt="English" />
 
+  </button>
+  <button onclick="setLanguage(Is)">
+    <img src="https://flagcdn.com/w40/is.png" alt="Icelandic" />
+  </button>
+</div>
+    
+    <script>
+  function setLanguage(lang) {
+    window.location.href = `/${lang}/index.html`;
+  }
+</script>
 <h1>César Gómez Torres</h1>
 
 <p>Velkomin(n) á mína persónulegu heimasíðu!</p>
@@ -24,7 +39,82 @@
   <p>Ég hef búið í Þýskalandi (2 ár) og á Spáni.</p>
   <p>Ég fagna því að deila efni mínu hér að neðan með þér. Þú ert velkominn(n) til að skoða – ég vona að þú finnir jafn spennandi og ég!</p>
 </section>
+<style>
+        a {
+            display: inline-block;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            text-decoration:none;
+            transition: transform 0.2s ease;
+        }
+        a:active{
+            transform: skewX(-40 deg);
+            color: black;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-image: 
+            url("pc/prt.png");
+            background-size:10cm;
+            background-position: right;
+            background-repeat: no-repeat;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+        }
+        nav a:hover {
+            color: #4CAF50;
+        }
+        section {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 1rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .language-switcher {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+}
 
+.language-switcher button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.language-switcher img {
+  width: 24px;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+    </style>
 <section id="content">
   <h2>Efni mitt</h2>
   <p>Hér eru nokkur forrit sem ég hef búið til:</p>
