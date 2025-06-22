@@ -13,7 +13,7 @@
     
     <script>
   function setLanguage(lang) {
-    window.location.href = `/${lang}/index.html`;
+    window.location.href = `/${lang}/cesgomez.html`;
   }
 </script>
   
@@ -144,6 +144,17 @@
             
             <button type="submit">Send Message</button>
         </form>
+        <script>
+  function sendEmail() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+    
+    const mailtoLink = `mailto: cesgomez289@gmail.com?subject=Contact request ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0ANetfang sendanda: ${encodeURIComponent(email)}`;
+    
+    window.open(mailtoLink, '_blank');
+  }
+    </script>
     </section>
 
     <footer>
