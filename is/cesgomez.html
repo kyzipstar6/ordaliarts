@@ -55,7 +55,7 @@
             line-height: 1.6;
             margin: 0;
             background-image: 
-            url("//pc//prt.png");
+            url("https://kyzipstar6.github.io/ordaliarts/pc/prt.png");
             background-size:10cm;
             background-position: right;
             background-repeat: no-repeat;
@@ -106,3 +106,50 @@
   border: none;
   cursor: pointer;
   padding: 0;
+          }
+  </style>
+  <section id="content">
+  <h2>Efni mitt</h2>
+  <p>Hér eru nokkur forrit sem ég hef búið til:</p>
+  
+    <ul>
+             <li><a href="wsim.html" target="_blank">Application: Veðurskilmála hermi</a></li>
+            <li><a href="media-player.html" target="_blank">Application: Léttur fjölmiðlaspilari</a></li>
+            <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank"> Youtube‑rás: Ævintýri í raunveruleikanumí raunveruleikanum </a></li>
+            <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">   Youtube‑rás: Tölvuleikir   </a></li>
+    </ul>target="_blank"></a></li>
+</section>
+
+<section id="contact">
+  <h2>Hafa samband við mig</h2>
+  <p>Ef þú vilt hafa samband, endilega fylltu út formið hér að neðan:</p>
+  <form onsubmit="sendEmail(); return false;">
+    <label for="name">Nafn:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="email">Netfang:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="message">Skilaboð:</label><br>
+    <textarea id="message" name="message"></textarea><br><br>
+
+    <button type="submit">Senda skilaboð</button>
+  </form>
+</section>
+
+<script>
+  function sendEmail() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+    
+    const mailtoLink = `mailto:cesgomez289@gmail.com?subject=Skilaboð frá ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0ANetfang sendanda: ${encodeURIComponent(email)}`;
+    
+    window.open(mailtoLink, '_blank');
+  }
+</script>
+</section>
+
+<footer>
+  <p>© 2025 César Gómez Torres. Öllum réttindum varðveitt.</p>
+</footer>
