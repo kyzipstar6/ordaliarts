@@ -31,6 +31,7 @@
     <button id = "startup", onclick="main()">Start simulation</button>
     <script>
     let inc1 =0.005; let inc2=0.002;
+	    inc1 = inc1*2; inc2 = inc2*2;
     let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();
             let hum = 77; let temp = 20;
             let hour = Math.ceil(ran*24);
@@ -75,17 +76,17 @@
                 inc1 = inc1 *(1+ (-0.5 + Math.random()));
                 inc2 = inc2 *(1+ (-0.5 + Math.random()));
                 if (hour >9 && hour<14){
-                temp = ((((Math.round(temp +inc1)*10))))/10;
-                hum = ((((Math.round(hum -inc1*10)*10))))/10;}
+                temp = (((Math.round((temp +inc1)*10))))/10;
+                hum = (((Math.round((hum -inc1*20)*10))))/10;}
                 if (hour >7 && hour<9 || hour >14 && hour<16){
-                temp = ((((Math.round(temp +inc2)*10))))/10;
-                hum = ((Math.round(((hum -inc2*10)*10))))/10;}
+                temp = (((Math.round((temp +inc2)*10))))/10;
+                hum = ((Math.round(((hum -inc2*20)*10))))/10;}
                 if (hour >16 && hour<22){
-                temp = ((((Math.round(temp -inc2/2)*10))))/10;
-                hum = ((((Math.round(hum +inc2*10)*10))))/10;}
+                temp = (((Math.round((temp -inc2/2)*10))))/10;
+                hum = (((Math.round((hum +inc2*20)*10))))/10;}
                 if (hour >0 && hour<7 || hour >22){
-                temp = ((((Math.round(temp -inc1)*10))))/10;
-                hum = ((((Math.round(hum -inc1*10)*10))))/10;}
+                temp = (((Math.round((temp -inc1)*10))))/10;
+                hum = (((Math.round((hum -inc1*20)*10))))/10;}
             }, 1000);
              
         }
