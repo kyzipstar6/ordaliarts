@@ -33,7 +33,7 @@
     let inc1 =0.005; let inc2=0.002; let inc3= inc1*50; let inc4 =inc2*50;
 	    inc1 = inc1*2; inc2 = inc2*2;
     let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();
-            let hum = 77*(1+ (-0.5 + Math.random()));; let temp = 20;
+            let hum = 77*Math.random(); let temp = 20;
             let hour = Math.ceil(ran*24);
             let minute = Math.ceil(ran2*60);
             let day = Math.ceil(ran3*31);
@@ -55,6 +55,7 @@
                 if(hour >= 24){hour =0; day = day + 1;}
                 if(day >= 31){day = 1; month = month+1;}
                 if(month >= 13){month = 1; year = year+1;}
+		    if (hum>100) hum =89;
             }, 60000); 
             
             tempM(); 
