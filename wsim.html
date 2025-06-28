@@ -56,9 +56,9 @@
                 if(month >= 13){month = 1; year = year+1;}
             }, 60000); 
             
-            tempM(); 
+            
             wind();
-            presssure(); 
+        
         }
         function tempM(){
             
@@ -94,6 +94,8 @@
         let UPPER_BOUND = 17;let LOWER_BOUND = 3;
         function wind(){
             boundSetter();
+		presssure();
+		tempM(); 
             setInterval(() => {
                 wspeed1= (Math.random()*200);
 				wspeed2= (Math.random()*200);
