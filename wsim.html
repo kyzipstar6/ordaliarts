@@ -33,7 +33,7 @@
     let inc1 =0.005; let inc2=0.002; let inc3= inc1*50; let inc4 =inc2*50;
 	    inc1 = inc1*2; inc2 = inc2*2;
     let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();
-            let hum = 77*Math.random(); let temp = 20;
+            let hum = 77*(0.5+ (Math.random()-0.5); let temp = 20;
             let hour = Math.ceil(ran*24);
             let minute = Math.ceil(ran2*60);
             let day = Math.ceil(ran3*31);
@@ -49,13 +49,19 @@
                 document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;
                 document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;
             }, 1000);
+		const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
             setInterval(() => {
                 minute = minute +1;
                 if(minute >= 60){minute = 0; hour = hour +1;}
                 if(hour >= 24){hour =0; day = day + 1;}
-                if(day >= 31){day = 1; month = month+1;}
+                
+if (day > daysInMonth[month - 1]) {
+  day = 1;
+  month++;
+}
                 if(month >= 13){month = 1; year = year+1;}
 		    if (hum>100) hum =89;
+		    
             }, 60000); 
             
             tempM(); 
@@ -68,7 +74,7 @@
             if(month ==3 || month==10){ temp=27.5;}if(month ==2 || month==11){ temp=28.4;}if(month ==1 || month==12){ temp=29.5;}}
             if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=19;}if(month ==5 || month==8){ temp=21;} if(month ==4 || month==9){ temp=22.5;}
             if(month ==3 || month==10){ temp=23.5;}if(month ==2 || month==11){ temp=25.4;}if(month ==1 || month==12){ temp=26.5;}}
-            if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1700 && year <1300){temp = temp-2;}  if (year > 1600 && year <1700){temp = temp-3;}
+            if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}
             if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}
             if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}
             if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}
@@ -169,30 +175,41 @@ function getText(){
     }
 }      
      </script>
-     <section id = "setup">
-      
-        
-    
-        <p></p>
-        <p></p>
-        <h1 id ="suph">Set up whatever</h1>
-        <p id="tmp" >Temperature:   </p><input id ="tmpi"></input>
-        <p id="hum">Humidity:   </p><input id ="humi"></input>
-        <p>Pressure:   </p><input id ="presi"></input>
-        <p>Wind:   </p><input id ="windi"></input>
-        <p>Hour: </p><input id ="houri"></input>
-        <p>Month:  </p><input id ="moni"></input >
-        <p>Year:  </p><input id ="yei"></input >
-        <p>Title:  </p><input id ="titi"></input >
-        <p></p>
-        
-      <button id = "set", onclick="getText()">Set</button> 
-    </section>
+     <section id="setup">
+  <h1 id="suph">Set up whatever</h1>
+
+  <label for="tmpi">Temperature:</label>
+  <input id="tmpi" type="number" step="0.1" />
+
+  <label for="humi">Humidity:</label>
+  <input id="humi" type="number" step="0.1" />
+
+  <label for="presi">Pressure:</label>
+  <input id="presi" type="number" step="0.1" />
+
+  <label for="windi">Wind:</label>
+  <input id="windi" type="number" step="0.1" />
+
+  <label for="houri">Hour:</label>
+  <input id="houri" type="number" min="0" max="23" />
+
+  <label for="moni">Month:</label>
+  <input id="moni" type="number" min="1" max="12" />
+
+  <label for="yei">Year:</label>
+  <input id="yei" type="number" min="0" max="4500" />
+
+  <label for="titi">Title:</label>
+  <input id="titi" type="text" />
+
+  <p></p>
+  <button id="set" onclick="getText()">Set</button>
+     </section>
     <area id="clim">
         
          <h1 id ="climh">Climate description</h1>
         
-        <p >Here at this "pacific" coastal village the weather is warm the whole year. Being located at the southern hemisphere, summers are in the first
+        <p >This coastal Pacific–Southern Hemisphere village experiences warm, humid conditions year-round. Being located at the southern hemisphere, summers are in the first
             months of the year and winters at the midst.
         </p>
         <p>The average temperature is of 25°C, while the average humidity is of 80%. This means a rather hot and humid climate.</p>
