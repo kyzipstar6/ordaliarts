@@ -96,10 +96,11 @@ if (day > daysInMonth[month - 1]) {
 					
 				if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND 
 						&& wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND && (wspeed1/wspeed2<= 0.985)
-						)
+				   {
 				 filter= wspeed2;
-				filterrecord = filter;
-				if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985)
+				filterrecord = filter;}
+				if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND 
+				   && wspeed1/filter <= 0.985)
 				{quickwind = wspeed1;}	
 				inc1 = (inc1 *(1+ (-0.5 + Math.random())))/3;
                 inc2 = (inc2 *(1+ (-0.5 + Math.random())))/3;
