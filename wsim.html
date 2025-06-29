@@ -30,7 +30,7 @@
      </area>
     <button id = "startup", onclick="main()">Start simulation</button>
     <script>
-    let inc1 =0.005; let inc2=0.002; let inc3= inc1*50; let inc4 =inc2*50;
+    let inc1 =0.015; let inc2=0.002; let inc3= inc1*50; let inc4 =inc2*50;
 	    inc1 = inc1*2; inc2 = inc2*2;
     let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();
             let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;
@@ -63,9 +63,9 @@ if (day > daysInMonth[month - 1]) {
 		    if (hum>100) hum =89;
 		    
             }, 60000); 
-            
-            tempM(); 
             wind();
+            tempM(); 
+            
             presssure(); 
         }
         function tempM(){
@@ -84,16 +84,16 @@ if (day > daysInMonth[month - 1]) {
                 inc2 = inc2 *(1+ (-0.5 + Math.random()));
                 if (hour >9 && hour<14){
                 temp = (((Math.round((temp +inc1)*10))))/10;
-                hum = (((Math.round((hum -inc1*20)*10))))/10;}
+                hum = (((Math.round((hum -inc1*7)*10))))/10;}
                 if (hour >7 && hour<9 || hour >14 && hour<16){
                 temp = (((Math.round((temp +inc2)*10))))/10;
-                hum = ((Math.round(((hum -inc2*20)*10))))/10;}
+                hum = ((Math.round(((hum -inc2*7)*10))))/10;}
                 if (hour >16 && hour<22){
                 temp = (((Math.round((temp -inc2/2)*10))))/10;
-                hum = (((Math.round((hum +inc2*20)*10))))/10;}
+                hum = (((Math.round((hum +inc2*7)*10))))/10;}
                 if (hour >0 && hour<7 || hour >22){
                 temp = (((Math.round((temp -inc1)*10))))/10;
-                hum = (((Math.round((hum -inc1*20)*10))))/10;}
+                hum = (((Math.round((hum -inc1*7)*10))))/10;}
               
             }, 1000);
              
