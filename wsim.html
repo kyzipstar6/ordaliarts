@@ -51,7 +51,7 @@
             }, 1000);
 		const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
             setInterval(() => {
-                minute = minute +1;
+                minute = minute +3;
                 if(minute >= 60){minute = 0; hour = hour +1;}
                 if(hour >= 24){hour =0; day = day + 1;}
                 
@@ -99,9 +99,10 @@ if (day > daysInMonth[month - 1]) {
 						)
 				 filter= wspeed2;
 				filterrecord = filter;
-				if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985
-				inc1 = (inc1 *(1+ (-0.5 + Math.random())))/10;
-                inc2 = (inc2 *(1+ (-0.5 + Math.random())))/10;
+				if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985)
+				{quickwind = wspeed1;}	
+				inc1 = (inc1 *(1+ (-0.5 + Math.random())))/3;
+                inc2 = (inc2 *(1+ (-0.5 + Math.random())))/3;
                 if (hour >9 && hour<14){
                 temp = (((Math.round((temp +inc1)*10))))/10;
                 hum = (((Math.round((hum -inc1*7)*10))))/10;}
@@ -114,7 +115,7 @@ if (day > daysInMonth[month - 1]) {
                 if (hour >0 && hour<7 || hour >22){
                 temp = (((Math.round((temp -inc1)*10))))/10;
                 hum = (((Math.round((hum -inc1*7)*10))))/10;}
-             		) {quickwind = wspeed1;}
+             		
 		     }, 100); 
         }
         function boundSetter(){
@@ -138,9 +139,9 @@ if (day > daysInMonth[month - 1]) {
 		if (pressure>1029){pressure = 1029;}
 		setInterval(() => {
 			
-			
-			inc3 = inc3 *(1+ (-0.5 + Math.random()));
-                inc4 = inc4 *(1+ (-0.5 + Math.random()));
+			//*3 because tacc is 3x
+			inc3 = inc3 *(1+ (-0.5 + Math.random()))"3;
+                inc4 = inc4 *(1+ (-0.5 + Math.random()))*3;
                 if (hour >9 && hour<14){
                 pressure = ((((Math.round(pressure +inc3)*10))))/10;
                }
