@@ -41,15 +41,7 @@ let day = Math.ceil(ran3*31);
 let month = Math.ceil(ran4*12);
 let year = Math.ceil(ran5*4500);
 function main() {
-setInterval(() => {
 
-document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
-            document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
-            document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
-            document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
-            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
-            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
-        }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
             minute = minute +3;  
@@ -189,8 +181,17 @@ if (document.getElementById("moni").value!=""){month = parseFloat(document.getEl
 if (document.getElementById("yei").value!=""){year = parseFloat(document.getElementById("yei").value);}
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
-document.getElementById("cucnh").innerText= ${title};
+document.getElementById("cucnh").innerText = `${title}`; 
 }
+	setInterval(() => {
+
+document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
+            document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
+            document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
+            document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
+            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
+            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
+        }, 1000);  
 }
 </script>
      <section id="setup">
