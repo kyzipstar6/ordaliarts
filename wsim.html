@@ -16,8 +16,7 @@
         
          <h1 id ="cucnh">Weather conditions at Pacific Island</h1>
         
-        <p id="tmp" >Temperature C</p>
-        <p id="hum">Humidity </p>
+        <p id="tmp" >Temperature C</p        <p id="hum">Humidity </p>
         <p id = "wind">Wind Speed </p>
         <p id="pres">Pressure </p>
         
@@ -29,159 +28,171 @@
         <p id="day" >Here will be the date visible</p></div>
      </area>
     <button id = "startup", onclick="main()">Start simulation</button>
-<script>
-let inc1 = 0.01, inc2 = 0.004, inc3 = inc1 * 50, inc4 = inc2 * 50;
-let ran = Math.random(), ran2 = Math.random(), ran3 = Math.random(), ran4 = Math.random(), ran5 = Math.random();
-let hum = 77 * (0.5 + (Math.random() - 0.5));
-let temp = 20;
-let hour = Math.ceil(ran * 24), minute = Math.ceil(ran2 * 60);
-let day = Math.ceil(ran3 * 31), month = Math.ceil(ran4 * 12), year = Math.ceil(ran5 * 4500);
-let pressure = 1023 * (1 + (-0.5 + Math.random()));
-let wspeed1 = 0, wspeed2 = 0, quickwind = 0, filter = 0;
-let UPPER_BOUND = 17, LOWER_BOUND = 3;
 
-let lastSimTime = Date.now();
-let simAccumulator = 0;
-const SIM_TICK = 1000;
-
-function main() {
-  lastSimTime = Date.now();
-  requestAnimationFrame(simulationLoop);
-}
-
-function simulationLoop() {
-  const now = Date.now();
-  const delta = now - lastSimTime;
-  simAccumulator += delta;
-
-  while (simAccumulator >= SIM_TICK) {
-    simulateTick();
-    simAccumulator -= SIM_TICK;
-  }
-
-  lastSimTime = now;
-  requestAnimationFrame(simulationLoop);
-}
-
-function simulateTick() {
-  updateTime();
-  updateTemperature();
-  updatePressure();
-  updateWind();
-  updateDisplay();
-}
-
-function updateTime() {
-  minute++;
-  if (minute >= 60) { minute = 0; hour++; }
-  if (hour >= 24) { hour = 0; day++; }
-
-  const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
-  if (day > daysInMonth[month - 1]) { day = 1; month++; }
-  if (month > 12) { month = 1; year++; }
-  if (hum > 100) hum = 89;
-}
-
-function updateTemperature() {
-  if (hour > 10 && hour < 18) {
-    if ([6,7].includes(month)) temp = 22;
-    else if ([5,8].includes(month)) temp = 24;
-    else if ([4,9].includes(month)) temp = 25.5;
-    else if ([3,10].includes(month)) temp = 27.5;
-    else if ([2,11].includes(month)) temp = 28.4;
-    else temp = 29.5;
-  } else {
-    if ([6,7].includes(month)) temp = 19;
-    else if ([5,8].includes(month)) temp = 21;
-    else if ([4,9].includes(month)) temp = 22.5;
-    else if ([3,10].includes(month)) temp = 23.5;
-    else if ([2,11].includes(month)) temp = 25.4;
-    else temp = 26.5;
-  }
-
-  if (year >= 0 && year < 1000) temp -= 2;
-  else if (year < 1300) temp -= 4;
-  else if (year < 1700) temp -= 2;
-  else if (year < 1750) temp -= 6;
-  else if (year < 1920) temp -= 5;
-  else if (year < 1950) temp -= 4;
-  else if (year < 1980) temp -= 3;
-  else if (year < 2000) temp -= 2;
-  else if (year < 2100) temp += 2;
-  else if (year < 2200) temp += 4;
-  else if (year < 2300) temp += 6;
-  else if (year < 2400) temp += 7;
-  else if (year < 2600) temp += 6;
-  else if (year < 3100) temp += 5;
-  else if (year < 4000) temp += 3;
-  else if (year < 4500) temp -= 1;
-
-  inc1 *= (1 + (-0.5 + Math.random()));
-  inc2 *= (1 + (-0.5 + Math.random()));
-
-  if (hour > 9 && hour < 14) {
-    temp += inc1;
-    hum -= inc1 * 20;
-  } else if ((hour > 7 && hour < 9) || (hour > 14 && hour < 16)) {
-    temp += inc2;
-    hum -= inc2 * 20;
-  } else if (hour > 16 && hour < 22) {
-    temp -= inc2 / 2;
-    hum += inc2 * 20;
-  } else if (hour < 7 || hour > 22) {
-    temp -= inc1;
-    hum -= inc1 * 20;
-  }
-
-  temp = Math.round(temp * 10) / 10;
-  hum = Math.round(hum * 10) / 10;
-}
-
-function updatePressure() {
-  inc3 *= (1 + (-0.5 + Math.random()));
-  inc4 *= (1 + (-0.5 + Math.random()));
-
-  if (hour > 9 && hour < 14) pressure += inc3;
-  else if ((hour > 7 && hour < 9) || (hour > 14 && hour < 16)) pressure += inc4;
-  else if (hour > 16 && hour < 22) pressure -= inc4 / 2;
-  else if (hour < 7 || hour > 22) pressure -= inc3;
-
-  if (quickwind > 30) pressure -= 0.01;
-  pressure = Math.round(pressure * 10) / 10;
-  pressure = Math.min(1029, Math.max(997, pressure));
-}
-
-function updateWind() {
-  wspeed1 = Math.random() * 200;
-  wspeed2 = Math.random() * 200;
-
-  if (
-    wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND &&
-    wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND &&
-    wspeed1 / wspeed2 <= 0.985
-  ) {
-    filter = wspeed2;
-  }
-
-  if (
-    wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND &&
-    wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND &&
-    wspeed1 / filter <= 0.985
-  ) {
-    quickwind = wspeed1;
-  }
-}
-
-function updateDisplay() {
-  document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;
-  document.getElementById("hum").innerText = `Humidity: ${hum} %`;
-  document.getElementById("hour").innerText = `Hour: ${hour}:${minute.toString().padStart(2, '0')}`;
-  document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;
-  document.getElementById("wind").innerText = `Wind speed: ${Math.round(quickwind * 10) / 10} km/h`;
-  document.getElementById("pres").innerText = `Pressure: ${Math.round(pressure * 10) / 10} hPa`;
-}
-      </script>
 	
+Check errors and make a .js file of the following  script. How would you call it in a webpage? <script>
+let inc1 =0.015; let inc2=0.002; let inc3= inc150; let inc4 =inc250;
+inc1 = inc12; inc2 = inc22;
+let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();
+let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;
+let hour = Math.ceil(ran24);
+let minute = Math.ceil(ran260);
+let day = Math.ceil(ran331);
+let month = Math.ceil(ran412);
+let year = Math.ceil(ran5*4500);
+function main() {
+setInterval(() => {
+
+document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
+            document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
+            document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
+            document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
+            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
+            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
+        }, 1000);  
+	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
+        setInterval(() => {  
+            minute = minute +3;  
+            if(minute >= 60){minute = 0; hour = hour +1;}  
+            if(hour >= 24){hour =0; day = day + 1;}
+
+if (day > daysInMonth[month - 1]) {
+day = 1;
+month++;
+}
+if(month >= 13){month = 1; year = year+1;}
+if (hum>100) hum =89;
+
+}, 60000);   
+         
+        tempM();   
+          
+        presssure();   
+    }  
+    function tempM(){  
+          wind(); 
+        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=22;} if(month ==5 || month==8){ temp=24;}if(month ==4 || month==9){ temp=25.5;}  
+        if(month ==3 || month==10){ temp=27.5;}if(month ==2 || month==11){ temp=28.4;}if(month ==1 || month==12){ temp=29.5;}}  
+        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=19;}if(month ==5 || month==8){ temp=21;} if(month ==4 || month==9){ temp=22.5;}  
+        if(month ==3 || month==10){ temp=23.5;}if(month ==2 || month==11){ temp=25.4;}if(month ==1 || month==12){ temp=26.5;}}  
+        if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
+        if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
+        if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
+        if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
+        if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
+        setInterval(() => {  
+             inc1 = (inc1 *(1+ (-0.5 + Math.random())))/3;  
+            inc2 = (inc2 *(1+ (-0.5 + Math.random())))/3;  
+            if (hour >9 && hour<14){  
+            temp = (((Math.round((temp +inc1)*10))))/10;  
+            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
+            if (hour >7 && hour<9 || hour >14 && hour<16){  
+            temp = (((Math.round((temp +inc2)*10))))/10;  
+            hum = ((Math.round(((hum -inc2*7)*10))))/10;}  
+            if (hour >16 && hour<22){  
+            temp = (((Math.round((temp -inc2/2)*10))))/10;  
+            hum = (((Math.round((hum +inc2*7)*10))))/10;}  
+            if (hour >0 && hour<7 || hour >22){  
+            temp = (((Math.round((temp -inc1)*10))))/10;  
+            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
+           
+        }, 100);  
+           
+    }  
+    let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
+    let UPPER_BOUND = 17;let LOWER_BOUND = 3;  
+    function wind(){  
+        boundSetter();  
+        setInterval(() => {  
+            wspeed1= (Math.random()*200);  
+			wspeed2= (Math.random()*200);  
+		  
+				  
+			if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND   
+					&& wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND && (wspeed1/wspeed2<= 0.985)  
+			   {  
+			 filter= wspeed2;  
+			filterrecord = filter;}  
+			if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND   
+			   && wspeed1/filter <= 0.985)  
+			{quickwind = wspeed1;}	  
+			inc1 = (inc1 *(1+ (-0.5 + Math.random())))/3;  
+            inc2 = (inc2 *(1+ (-0.5 + Math.random())))/3;  
+            if (hour >9 && hour<14){  
+            temp = (((Math.round((temp +inc1)*10))))/10;  
+            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
+            if (hour >7 && hour<9 || hour >14 && hour<16){  
+            temp = (((Math.round((temp +inc2)*10))))/10;  
+            hum = ((Math.round(((hum -inc2*7)*10))))/10;}  
+            if (hour >16 && hour<22){  
+            temp = (((Math.round((temp -inc2/2)*10))))/10;  
+            hum = (((Math.round((hum +inc2*7)*10))))/10;}  
+            if (hour >0 && hour<7 || hour >22){  
+            temp = (((Math.round((temp -inc1)*10))))/10;  
+            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
+         		  
+	     }, 100);   
+    }  
+    function boundSetter(){  
+        setInterval(() => {  
+        wspeed1  = (Math.random()*200);  
+		wspeed2  = (Math.random()*200);  
+			  
+		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && UPPER_BOUND/wspeed1 <= 1.3&& wspeed1 > LOWER_BOUND   
+				&& (wspeed1 - UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
+		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && wspeed1/UPPER_BOUND <= 1.3&& wspeed1 > LOWER_BOUND   
+				&& (wspeed1 + UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
+		if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (LOWER_BOUND/wspeed2 <= 1.3)&& UPPER_BOUND > wspeed2   
+				&& (wspeed2 - LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2; }  
+				if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (wspeed2/LOWER_BOUND <= 1.3)&& UPPER_BOUND > wspeed2   
+						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
+           }}, 4200);   
+    }  
+    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+    function presssure() {  
+	if (pressure<997){pressure = 997;}  
+	if (pressure>1029){pressure = 1029;}  
+	setInterval(() => {  
+		  
+		//*3 because tacc is 3x  
+		inc3 = inc3 *(1+ (-0.5 + Math.random()))*3;  
+            inc4 = inc4 *(1+ (-0.5 + Math.random()))*3;  
+            if (hour >9 && hour<14){  
+            pressure = ((((Math.round(pressure +inc3)*10))))/10;  
+           }  
+            if (hour >7 && hour<9 || hour >14 && hour<16){  
+            pressure = ((((Math.round(pressure +inc4)*10))))/10;  
+            }  
+            if (hour >16 && hour<22){  
+            pressure = ((((Math.round(pressure -inc4/2)*10))))/10;  
+            }  
+            if (hour >-1 && hour<7 || hour >22){  
+            pressure = ((((Math.round(pressure -inc3)*10))))/10;  
+            }  
+	},444);  
+	setInterval(() => {  
+		if(quickwind>30) {pressure = pressure - 0.01;}  
+	},222*100);  
+	  
+	  
+}  
+let title = "";
+
+function getText(){
+if (document.getElementById("tmpi").value !=""){ temp = parseFloat(document.getElementById("tmpi").value);}
+if (document.getElementById("humi").value!=""){hum = parseFloat(document.getElementById("humi").value);}
+if (document.getElementById("presi").value!=""){pressure = parseFloat(document.getElementById("presi").value);}
+if (document.getElementById("windi").value!=""){quickwind = parseFloat(document.getElementById("windi").value);}
+if (document.getElementById("houri").value!=""){hour = parseFloat(document.getElementById("houri").value);}
+if (document.getElementById("moni").value!=""){month = parseFloat(document.getElementById("moni").value);}
+if (document.getElementById("yei").value!=""){year = parseFloat(document.getElementById("yei").value);}
+if (document.getElementById("titi").value!=""){
+title = document.getElementById("titi").value;
+document.getElementById("cucnh").innerText= ${title};
+}
+}
+</script>
      <section id="setup">
   <h1 id="suph">Set up whatever</h1>
 
