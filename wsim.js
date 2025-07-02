@@ -1,16 +1,16 @@
-let inc1 =0.015; let inc2=0.002; let inc3= inc1*30; let inc4 =inc2*50;
-
-let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();
-let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;
-let hour = Math.ceil(ran*24);
-let minute = Math.ceil(ran2*60);
-let day = Math.ceil(ran3*31);
-let month = Math.ceil(ran4*12);
-let year = Math.ceil(ran5*4500);
-function main() {
-setInterval(() => {
-
-document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
+let inc1 =0.01; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
+    inc1 = inc1*2; inc2 = inc2*2;  
+let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
+        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
+        let hour = Math.ceil(ran*24);  
+        let minute = Math.ceil(ran2*60);  
+        let day = Math.ceil(ran3*31);  
+        let month = Math.ceil(ran4*12);  
+        let year = Math.ceil(ran5*4500);  
+    function main() {  
+       setInterval(() => {  
+               
+            document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
             document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
             document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
@@ -30,14 +30,14 @@ month++;
 if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
 
-}, 60000);   
-         
-        tempM();   
+}, 20000);   
           
+        tempM();   
+        wind();  
         presssure();   
     }  
     function tempM(){  
-          wind(); 
+          
         if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=22;} if(month ==5 || month==8){ temp=24;}if(month ==4 || month==9){ temp=25.5;}  
         if(month ==3 || month==10){ temp=27.5;}if(month ==2 || month==11){ temp=28.4;}if(month ==1 || month==12){ temp=29.5;}}  
         if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=19;}if(month ==5 || month==8){ temp=21;} if(month ==4 || month==9){ temp=22.5;}  
@@ -48,21 +48,21 @@ if (hum>100) hum =89;
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
         setInterval(() => {  
-             inc1 = (inc1 *(1+ (-0.5 + Math.random())))/3;  
-            inc2 = (inc2 *(1+ (-0.5 + Math.random())))/3;  
+            inc1 = inc1/10 *(1+ (-0.5 + Math.random()));  
+            inc2 = inc2/10 *(1+ (-0.5 + Math.random()));  
             if (hour >9 && hour<14){  
             temp = (((Math.round((temp +inc1)*10))))/10;  
-            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
+            hum = (((Math.round((hum -inc1*20)*10))))/10;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
             temp = (((Math.round((temp +inc2)*10))))/10;  
-            hum = ((Math.round(((hum -inc2*7)*10))))/10;}  
+            hum = ((Math.round(((hum -inc2*20)*10))))/10;}  
             if (hour >16 && hour<22){  
             temp = (((Math.round((temp -inc2/2)*10))))/10;  
-            hum = (((Math.round((hum +inc2*7)*10))))/10;}  
+            hum = (((Math.round((hum +inc2*20)*10))))/10;}  
             if (hour >0 && hour<7 || hour >22){  
             temp = (((Math.round((temp -inc1)*10))))/10;  
-            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
-           
+            hum = (((Math.round((hum -inc1*20)*10))))/10;}  
+            
         }, 100);  
            
     }  
@@ -78,27 +78,11 @@ if (hum>100) hum =89;
 				  
 			if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND   
 					&& wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND && (wspeed1/wspeed2<= 0.985)  
-			   {  
+					)  
 			 filter= wspeed2;  
-			filterrecord = filter;}  
-			if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND   
-			   && wspeed1/filter <= 0.985)  
-			{quickwind = wspeed1;}	  
-			inc1 = (inc1 *(1+ (-0.5 + Math.random())))/3;  
-            inc2 = (inc2 *(1+ (-0.5 + Math.random())))/3;  
-            if (hour >9 && hour<14){  
-            temp = (((Math.round((temp +inc1)*10))))/10;  
-            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
-            if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp = (((Math.round((temp +inc2)*10))))/10;  
-            hum = ((Math.round(((hum -inc2*7)*10))))/10;}  
-            if (hour >16 && hour<22){  
-            temp = (((Math.round((temp -inc2/2)*10))))/10;  
-            hum = (((Math.round((hum +inc2*7)*10))))/10;}  
-            if (hour >0 && hour<7 || hour >22){  
-            temp = (((Math.round((temp -inc1)*10))))/10;  
-            hum = (((Math.round((hum -inc1*7)*10))))/10;}  
-         		  
+			filterrecord = filter;  
+			if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985  
+					) {quickwind = wspeed1;}  
 	     }, 100);   
     }  
     function boundSetter(){  
@@ -122,9 +106,9 @@ if (hum>100) hum =89;
 	if (pressure>1029){pressure = 1029;}  
 	setInterval(() => {  
 		  
-		//*3 because tacc is 3x  
-		inc3 = inc3 *(1+ (-0.5 + Math.random()))*3;  
-            inc4 = inc4 *(1+ (-0.5 + Math.random()))*3;  
+		  
+		inc3 = inc3 *(1+ (-0.5 + Math.random())*3);  
+            inc4 = inc4 *(1+ (-0.5 + Math.random())*3);  
             if (hour >9 && hour<14){  
             pressure = ((((Math.round(pressure +inc3)*10))))/10;  
            }  
@@ -156,5 +140,5 @@ if (document.getElementById("moni").value!=""){month = parseFloat(document.getEl
 if (document.getElementById("yei").value!=""){year = parseFloat(document.getElementById("yei").value);}
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
-document.getElementById("cucnh").innerText= ${title};
-}}
+}
+}
