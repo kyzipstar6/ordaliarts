@@ -1,7 +1,7 @@
  let inc1 =0.01; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
+        let hum = 87*(0.5+ (Math.random()-0.5)); let temp = 20;  
         let hour = Math.ceil(ran*24);  
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
