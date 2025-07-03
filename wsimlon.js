@@ -1,4 +1,4 @@
- let inc1 =0.01; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
+ let inc1 =0.1; let inc2=0.05; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 87*(0.5+ (Math.random()-0.5)); let temp = 20;  
@@ -66,9 +66,9 @@ if (hum>100) hum =89;
         }, 100);  
            
     }  
-    let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
-    let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
-    let UPPER_BOUND = 17;let LOWER_BOUND = 3;  
+    let wspeed1=0;let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 152;let W_MAXmin= 4;let W_MINmax= 49;let W_MINmin= 0;  
+    let UPPER_BOUND = 27;let LOWER_BOUND = 7;  
     function wind(){  
         boundSetter();  
         setInterval(() => {  
