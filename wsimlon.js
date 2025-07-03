@@ -102,7 +102,7 @@ if (hum>100) hum =89;
 				if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (wspeed2/LOWER_BOUND <= 1.3)&& UPPER_BOUND > wspeed2   
 						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
            }}, 4200);   
-    }  
+    }  }
     let pressure = 1023 *(1+ (-0.5+ Math.random()));  
     function presssure() {  
 	if (pressure<977){pressure = 977;}  
