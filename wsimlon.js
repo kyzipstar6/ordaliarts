@@ -67,7 +67,7 @@ if (hum>100) hum =89;
            
     }  
     let wspeed1=0;let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
-    let W_MAXmax= 152;let W_MAXmin= 4;let W_MINmax= 49;let W_MINmin= 0;  
+    let W_MAXmax= 152;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
     let UPPER_BOUND = 27;let LOWER_BOUND = 7;  
     function wind(){  
         boundSetter();  
@@ -86,6 +86,9 @@ if (hum>100) hum =89;
 	     }, 100);   
     }  
     function boundSetter(){  
+	    if (hour > 10 && hour<18){ if(month ==1 || month==2){ W_MAXmax =120;} if(month ==5 || month==8){ W_MAXmax =100;}if(month ==4 || month==9){ W_MAXmax =90;}  
+        if(month ==3 || month==10){ W_MAXmax =100;}if(month ==2 || month==11){ W_MAXmax =141;}if(month ==1 || month==12){ W_MAXmax =132;}}  
+        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){}if(month ==5 || month==8){ W_MAXmax =70;} if(month ==4 || month==9){ } 
         setInterval(() => {  
         wspeed1  = (Math.random()*200);  
 		wspeed2  = (Math.random()*200);  
@@ -102,7 +105,7 @@ if (hum>100) hum =89;
     }  
     let pressure = 1023 *(1+ (-0.5+ Math.random()));  
     function presssure() {  
-	if (pressure<997){pressure = 997;}  
+	if (pressure<977){pressure = 977;}  
 	if (pressure>1029){pressure = 1029;}  
 	setInterval(() => {  
 		  
