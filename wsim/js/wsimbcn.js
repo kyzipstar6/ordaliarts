@@ -82,7 +82,7 @@ if (hum>100) hum =89;
 			filterrecord = filter;  
 			if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985  
 					) {quickwind = wspeed1;}  
-        }, 100);  
+        }, 1000);  
            if (hour > 10 && hour<18){ if(month ==1 || month==2){ W_MAXmax =120;} if(month ==5 || month==8){ W_MAXmax =100;}if(month ==4 || month==9){ W_MAXmax =90;}  
         if(month ==3 || month==10){ W_MAXmax =100;}if(month ==2 || month==11){ W_MAXmax =141;}if(month ==1 || month==12){ W_MAXmax =132;}}  
         if (hour < 10 || hour>18){  if(month ==6 || month==7 ){}if(month ==5 || month==8){ W_MAXmax =70;} if(month ==4 || month==9){ } 
