@@ -35,7 +35,7 @@ month++;
 if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
 
-}, 60000); 
+}, 20000); 
         if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=7;} if(month ==5 || month==8){ temp=18;}if(month ==4 || month==9){ temp=14;}  
         if(month ==3 || month==10){ temp=15;}if(month ==2 || month==11){ temp=10;}if(month ==1 || month==12){ temp=6;}}  
         if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=14;}if(month ==5 || month==8){ temp=12;} if(month ==4 || month==9){ temp=9;}  
