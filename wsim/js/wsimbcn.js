@@ -36,10 +36,10 @@ if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
 
 }, 20000); 
-        if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=7;} if(month ==5 || month==8){ temp=18;}if(month ==4 || month==9){ temp=14;}  
-        if(month ==3 || month==10){ temp=15;}if(month ==2 || month==11){ temp=10;}if(month ==1 || month==12){ temp=6;}}  
-        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=14;}if(month ==5 || month==8){ temp=12;} if(month ==4 || month==9){ temp=9;}  
-        if(month ==3 || month==10){ temp=5;}if(month ==2 || month==11){ temp=3;}if(month ==1 || month==12){ temp=2;}}  
+        if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=13;} if(month ==5 || month==8){ temp=29;}if(month ==4 || month==9){ temp=27;}  
+        if(month ==3 || month==10){ temp=15;}if(month ==2 || month==11){ temp=14;}if(month ==1 || month==12){ temp=14;}}  
+        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=24;}if(month ==5 || month==8){ temp=23;} if(month ==4 || month==9){ temp=21;}  
+        if(month ==3 || month==10){ temp=12;}if(month ==2 || month==11){ temp=11;}if(month ==1 || month==12){ temp=10;}}  
         if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
         if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
