@@ -1,5 +1,5 @@
-let inc1 =0.3; let inc2=0.2; let inc3= inc1*50; let inc4 =inc2*50;   
-    inc1 = inc1*2; inc2 = inc2*2;   let wspeed1=0;let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
+let inc1 =0.08; let inc3= inc1*50;   
+    inc1 = inc1*2;    let wspeed1 =0; let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 152;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
     let UPPER_BOUND = 27;let LOWER_BOUND = 7;    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
    
@@ -24,7 +24,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
-            minute = minute +3;  
+            minute += minute;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 24){hour =0; day = day + 1;}
 
@@ -46,17 +46,15 @@ if (hum>100) hum =89;
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
         setInterval(() => {  
-            inc1 = inc1/10 *(1+ (-0.5 + Math.random()));  
-            inc2 = inc2/10 *(1+ (-0.5 + Math.random()));  
             if (hour >9 && hour<14){  
             temp = (((Math.round((temp +inc1)*10))))/10;  
-            hum = (((Math.round((hum -inc1*20)*10))))/10;}  
+            hum = (((Math.round((hum -inc1*5)*10))))/10;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp = (((Math.round((temp +inc2)*10))))/10;  
-            hum = ((Math.round(((hum -inc2*20)*10))))/10;}  
+            temp = (((Math.round((temp +inc1/2)*10))))/10;  
+            hum = ((Math.round(((hum -inc1*5)*10))))/10;}  
             if (hour >16 && hour<22){  
-            temp = (((Math.round((temp -inc2/2)*10))))/10;  
-            hum = (((Math.round((hum +inc2*20)*10))))/10;}  
+            temp = (((Math.round((temp -inc1/2)*10))))/10;  
+            hum = (((Math.round((hum +inc1)*10))))/10;}  
             if (hour >0 && hour<7 || hour >22){  
             temp = (((Math.round((temp -inc1)*10))))/10;  
             hum = (((Math.round((hum -inc1*20)*10))))/10;}  
@@ -64,19 +62,17 @@ if (hum>100) hum =89;
 			wspeed2= (Math.random()*200);  
 		   
 		  
-		inc3 = inc3 *(1+ (-0.5 + Math.random())*3);  
-            inc4 = inc4 *(1+ (-0.5 + Math.random())*3);  
-            if (hour >9 && hour<14){  
+		     if (hour >9 && hour<14){  
             pressure = ((((Math.round(pressure +inc3)*10))))/10;  
            }  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            pressure = ((((Math.round(pressure +inc4)*10))))/10;  
+            pressure = ((((Math.round(pressure +inc3/Math.random()/2)*10))))/10;  
             }  
             if (hour >16 && hour<22){  
-            pressure = ((((Math.round(pressure -inc4/2)*10))))/10;  
+            pressure = ((((Math.round(pressure -inc3/2)*10))))/10;  
             }  
             if (hour >-1 && hour<7 || hour >22){  
-            pressure = ((((Math.round(pressure -inc3)*10))))/10;  
+            pressure = ((((Math.round(pressure -inc3/Math.random())*10))))/10;  
             }  
 				  
 			if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND   
