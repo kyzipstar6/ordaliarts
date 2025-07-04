@@ -1,7 +1,7 @@
 let inc1 =0.08; let inc3= inc1*50;   
-    inc1 = inc1*2;    let wspeed1 =0; let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
-    let W_MAXmax= 152;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
-    let UPPER_BOUND = 27;let LOWER_BOUND = 7;    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+      let wspeed1 =0; let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 92;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
+        let pressure = 1023 *(1+ (-0.5+ Math.random()));  
    
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 87*(0.5+ (Math.random()-0.5)); let temp = 20;  
@@ -10,6 +10,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let day = Math.ceil(ran3*31);  
         let month = Math.ceil(ran4*12);  
         let year = Math.ceil(ran5*4500);  
+let UPPER_BOUND = ran3*37;let LOWER_BOUND = ran3*10;
     function main() {  
 	if (pressure<977){pressure = 977;}  
 	if (pressure>1029){pressure = 1029;}  
@@ -24,7 +25,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
-            minute += minute;  
+            minute =+; 
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 24){hour =0; day = day + 1;}
 
