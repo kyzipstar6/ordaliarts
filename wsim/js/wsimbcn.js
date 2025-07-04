@@ -25,7 +25,7 @@ let UPPER_BOUND = ran3*37;let LOWER_BOUND = ran3*10;
         }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
-            minute =+; 
+            minute ++; 
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 24){hour =0; day = day + 1;}
 
