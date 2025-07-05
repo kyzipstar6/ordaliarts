@@ -1,0 +1,141 @@
+<!DOCTYPE html>  <html>  
+<head>  
+    <meta charset="UTF-8" />  
+    <title>London simulated Weather</title>  
+</head>  
+<nav>  
+        <a href="#curc">Conditions</a>  
+        <a href="#setup">Settings</a>  
+        <a href="#clim">Climate description</a>  
+        <a href="#getapp">Get the App</a>  
+    </nav>  
+<body>  <area id="curc">  
+      
+     <h1 id ="cucnh">Weather conditions at London city</h1>  
+      
+    <p id="tmp" >Temperature </p>  
+    <p id="hum">Humidity </p>  
+    <p id = "wind">Wind Speed </p>  
+    <p id="pres">Pressure </p>
+
+</area>  <area id="clock">  
+    <h2 id ="time">Time</h2>  
+    <p id="hour" ></p>  
+    <p id="day" ></p></div>  
+ </area>  
+<button id = "startup", onclick="main()">Start</button>  <button id = "update", onclick="tempM()" , step="0.2"   >Update</button>
+<script src = "wsimlon.php">  
+fetch("https://kyzipstar6.github.io/ordaliarts/wsim/wsimlon.php")
+  .then(res => res.json())
+  .then(data => {
+    console.log(data.temp, data.hum, data.pressure);
+  });
+
+</script>
+<section id="setup">
+
+  <h1 id="suph">Settings</h1>  <label for="tmpi">Temperature:</label>
+<input id="tmpi" type="number" step="0.1" />
+
+<label for="humi">Humidity:</label>
+<input id="humi" type="number" step="0.1" />
+
+<label for="presi">Pressure:</label>
+<input id="presi" type="number" step="0.1" />
+
+<label for="windi">Wind:</label>
+<input id="windi" type="number" step="0.1" />
+
+<label for="houri">Hour:</label>
+<input id="houri" type="number" min="0" max="23" />
+
+<label for="moni">Month:</label>
+<input id="moni" type="number" min="1" max="12" />
+
+<label for="yei">Year:</label>
+<input id="yei" type="number" min="0" max="4500" />
+
+<label for="titi">Title:</label>
+<input id="titi" type="text" />
+
+  <p></p>  
+  <button id="set" onclick="getText()">Set</button>  
+     </section>  
+    <area id="clim">  <h1 id ="climh">Climate description</h1>  
+      
+    <p >London features a relativelly warm climate if we take into consideration other cities aituated at the same latitude but diferent longitude.  
+    </p>  
+  <p >However, its reputation of having a bad weather often darkens the perception of the city.
+  </p>
+    <p>The fact is that the Atlantic quite softens the climatey protectong the city against the cold european air in the months from November
+      to April. The average temperature is of 8°C, while the average humidity is of 80%. This means a rather cool and humid climate.</p>  
+    <p>The yearly precipitation is of 680 mm. </p>  
+    <p>Being located near the Atlantic Ocean, the city features a rather windy climate with cool, humid winds from West direction.</p>
+
+</area>  
+     <h1 id ="getapp">Get the app</h1>  
+    <b></b>  
+    <b></b>  
+    <p>Rain and solar radiation models, other scenarios and more in the java version. </p>  
+     <button id ="getit"><a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">Get Java Version</a></button>  <style>  
+      
+area{  
+    background-color: #af9b4c;  
+    opacity: 0.4;  
+      
+    font-style:rgb(226, 226, 226) ;  
+}  
+  
+set{  
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;  
+    background-color: rgb(160, 134, 95);  
+}  
+  
+time{  
+    font-size: 16 px;  
+     
+    color: #084a64;  
+    background-color: #f4a25f;  
+}  
+li{  
+    padding: 24 px;  
+}  
+h1{  
+    font-size: 18 px;  
+      
+    font: Gill Sans MS;  
+    -webkit-text-fill-color: rgb(37, 34, 24);  
+    background-color:#a86f2a;  
+}  
+head{  
+    background-color: #643308;background-color:#af894c;  
+}  
+body{  
+    background-color: #d69027;  
+    background: url("pc/lon.png");  
+    background-repeat: repeat;  
+    text-decoration: none;  
+    text-align: center;  
+    font-family: Cambria, Cochin, Georgia, Times, 'Cambria', serif;  
+}  
+nav {  
+        text-align: center;  
+        margin: 1rem 0;  
+    }  
+nav a {  
+        margin: 0 15px;  
+        text-decoration: none;  
+        color: #333;  
+    }  
+button{  
+    font-family: Cambria, Cochin, Georgia, Times, 'Consolas', serif;   
+    background-color: rgb(160, 153, 95);  
+}  
+input{  
+    font-family: Cambria, Cochin, Georgia, Times, 'Consolas', serif;   
+    background-color:rgb(205, 117, 117);  
+}  
+</style>
+
+</body>  
+</html>  
