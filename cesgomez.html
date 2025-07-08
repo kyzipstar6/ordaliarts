@@ -141,9 +141,10 @@
             
             <label for="message">Message:</label><br>
             <textarea id="message" name="message" rows="4" required></textarea><br><br>
+            <button id ="send" onclick= "sendEmail()">Send Message</button>
             
-            <button type="submit", onclick= "sendEmail()">Send Message</button>
         </form>
+        
         <script>
   function sendEmail() {
     const name = document.getElementById("name").value.trim();
@@ -155,10 +156,8 @@
     window.open(mailtoLink, '_blank');
   }
     </script>
+
     </section>
 
-    <footer>
-        <p>&copy; 2025 César Gómez Torres. All rights reserved.</p>
-    </footer>
 </body>
 </html>
