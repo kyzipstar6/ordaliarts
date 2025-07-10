@@ -16,8 +16,8 @@ let UPPER_BOUND = ran3*37;let LOWER_BOUND = ran3*10;
 	if (pressure>1029){pressure = 1029;}  
        setInterval(() => {  
                
-            document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
-            document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
+            document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
+            document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
             document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
             document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
@@ -27,6 +27,8 @@ let UPPER_BOUND = ran3*37;let LOWER_BOUND = ran3*10;
         setInterval(() => {  
             minute ++; 
             if(minute >= 60){minute = 0; hour = hour +1;}  
+		if(minute<10) minute = "0" 
+		+ minute;
             if(hour >= 24){hour =0; day = day + 1;}
 
 if (day > daysInMonth[month - 1]) {
@@ -46,13 +48,14 @@ if (hum>100) hum =89;
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
+	    iF(hum <40 &&( month>4 || month<11)) hum = 40;  iF(hum <40 &&( month<4 || month>10)) hum = 30;
         setInterval(() => {  
             if (hour >9 && hour<14){  
-            temp = (((Math.round((temp +inc1)*10))))/10;  
-            hum = (((Math.round((hum -inc1*5)*10))))/10;}  
+            temp = temp +inc1;  
+            hum = hum - (inc1*5);}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp = (((Math.round((temp +inc1/2)*10))))/10;  
-            hum = ((Math.round(((hum -inc1*5)*10))))/10;}  
+            temp = temp +(inc1/2);  
+            hum = hum -(inc1*5);}  
             if (hour >16 && hour<22){  
             temp = (((Math.round((temp -inc1/2)*10))))/10;  
             hum = (((Math.round((hum +inc1)*10))))/10;}  
