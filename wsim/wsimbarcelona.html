@@ -1,137 +1,175 @@
-<!DOCTYPE html>  <html>  
-<head>  
-    <meta charset="UTF-8" />  
-    <title>Barcelona simulated Weather</title>  
-</head>  
-<nav>  
-        <a href="#curc">Conditions</a>  
-        <a href="#setup">Settings</a>  
-        <a href="#clim">Climate description</a>  
-        <a href="#getapp">Get the App</a>  
-    </nav>  
-<body>  <area id="curc">  
-      
-     <h1 id ="cucnh">Weather conditions at Barcelona</h1>  
-      
-    <p id="tmp" >Temperature </p>  
-    <p id="hum">Humidity </p>  
-    <p id = "wind">Wind Speed </p>  
-    <p id="pres">Pressure </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Barcelona Simulated Weather</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url("pc/bcn.png");
+      background-repeat: repeat;
+      background-color: #27a5d6;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
 
-</area>  <area id="clock">  
-    <h2 id ="time">Time</h2>  
-    <p id="hour" ></p>  
-    <p id="day" ></p></div>  
- </area>  
-<button id = "startup", onclick="main()">Start</button>  <button id = "update", onclick="tempM()" , step="0.2"   >Update</button>
-<script src ="js/wsimbcn.js">  
+    nav {
+      text-align: center;
+      padding: 1rem;
+      background-color: #a86f2a;
+    }
 
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
 
-</script>
+    section {
+      margin: 2rem auto;
+      padding: 1rem;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+    }
+
+    h1, h2 {
+      color: #a86f2a;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input {
+      padding: 0.4rem;
+      width: 80%;
+      max-width: 300px;
+      background-color: rgb(205, 117, 117);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      margin: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3b9241;
+    }
+
+    #clim {
+      background-color: #fff6eb;
+    }
+top-left-nav, .top-right-nav {
+  position: fixed;
+  top: 10px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  z-index: 999;
+  font-weight: bold;
+  font-size: 14px;
+}
+    @media (max-width: 600px) {
+      input {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="top-left-nav">
+  <a href="wsim.html" target="_blank">☀️ Abstract Island Weather</a>
+</div>
+
+<div class="top-right-nav">
+  <a href="wsimlondon.html" target="_blank">🌧 Simulate London Weather</a>
+</div>
+<nav>
+  <a href="#curc">Conditions</a>
+  <a href="#setup">Settings</a>
+  <a href="#clim">Climate Description</a>
+  <a href="#getapp">Get the App</a>
+</nav>
+
+<section id="curc">
+  <h1 id="cucnh">Weather Conditions in Barcelona</h1>
+  <p id="tmp">🌡 Temperature:</p>
+  <p id="hum">💧 Humidity:</p>
+  <p id="wind">🌬 Wind Speed:</p>
+  <p id="pres">📊 Pressure:</p>
+</section>
+
+<section id="clock">
+  <h2>⏰ Time</h2>
+  <p id="hour">Hour: --</p>
+  <p id="day">Date: --</p>
+</section>
+
+<div>
+  <button id="startup" onclick="main()">Start</button>
+  <button id="update" onclick="tempM()" step="0.2">Update</button>
+</div>
+
 <section id="setup">
+  <h1>⚙️ Settings</h1>
 
-  <h1 id="suph">Settings</h1>  <label for="tmpi">Temperature:</label>
-<input id="tmpi" type="number" step="0.1" />
+  <label for="tmpi">Temperature (°C):</label>
+  <input id="tmpi" type="number" step="0.1" />
 
-<label for="humi">Humidity:</label>
-<input id="humi" type="number" step="0.1" />
+  <label for="humi">Humidity (%):</label>
+  <input id="humi" type="number" step="0.1" />
 
-<label for="presi">Pressure:</label>
-<input id="presi" type="number" step="0.1" />
+  <label for="presi">Pressure (hPa):</label>
+  <input id="presi" type="number" step="0.1" />
 
-<label for="windi">Wind:</label>
-<input id="windi" type="number" step="0.1" />
+  <label for="windi">Wind Speed (km/h):</label>
+  <input id="windi" type="number" step="0.1" />
 
-<label for="houri">Hour:</label>
-<input id="houri" type="number" min="0" max="23" />
+  <label for="houri">Hour (0–23):</label>
+  <input id="houri" type="number" min="0" max="23" />
 
-<label for="moni">Month:</label>
-<input id="moni" type="number" min="1" max="12" />
+  <label for="moni">Month (1–12):</label>
+  <input id="moni" type="number" min="1" max="12" />
 
-<label for="yei">Year:</label>
-<input id="yei" type="number" min="0" max="4500" />
+  <label for="yei">Year:</label>
+  <input id="yei" type="number" min="0" max="4500" />
 
-<label for="titi">Title:</label>
-<input id="titi" type="text" />
+  <label for="titi">Title:</label>
+  <input id="titi" type="text" />
 
-  <p></p>  
-  <button id="set" onclick="getText()">Set</button>  
-     </section>  
-    <area id="clim">  <h1 id ="climh">Climate description</h1>  
-      
-    <p >The climate of the city is of the type mediterranean Csa, with average temperatures of 15•C and moderate rainfall.
-  </p>
-    <p>The city enjoys of at least 140 montly sunshine hours each month. The cloudiest months are those of the late autnum and those
-    of the early spring.</p>  
-    <p > The warm weather of Barcelona has experienced an increase of temperatures the last years.
-    Rains have become less frequent and more harmful due to the quantity of precipitation fallen at once. The last time it snowed at the city was in
-    2018. Before then it used to snow one each two years. The mean anual precipitation quantity
-    is of roughly 650 mm, spread all over the year, with tendency to occur in the months of the fall.</p>  
-  
-</area>  
-     <h1 id ="getapp">Get the app</h1>  
-    <b></b>  
-    <b></b>  
-    <p>Rain and solar radiation models, other scenarios and more in the java version. </p>  
-     <button id ="getit"><a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">Get Java Version</a></button>  <style>  
-      
-area{  
-    background-color: #4CAF50;  
-    opacity: 0.4;  
-      
-    font-style:rgb(226, 226, 226) ;  
-}  
-  
-set{  
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;  
-    background-color: cadetblue;  
-}  
-  
-time{  
-    font-size: 16 px;  
-     
-    color: #084a64;  
-    background-color: #f4a25f;  
-}  
-li{  
-    padding: 24 px;  
-}  
-h1{  
-    font-size: 18 px;  
-      
-    font: Gill Sans MS;  
-    -webkit-text-fill-color: rgb(37, 34, 24);  
-    background-color:#a86f2a;  
-}  
-head{  
-    background-color: #084a64;background-color:#af894c;  
-}  
-body{  
-    background-color: #27a5d6;  
-    background: url("pc/bcn.png");  
-    background-repeat: repeat;  
-    text-decoration: none;  
-    text-align: center;  
-    font-family: Cambria, Cochin, Georgia, Times, 'Cambria', serif;  
-}  
-nav {  
-        text-align: center;  
-        margin: 1rem 0;  
-    }  
-nav a {  
-        margin: 0 15px;  
-        text-decoration: none;  
-        color: #333;  
-    }  
-button{  
-    font-family: Cambria, Cochin, Georgia, Times, 'Consolas', serif;   
-    background-color: #4CAF50;  ;  
-}  
-input{  
-    font-family: Cambria, Cochin, Georgia, Times, 'Consolas', serif;   
-    background-color:rgb(205, 117, 117);   
-}  
-</style>
+  <button id="set" onclick="getText()">Set</button>
+</section>
 
-</body>  
-</html>  
+<section id="clim">
+  <h1>🌇 Climate Description of Barcelona</h1>
+  <p>Barcelona has a Mediterranean climate (Köppen Csa), with mild winters and hot summers. The average annual temperature is around 15 °C with moderate rainfall.</p>
+  <p>The city enjoys at least 140 hours of sunshine each month. The cloudiest periods are typically in late autumn and early spring.</p>
+  <p>In recent years, Barcelona has experienced rising temperatures. Rainfall has become less frequent but more intense, often causing flash floods. The last snowfall was in 2018. Previously, snow would fall roughly every two years.</p>
+  <p>The city receives approximately 650 mm of rainfall per year, mostly concentrated in the fall months.</p>
+</section>
+
+<section id="getapp">
+  <h1>📦 Get the App</h1>
+  <p>Try the full-featured Java version for more features, including radiation models, complex rain systems, and climate presets:</p>
+  <a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">
+    <button>Get Java Version</button>
+  </a>
+</section>
+
+<script src="js/wsimbcn.js"></script>
+</body>
+</html>
