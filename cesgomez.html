@@ -1,163 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <div class="language-switcher">
-  <button onclick="setLanguage('en')">
-    <img src="https://flagcdn.com/w40/us.png" alt="English" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>César Gómez Torres - Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      background-image: url("pc/prt.png");
+      background-size: 10cm;
+      background-position: right;
+      background-repeat: no-repeat;
+    }
 
-  </button>
-  <button onclick="setLanguage('is')">
-    <img src="https://flagcdn.com/w40/is.png" alt="Icelandic" />
-  </button>
-</div>
-    
-    <script>
-  function setLanguage(lang) {
-    window.location.href = `https://kyzipstar6.github.io/ordaliarts/${lang}/cesgomez.html`;
-  }
-</script>
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cesar Gomez Torres - Website</title>
-    <style>
-        a {
-            display: inline-block;
-            font-family: 'Times New Roman', Times, serif, sans-serif;
-            text-decoration:none;
-            transition: transform 0.2s ease;
-        }
-        a:active{
-            transform: skewX(-40 deg);
-            color: black;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            background-image: 
-            url("pc/prt.png");
-            background-size:10cm;
-            background-position: right;
-            background-repeat: no-repeat;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        nav {
-            text-align: center;
-            margin: 1rem 0;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-        }
-        nav a:hover {
-            color: #4CAF50;
-        }
-        section {
-            margin: 20px auto;
-            max-width: 800px;
-            padding: 1rem;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        .language-switcher {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px;
-  z-index: 1000;
-}
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+    }
 
-.language-switcher button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
+    nav {
+      text-align: center;
+      margin: 1rem 0;
+    }
 
-.language-switcher img {
-  width: 24px;
-  height: auto;
-  border-radius: 3px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-}
-    </style>
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #4CAF50;
+    }
+
+    section {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 1rem;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .language-switcher {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+      z-index: 1000;
+    }
+
+    .language-switcher button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .language-switcher img {
+      width: 24px;
+      height: auto;
+      border-radius: 3px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #45a049;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background-size: contain;
+        background-position: top right;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>César Gómez Torres</h1>
-        <p>Welcome to my personal website!</p>
-    </header>
 
-    <nav>
-        <a href="#about">About Me</a>
-        <a href="#content">My Content</a>
-        <a href="#contact">Contact</a>
-    </nav>
+  <div class="language-switcher">
+    <button onclick="setLanguage('en')">
+      <img src="https://flagcdn.com/w40/us.png" alt="English" />
+    </button>
+    <button onclick="setLanguage('is')">
+      <img src="https://flagcdn.com/w40/is.png" alt="Icelandic" />
+    </button>
+  </div>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! My name is César Gómez. I am a service driver with a passion for creating applications that make life easier.
-            I like as well make applications that simulate real conditons. I specialize in Java applications.</p>
-        <p>Other skills I have is some language gift (I speak four languages: Spanish, German, English and Catalan).</p>
-         <p>I have lived in Germany (2 years) and in Spain.</p>
-        <p>I am pleased to share my content bellow with you. Feel share to explore. Hope you see it as exciting as me!</p>
-    </section>
+  <header>
+    <h1>César Gómez Torres</h1>
+    <p>Welcome to my personal website!</p>
+  </header>
 
-    <section id="content">
-        <h2>My Content</h2>
-        <p>Here are some Applications I created:</p>
-        <ul>
-             <li><a href="wsim.html" target="_blank">Application: Weather conditions simulator</a></li>
-            <li><a href="media-player.html" target="_blank">Application: Light-weight Media Player</a></li>
-            <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">Youtube Channel: Real-life adventures</a></li>
-            <li><a href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5" target="_blank">Youtube Channel: Videogames</a></li>
-        </ul>
-    </section>
+  <nav>
+    <a href="#about">About Me</a>
+    <a href="#content">My Content</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <p>If you’d like to get in touch, feel free to use the form below:</p>
-        <form action="https://example.com/form-handler" method="POST">
-            <label for="name">Name:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
-            
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" required><br><br>
-            
-            <label for="message">Message:</label><br>
-            <textarea id="message" name="message" rows="4" required></textarea><br><br>
-            <button id ="send" onclick= "sendEmail()">Send Message</button>
-            
-        </form>
-        
-        <script>
-  function sendEmail() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const message = document.getElementById("message").value.trim();
-    
-    const mailtoLink = `mailto: cesgomez289@gmail.com?subject=Contact request ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0ANetfang sendanda: ${encodeURIComponent(email)}`;
-    
-    window.open(mailtoLink, '_blank');
-  }
-    </script>
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Hello! My name is César Gómez. I am a service driver with a passion for creating applications that make life easier.</p>
+    <p>I also enjoy developing applications that simulate real-world conditions, especially in Java.</p>
+    <p>I speak four languages: Spanish, German, English, and Catalan. I’ve lived in Germany (2 years) and Spain.</p>
+    <p>Feel free to explore my projects below—I hope you find them as exciting as I do!</p>
+  </section>
 
-    </section>
+  <section id="content">
+    <h2>My Content</h2>
+    <p>Here are some Applications I created:</p>
+    <ul>
+      <li><a href="wsim.html" target="_blank">🌤 Weather Conditions Simulator</a></li>
+      <li><a href="media-player.html" target="_blank">🎵 Light-weight Media Player</a></li>
+      <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">🎥 Real-life Adventures (YouTube)</a></li>
+      <li><a href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5" target="_blank">🎮 Videogames Channel (YouTube)</a></li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>If you'd like to get in touch, feel free to use the form below:</p>
+    <form onsubmit="sendEmail(event)">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 César Gómez Torres
+  </footer>
+
+  <script>
+    function setLanguage(lang) {
+      window.location.href = `https://kyzipstar6.github.io/ordaliarts/${lang}/cesgomez.html`;
+    }
+
+    function sendEmail(event) {
+      event.preventDefault(); // prevent reload
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const mailtoLink = `mailto:cesgomez289@gmail.com?subject=Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0ASender: ${encodeURIComponent(email)}`;
+      window.open(mailtoLink, '_blank');
+    }
+  </script>
 
 </body>
 </html>
