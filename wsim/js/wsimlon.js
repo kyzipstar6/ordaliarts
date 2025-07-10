@@ -62,8 +62,8 @@ if (hum>100) hum =89;
             if (hour >0 && hour<7 || hour >22){  
             temp = (((Math.round((temp -inc1)*10))))/10;  
             hum = (((Math.round((hum -inc1*20)*10))))/10;}  
-            
-        }, 100);  
+            if(temp>43)temp = 43; if(temp<-30)temp = -30;
+        }, 1000);  
            
     }  
     let wspeed1=0;let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
@@ -108,21 +108,22 @@ if (hum>100) hum =89;
 	if (pressure<977){pressure = 977;}  
 	if (pressure>1029){pressure = 1029;}  
 	setInterval(() => {  
-		  
+		if (pressure<977){pressure = 977;}  
+	if (pressure>1029){pressure = 1029;}  
 		  
 		inc3 = inc3 *(1+ (-0.5 + Math.random())*3);  
             inc4 = inc4 *(1+ (-0.5 + Math.random())*3);  
             if (hour >9 && hour<14){  
-            pressure = ((((Math.round(pressure +inc3)*10))))/10;  
+            pressure = pressure +inc3;  
            }  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            pressure = ((((Math.round(pressure +inc4)*10))))/10;  
+            pressure = pressure +inc4;  
             }  
             if (hour >16 && hour<22){  
-            pressure = ((((Math.round(pressure -inc4/2)*10))))/10;  
+            pressure = pressure -inc4;  
             }  
             if (hour >-1 && hour<7 || hour >22){  
-            pressure = ((((Math.round(pressure -inc3)*10))))/10;  
+            pressure = pressure -inc3;  
             }  
 	},444);  
 	setInterval(() => {  
