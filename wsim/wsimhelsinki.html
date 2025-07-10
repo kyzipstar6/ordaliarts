@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weather Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url("pc/hels.png");
+      background-repeat: repeat;
+      background-color: #27a5d6;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      text-align: center;
+      padding: 1rem;
+      background-color: #4CAF50;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    section {
+      margin: 2rem auto;
+      padding: 1rem;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+    }
+
+    h1, h2 {
+      color: #084a64;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input {
+      padding: 0.4rem;
+      width: 80%;
+      max-width: 300px;
+      background-color: lightblue;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: cadetblue;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      margin: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #46889c;
+    }
+
+    .climate {
+      background-color: #d0f0df;
+    }
+
+    #getapp {
+      font-weight: bold;
+    }
+.top-left-nav, .top-right-nav {
+  position: fixed;
+  top: 10px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  z-index: 999;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.top-left-nav {
+  left: 10px;
+}
+
+.top-right-nav {
+  right: 10px;
+}
+
+.top-left-nav a, .top-right-nav a {
+  color: #084a64;
+  text-decoration: none;
+}
+
+.top-left-nav a:hover, .top-right-nav a:hover {
+  color: #4CAF50;
+}
+
+    @media (max-width: 600px) {
+      input {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="top-left-nav">
+  <a href="wsimlondon.html" target="_blank">🌧 Simulate London Weather</a>
+</div>
+
+<div class="top-right-nav">
+  <a href="wsimbarcelona.html" target="_blank">☀️ Simulate Barcelona Weather</a>
+</div>
+
+<nav>
+  <a href="#curc">Current Conditions</a>
+  <a href="#setup">Settings</a>
+  <a href="#clim">Climate Description</a>
+  <a href="#getapp">Get the App</a>
+</nav>
+
+<section id="curc">
+  <h1 id="cucnh">Weather Conditions at Helsinki</h1>
+  <p id="tmp">🌡 Temperature:</p>
+  <p id="hum">💧 Humidity:</p>
+  <p id="wind">🌬 Wind Speed:</p>
+  <p id="pres">📊 Pressure:</p>
+</section>
+
+<section id="clock">
+  <h2>⏰ Time</h2>
+  <p id="hour">Hour: --</p>
+  <p id="day">Date: --</p>
+</section>
+
+<div>
+  <button id="startup" onclick="main()">Start</button>
+  <button id="update" onclick="tempM()" step="0.2">Update</button>
+</div>
+
+<section id="setup">
+  <h1>⚙️ Settings</h1>
+
+  <label for="tmpi">Temperature (°C):</label>
+  <input id="tmpi" type="number" step="0.1" />
+
+  <label for="humi">Humidity (%):</label>
+  <input id="humi" type="number" step="0.1" />
+
+  <label for="presi">Pressure (hPa):</label>
+  <input id="presi" type="number" step="0.1" />
+
+  <label for="windi">Wind Speed (km/h):</label>
+  <input id="windi" type="number" step="0.1" />
+
+  <label for="houri">Hour (0–23):</label>
+  <input id="houri" type="number" min="0" max="23" />
+
+  <label for="moni">Month (1–12):</label>
+  <input id="moni" type="number" min="1" max="12" />
+
+  <label for="yei">Year:</label>
+  <input id="yei" type="number" min="0" max="4500" />
+
+  <label for="titi">Title:</label>
+  <input id="titi" type="text" />
+
+  <button id="set" onclick="getText()">Set</button>
+</section>
+
+<section id="clim" class="climate">
+  <h1>🌴 Climate Description</h1>
+  <p>Helsinki's climate classification is Köppen Dfb, which features a humid continental climate description.</p>
+  <p>Just as what happens in other atlantic cities such as London or Paris, the city enjoys the temperating influence of the Atlantic Ocean, that thus keeps temperatures protected from the freezing artic winds in winter time.</p>
+  <p>If we go on with comparison with other nortern cities we will notice that this swedish city enjoys of quantious sunshine in summer (300 hours vs. 200 hors of London).</p>
+  <p>However, the city is colder than London due to its proximity to the European continent and more vulnerable to the cold eastern winds bringing the freezing siberian influence.</p>
+  <p>That is what makes the 🌡️ temperatures average -2°C in the winter months, but allows for as well the sun to shine. Hence July can average 18°C with temperatures achieving often 30°C, which is really noteworthy for a city located 60°N. </p>
+<p>The precipitations are well spread all over the year, a typical behavior of atlantic located cities. It falls 650 mm of precipitation throughout the year.</p>
+
+</section>
+<section id="related">
+  <h1>🌍 Explore Real Climate Data</h1>
+  <p>Compare the simulator with real-life data from other places around the world:</p>
+  <ul style="list-style: none; padding: 0;">
+    <li><a href="https://en.wikipedia.org/wiki/Climate_of_London#London%20Weather%20Centre" target="_blank">🇬🇧 London Climate Page</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Climate_of_Barcelona#Barcelona:~:text=Mean%20maximums%20and%20minimums%5Bedit%5D" target="_blank">🇪🇸 Barcelona Climate Page</a></li>
+  </ul>
+</section>
+<section id="getapp">
+  <h1>📦 Get the App</h1>
+  <p>For solar radiation, rainfall models, and more complex simulation scenarios, try the full-featured Java version:</p>
+  <a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">
+    <button>Get Java Version</button>
+  </a>
+</section>
+
+<script src="js\wsimhel.js"></script>
+</body>
+</html>
