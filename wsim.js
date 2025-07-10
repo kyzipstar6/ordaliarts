@@ -10,12 +10,12 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
     function main() {  
        setInterval(() => {  
                
-            document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
-            document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
+            document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
+            document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
             document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
-            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
-            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
+            document.getElementById("wind").innerText = `Wind speed: ${quickwind.toFixed(1)} km/h`;  
+            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
         }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
@@ -141,4 +141,23 @@ if (document.getElementById("yei").value!=""){year = parseFloat(document.getElem
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
+}
+function update() {
+	setInterval(() => {  
+            inc1 = inc1/10 *(1+ (-0.5 + Math.random()));  
+            inc2 = inc2/10 *(1+ (-0.5 + Math.random()));  
+            if (hour >9 && hour<14){  
+            temp = temp +inc1;  
+            hum = hum -inc1*20;}  
+            if (hour >7 && hour<9 || hour >14 && hour<16){  
+            temp = temp +inc2/10;  
+            hum = hum -inc2*20;}  
+            if (hour >16 && hour<22){  
+            temp = temp -inc2/2;  
+            hum = hum +inc2*20;}  
+            if (hour >0 && hour<7 || hour >22){  
+            temp = temp -inc1;  
+            hum = hum -inc1*20;}  
+            
+        }, 1009);  
 }
