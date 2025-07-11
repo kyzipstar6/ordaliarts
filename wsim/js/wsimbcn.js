@@ -48,7 +48,7 @@ if (hum>100) hum =89;
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
-	    if (hum <40 &&( month>4 || month<11)) hum = 40;  iF(hum <40 &&( month<4 || month>10)) hum = 30;
+	    if (hum <40 &&( month>4 || month<11)) hum = 40;  if(hum <40 &&( month<4 || month>10)) hum = 30;
         setInterval(() => {  
             if (hour >9 && hour<14){  
             temp = temp +inc1;  
@@ -119,4 +119,11 @@ if (document.getElementById("yei").value!=""){year = parseFloat(document.getElem
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
+	function update(){
+    if(hour>19 || hour<7) { 
+      temp-=1*aci; hum+=8*aci; pressure += 0.87*aci;}
+    if(hour<20 || hour>7) { 
+      temp+=1*aci; hum-=8*aci; pressure -= 0.87*aci;}
+    
+          }
 }
