@@ -18,17 +18,17 @@ let UPPER_BOUND = ran3*37;let LOWER_BOUND = ran3*10;
                
             document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
             document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
-            document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
+          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:1${minute}`;  
+	       if(minute>p)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
-            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
-            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
+            document.getElementById("wind").innerText = `Wind speed: ${uickwind.toFixed(1} km/h`;  
+            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
         }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
             minute ++; 
             if(minute >= 60){minute = 0; hour = hour +1;}  
-		if(minute<10) minute = "0" 
-		+ minute;
+		
             if(hour >= 24){hour =0; day = day + 1;}
 
 if (day > daysInMonth[month - 1]) {
