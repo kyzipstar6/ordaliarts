@@ -10,13 +10,14 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
     function main() {  
        setInterval(() => {  
                
-            document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
-            document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
-            document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
+            document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
+            document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
+          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:1${minute}`;  
+	       if(minute>p)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
-            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
-            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
-        }, 1000);  
+            document.getElementById("wind").innerText = `Wind speed: ${uickwind.toFixed(1} km/h`;  
+            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
+             }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
             minute = minute +3;  
@@ -91,7 +92,7 @@ if (hum>100) hum =89;
         if (hour < 10 || hour>18){  if(month ==6 || month==7 ){}if(month ==5 || month==8){ W_MAXmax =70;} if(month ==4 || month==9){ } 
         setInterval(() => {  
         wspeed1  = (Math.random()*200);  
-		wspeed2  = (Math.random()*200);  acumulator +=1;
+		wspeed2  = (Math.random()*200);  acumulator = acumulator+1;
 			  
 		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && UPPER_BOUND/wspeed1 <= 1.3&& wspeed1 > LOWER_BOUND   
 				&& (wspeed1 - UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
@@ -154,4 +155,4 @@ title = document.getElementById("titi").value;
       temp+=1*aci; hum-=8*aci; pressure -= 0.87*aci;}
     
           }
-  
+}
