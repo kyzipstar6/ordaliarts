@@ -1,4 +1,4 @@
- let inc1 =0.02; let inc2=0.05; let inc3= inc1*50; let inc4 =inc2*50;   
+) let inc1 =0.02; let inc2=0.05; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 87*(0.5+ (Math.random()-0.5)); let temp = 20;  
@@ -15,7 +15,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
           if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:1${minute}`;  
 	       if(minute>p)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
-            document.getElementById("wind").innerText = `Wind speed: ${uickwind.toFixed(1} km/h`;  
+            document.getElementById("wind").innerText = `Wind speed: ${uickwind.toFixed(1)} km/h`;  
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
