@@ -1,7 +1,7 @@
 let inc1 =0.001; let inc3= inc1*50;   
       let wspeed1 =0; let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 92;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
-        let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+        let pressure = 1023 *(1+ (-0.5+ Math.random()));  let acumulator=0;
    
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 87*(0.5+ (Math.random()-0.5)); let temp = 20;  
@@ -82,7 +82,7 @@ if (hum>100) hum =89;
 			if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND   
 					&& wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND && (wspeed1/wspeed2<= 0.985)  
 					)  
-			 filter= wspeed2;  
+			 filter= wspeed2;  acumulator++;
 			filterrecord = filter;  
 			if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985  
 					) {quickwind = wspeed1;}  
