@@ -1,4 +1,4 @@
-let inc1 =0.001; let inc3= inc1*50;   
+let inc1 =0.001; let inc3= inc1*5;   
       let wspeed1 =0; let wspeed2=0; let quickwind =10; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 92;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
         let pressure = 1023 *(1+ (-0.5+ Math.random()));  let acumulator=0;
