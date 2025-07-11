@@ -1,4 +1,4 @@
-) let inc1 =0.02; let inc2=0.05; let inc3= inc1*50; let inc4 =inc2*50;   
+let inc1 =0.02; let inc2=0.05; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 87*(0.5+ (Math.random()-0.5)); let temp = 20;  
