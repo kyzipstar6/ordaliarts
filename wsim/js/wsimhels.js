@@ -12,8 +12,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
                
             document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
             document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
-          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:1${minute}`;  
-	       if(minute>p)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
+          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
+	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
             document.getElementById("wind").innerText = `Wind speed: ${uickwind.toFixed(1)} km/h`;  
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
