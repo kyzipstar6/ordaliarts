@@ -148,11 +148,12 @@ if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
   let aci = acumulator/36000;
-  function update(){
+  
+}
+function update(){
     if(hour>19 || hour<7) { 
       temp-=1*aci; hum+=8*aci; pressure += 0.87*aci;}
     if(hour<20 || hour>7) { 
       temp+=1*aci; hum-=8*aci; pressure -= 0.87*aci;}
     
           }
-}
