@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weather Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url("pc/linc.png");
+      background-repeat: repeat;
+      background-color: #064719;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      text-align: center;
+      padding: 1rem;
+      background-color: #314920;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    section {
+      margin: 2rem auto;
+      padding: 1rem;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 8px;
+    }
+
+    h1, h2 {
+      color: #084a64;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input {
+      padding: 0.4rem;
+      width: 80%;
+      max-width: 300px;
+      background-color: rgb(216, 158, 49);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      background-color: cadetblue;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      margin: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #46889c;
+    }
+
+    .climate {
+      background-color: #249e5d;
+    }
+
+    #getapp {
+      font-weight: bold;
+    }
+.top-left-nav, .top-right-nav {
+  position: fixed;
+  top: 10px;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  z-index: 999;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.top-left-nav {
+  left: 10px;
+}
+
+.top-right-nav {
+  right: 10px;
+}
+
+.top-left-nav a, .top-right-nav a {
+  color: #084a64;
+  text-decoration: none;
+}
+
+.top-left-nav a:hover, .top-right-nav a:hover {
+  color: #873e2e;
+}
+
+    @media (max-width: 600px) {
+      input {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="top-left-nav">
+  <a href="wsimlondon.html" target="_self">🌧 Compare London Climate</a>
+</div>
+
+<div class="top-right-nav">
+  <a href="wsimjakarta.html" target="_self">☀️ Travel to Jakarta and meet its Weather</a>
+</div>
+
+<nav>
+  <a href="#curc">Current Conditions</a>
+  <a href="#setup">Settings</a>
+  <a href="#clim">Climate Description</a>
+  <a href="#getapp">Get the App</a>
+</nav>
+
+<section id="curc">
+  <h1 id="cucnh">Weather Conditions in Lincoln, Nebraska, USA</h1>
+  <p id="tmp">🌡 Temperature:</p>
+  <p id="hum">💧 Humidity:</p>
+  <p id="wind">🌬 Wind Speed:</p>
+  <p id="pres">📊 Pressure:</p>
+</section>
+
+<section id="clock">
+  <h2>⏰ Time</h2>
+  <p id="hour">Hour: --</p>
+  <p id="day">Date: --</p>
+</section>
+
+<div>
+  <button id="startup" onclick="main()">Start</button>
+  <button id="update" onclick="update()" step="0.2">Update</button>
+</div>
+
+<section id="setup">
+  <h1>⚙️ Settings</h1>
+
+  <label for="tmpi">Temperature (°C):</label>
+  <input id="tmpi" type="number" step="0.1" />
+
+  <label for="humi">Humidity (%):</label>
+  <input id="humi" type="number" step="0.1" />
+
+  <label for="presi">Pressure (hPa):</label>
+  <input id="presi" type="number" step="0.1" />
+
+  <label for="windi">Wind Speed (km/h):</label>
+  <input id="windi" type="number" step="0.1" />
+
+  <label for="houri">Hour (0–23):</label>
+  <input id="houri" type="number" min="0" max="23" />
+
+  <label for="moni">Month (1–12):</label>
+  <input id="moni" type="number" min="1" max="12" />
+
+  <label for="yei">Year:</label>
+  <input id="yei" type="number" min="0" max="4500" />
+
+  <label for="titi">Title:</label>
+  <input id="titi" type="text" />
+
+  <button id="set" onclick="getText()">Set</button>
+</section>
+
+<section id="clim" class="climate">
+  <h1>🌴 Climate Description</h1>
+  <p>The climate of Lincoln features a strong continental Influence due to its ubication far from the sea. The fact of being
+            located in the american state of Nebraska has its influence in the climate. In wintertime the area is strongly influenced by
+            northerly winds that bring freezing temperatures and heavy snowfalls, while in summer the lack of influence from the oceans translates in sweltering
+            temperatures in the afternoon. </p>
+  <p>The Weather is described as humid continental climate (Köppen Dfa) . </p>
+<p>In this case the average temperature is of 11°C, while the average humidity is of 69%. This means a quite cold climate.</p>
+<p>Despite the fact of being ubicated far from the sea, Lincoln enjoys of frequent precipitations in the spring and summer months.
+            Those big and subit precipitations are caused by thunderstorms, that often scale to tornadoes. 
+        </p>
+        <p>The winds in the area are often caused by daily termic oscilations, specially on the warmer months, when oscillations are bigger.
+            However it blows wind there as well due to the atmospherical jet stream that often brings cold north wind to the area. It can blow quite hard then (up to 100 km/h).
+        </p>
+</section>
+<section id="related">
+  <h1>🌍 Explore Real Climate Data</h1>
+  <p>Compare the simulator with real-life data from other places around the world:</p>
+  <ul style="list-style: none; padding: 0;">
+    <li><a href="https://en.wikipedia.org/wiki/Climate_of_Lincoln" target="_blank"> Lincoln Climate Page</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Climate_of_Sydney" target="_blank"> Sydney, Australia Climate Page</a></li>
+  </ul>
+</section>
+<section id="getapp">
+  <h1>📦 Get the App</h1>
+  <p>For solar radiation, rainfall models, and more complex simulation scenarios, try the full-featured application:</p>
+  <a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">
+    <button>Get Java Version</button>
+  </a>
+</section>
+
+<script src="js\wsimlinc.js"></script>
+</body>
+</html>
