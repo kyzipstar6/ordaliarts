@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>César Gómez Torres - Webseite</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    /* ... (your existing CSS remains unchanged) ... */
+  </style>
+</head>
+<body>
+
+  <div class="language-switcher">
+    <button onclick="setLanguage('en')">
+      <img src="https://flagcdn.com/w40/us.png" alt="Englisch" />
+    </button>
+    <button onclick="setLanguage('is')">
+      <img src="https://flagcdn.com/w40/is.png" alt="Isländisch" />
+    </button>
+    <button onclick="setLanguage('de')">
+      <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" />
+    </button>
+    <button onclick="setLanguage('es')">
+      <img src="https://flagcdn.com/w40/es.png" alt="Spanisch" />
+    </button>
+  </div>
+
+  <header>
+    <h1>César Gómez Torres</h1>
+    <p>Willkommen auf meiner persönlichen Webseite!</p>
+  </header>
+
+  <nav>
+    <a href="#about">Über mich</a>
+    <a href="#content">Meine Inhalte</a>
+    <a href="#contact">Kontakt</a>
+  </nav>
+
+  <section id="about">
+    <h2>Über mich</h2>
+    <p>Hallo! Mein Name ist César Gómez. Ich bin Servicefahrer mit einer Leidenschaft für die Entwicklung von Anwendungen, die das Leben erleichtern.</p>
+    <p>Ich entwickle auch gerne Programme, die reale Bedingungen simulieren, besonders in Java.</p>
+    <p>Ich spreche vier Sprachen: Spanisch, Deutsch, Englisch und Katalanisch. Ich habe in Deutschland (2 Jahre) und Spanien gelebt.</p>
+    <p>Schau dir gerne meine Projekte unten an – ich hoffe, sie begeistern dich genauso wie mich!</p>
+  </section>
+
+  <section id="content">
+    <h2>Meine Inhalte</h2>
+    <p>Hier sind einige Anwendungen, die ich erstellt habe:</p>
+    <ul>
+      <li><a href="wsim/wsim.html" target="_blank">🌤 Wettersimulator</a></li>
+      <li><a href="media-player.html" target="_blank">🎵 Leichter Mediaplayer</a></li>
+      <li><a href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5" target="_blank">🎥 Abenteuer im echten Leben (YouTube)</a></li>
+      <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">🎮 Videospiele und 💿 Programmierkanal (YouTube)</a></li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Kontaktiere mich</h2>
+    <p>Wenn du mit mir in Kontakt treten möchtest, nutze gerne das folgende Formular:</p>
+    <form onsubmit="sendEmail(event)">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">E-Mail:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Nachricht:</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+
+      <button type="submit">Nachricht senden</button>
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 César Gómez Torres
+  </footer>
+
+  <script>
+    function setLanguage(lang) {
+      window.location.href = `https://kyzipstar6.github.io/ordaliarts/${lang}/cesgomez.html`;
+    }
+
+    function sendEmail(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const mailtoLink = `mailto:cesgomez289@gmail.com?subject=Kontakt von ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0AAbsender: ${encodeURIComponent(email)}`;
+      window.open(mailtoLink, '_blank');
+    }
+  </script>
+
+</body>
+</html>
