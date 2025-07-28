@@ -12,6 +12,9 @@
     <img src="https://flagcdn.com/w40/us.png" alt="English" />
 
   </button>
+      <button onclick="setLanguage(de)">
+    <img src="https://flagcdn.com/w40/de.png" alt="German" />
+      </button>
   <button onclick="setLanguage(Is)">
     <img src="https://flagcdn.com/w40/is.png" alt="Icelandic" />
   </button>
@@ -84,24 +87,24 @@
             padding: 1rem;
         }
         footer {
-            background-color: #333;
+            background-color: #3332aa;
             color: white;
             text-align: center;
             padding: 1rem 0;
             position: fixed;
             bottom: 0;
             width: 100%;
-        }
-        .language-switcher {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px;
-  z-index: 1000;
-}
+           }
+            language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+            }
 
-.language-switcher button {
+            language-switcher button {
   background: none;
   border: none;
   cursor: pointer;
