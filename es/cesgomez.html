@@ -6,7 +6,110 @@
   <title>César Gómez Torres - Sitio Web</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
-    /* Tu CSS permanece igual */
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      background-image: url("pc/prt.png");
+      background-size: 10cm;
+      background-position: right;
+      background-repeat: no-repeat;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #4CAF50;
+    }
+
+    section {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 1rem;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .language-switcher {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+      z-index: 1000;
+    }
+
+    .language-switcher button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .language-switcher img {
+      width: 24px;
+      height: auto;
+      border-radius: 3px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #45a049;
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background-size: contain;
+        background-position: top right;
+      }
+    }
   </style>
 </head>
 <body>
