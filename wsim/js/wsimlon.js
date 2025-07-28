@@ -10,12 +10,14 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
     function main() {  
        setInterval(() => {  
                
-            document.getElementById("tmp").innerText = `Temperature: ${temp} °C`;  
+            
+            document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
             document.getElementById("hum").innerText = `Humidity: ${hum} %`;  
             document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`;  
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
-            document.getElementById("wind").innerText = `Wind speed: ${(Math.round(quickwind*10))/10} km/h`;  
-            document.getElementById("pres").innerText = `Pressure: ${((pressure*10))/10} hPa`;  
+            document.getElementById("wind").innerText = `Wind speed: ${quickwind.toFixed(1)} km/h`;  
+            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
+        
         }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
@@ -37,7 +39,7 @@ if (hum>100) hum =89;
         presssure();   
     }  
     function tempM(){  
-          
+          if(hum<43){ hum=43;}
         if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=7;} if(month ==5 || month==8){ temp=18;}if(month ==4 || month==9){ temp=14;}  
         if(month ==3 || month==10){ temp=15;}if(month ==2 || month==11){ temp=10;}if(month ==1 || month==12){ temp=6;}}  
         if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=14;}if(month ==5 || month==8){ temp=12;} if(month ==4 || month==9){ temp=9;}  
