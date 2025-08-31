@@ -1,4 +1,4 @@
-let inc1 =0.01; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
+let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
@@ -142,6 +142,7 @@ if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
 }
+let trend = 0;
 function update() {
 	setInterval(() => {  
             inc1 = inc1/10 *(1+ (-0.5 + Math.random()));  
@@ -158,6 +159,7 @@ function update() {
             if (hour >0 && hour<7 || hour >22){  
             temp = temp -inc1;  
             hum = hum -inc1*20;}  
-            
+		if(trend == 1) temp= temp + (inc1)*2;
+        if(trend == -1) temp= temp - (inc1)*2;    
         }, 1009);  
 }
