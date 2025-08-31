@@ -5,6 +5,7 @@
   <title>Weather Simulator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="js/charts.js"</script>
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -15,7 +16,23 @@
       margin: 0;
       padding: 0;
     }
-
+    chart-wrap { padding: 0 1rem 1rem; }
+    .chart-container {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      display: grid;
+      gap: .75rem;
+    }
+    .chart-header { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; }
+    
+ .chart-controls {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0,1fr));
+      gap: .5rem;
+      align-items: end;
+    }
     nav {
       text-align: center;
       padding: 1rem;
@@ -141,7 +158,7 @@
   <p id="hour">Hour: --</p>
   <p id="day">Date: --</p>
 </section>
-
+<script src="js/wsim2.js"</script>
 <div>
   <button id="startup" onclick="main()">Start</button>
   <button id="update" onclick="tempM()" step="0.2">Update</button>
@@ -176,6 +193,62 @@
 
   <button id="set" onclick="getText()">Set</button>
 </section>
+
+  <section class="chart-wrap">
+  <div class="chart-container" id="chartBox">
+    <div class="chart-header" style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
+      <h3 style="margin:0">Weather</h3>
+      <div class="pills" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <span class="pill">Temperature: <strong id="pillTotal">—</strong></span>
+        <span class="pill">Humidity: <strong id="pillMales">—</strong></span>
+        <span class="pill">Pressure: <strong id="pillFemales">—</strong></span>
+        <span class="pill">Wind Speed: <strong id="pillYear">—</strong></span>
+        <span class="pill">Rain: <strong id="pillMode">steady</strong></span>
+      </div>
+    </div>
+
+    <!-- Combo controls -->
+    <div class="chart-controls" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;align-items:end;">
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
+        <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+      </div>
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="popInput" style="font-size:12px;">Set pressure</label>
+        <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+      </div>
+
+      
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="trendSelect" style="font-size:12px;">Trend</label>
+        <select id="trendSelect" aria-label="Trend"
+                style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
+                onchange="this.value==='rise'?rise():this.value==='steady'?steady():fall();">
+          <option value="steady" selected>Steady</option>
+          <option value="rise">Rise</option>
+          <option value="fall">Decline</option>
+        </select>
+      </div>
+
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
+      </div>
+    </div>
+
+    <canvas id="varChart"></canvas>
+
+    <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
+    </div>
+  </div>
+  
+  </section>
 
 <section id="clim" class="climate">
   <h1>🌴 Climate Description</h1>
