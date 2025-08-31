@@ -6,7 +6,154 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="js/charts.js"</script>
-  <style>
+  
+</head>
+<body>
+<div class="top-left-nav">
+  <a href="wsimlondon.html" target="_blank">🌧 Simulate London Weather</a>
+</div>
+
+<div class="top-right-nav">
+  <a href="wsimbarcelona.html" target="_blank">☀️ Simulate Barcelona Weather</a>
+</div>
+
+<nav>
+  <a href="#curc">Current Conditions</a>
+  <a href="#setup">Settings</a>
+  <a href="#clim">Climate Description</a>
+  <a href="#getapp">Get the App</a>
+</nav>
+
+<section id="curc">
+  <h1 id="cucnh">Weather Conditions at Pacific Island</h1>
+  <p id="tmp">🌡 Temperature:</p>
+  <p id="hum">💧 Humidity:</p>
+  <p id="wind">🌬 Wind Speed:</p>
+  <p id="pres">📊 Pressure:</p>
+</section>
+
+<section id="clock">
+  <h2>⏰ Time</h2>
+  <p id="hour">Hour: --</p>
+  <p id="day">Date: --</p>
+</section>
+
+<div>
+  <button id="startup" onclick="main()">Start</button>
+  <button id="update" onclick="tempM()" step="0.2">Update</button>
+</div>
+
+<section id="setup">
+  <h1>⚙️ Settings</h1>
+
+  <label for="tmpi">Temperature (°C):</label>
+  <input id="tmpi" type="number" step="0.1" />
+
+  <label for="humi">Humidity (%):</label>
+  <input id="humi" type="number" step="0.1" />
+
+  <label for="presi">Pressure (hPa):</label>
+  <input id="presi" type="number" step="0.1" />
+
+  <label for="windi">Wind Speed (km/h):</label>
+  <input id="windi" type="number" step="0.1" />
+
+  <label for="houri">Hour (0–23):</label>
+  <input id="houri" type="number" min="0" max="23" />
+
+  <label for="moni">Month (1–12):</label>
+  <input id="moni" type="number" min="1" max="12" />
+
+  <label for="yei">Year:</label>
+  <input id="yei" type="number" min="0" max="4500" />
+
+  <label for="titi">Title:</label>
+  <input id="titi" type="text" />
+
+  <button id="set" onclick="getText()">Set</button>
+</section>
+
+  <section class="chart-wrap">
+  <div class="chart-container" id="chartBox">
+    <div class="chart-header" style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
+      <h3 style="margin:0">Weather</h3>
+      <div class="pills" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <span class="pill">Temperature: <strong id="pillTotal">—</strong></span>
+        <span class="pill">Humidity: <strong id="pillMales">—</strong></span>
+        <span class="pill">Pressure: <strong id="pillFemales">—</strong></span>
+        <span class="pill">Wind Speed: <strong id="pillYear">—</strong></span>
+        <span class="pill">Rain: <strong id="pillMode">steady</strong></span>
+      </div>
+    </div>
+
+    <!-- Combo controls -->
+    <div class="chart-controls" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;align-items:end;">
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
+        <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+      </div>
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="popInput" style="font-size:12px;">Set pressure</label>
+        <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+      </div>
+
+      
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="trendSelect" style="font-size:12px;">Trend</label>
+        <select id="trendSelect" aria-label="Trend"
+                style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
+                onchange="this.value==='rise'?rise():this.value==='steady'?steady():fall();">
+          <option value="steady" selected>Steady</option>
+          <option value="rise">Rise</option>
+          <option value="fall">Decline</option>
+        </select>
+      </div>
+
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
+      </div>
+    </div>
+
+    <canvas id="varChart"></canvas>
+
+    <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
+    </div>
+  </div>
+  
+  </section>
+
+<section id="clim" class="climate">
+  <h1>🌴 Climate Description</h1>
+  <p>This coastal Pacific–Southern Hemisphere village experiences warm, humid conditions year-round. Summers occur early in the year (January–March), and winters mid-year (June–August).</p>
+  <p>The average temperature is around 25 °C, and humidity averages 80%, creating a hot and sticky climate.</p>
+  <p>Rain is frequent but moderate, with an annual average of 1200 mm. Gentle NW trade winds are common, but tropical storms can sometimes occur.</p>
+</section>
+<section id="related">
+  <h1>🌍 Explore Real Climate Data</h1>
+  <p>Compare the simulator with real-life data from other places around the world:</p>
+  <ul style="list-style: none; padding: 0;">
+    <li><a href="https://en.wikipedia.org/wiki/Climate_of_London#London%20Weather%20Centre" target="_blank">🇬🇧 London Climate Page</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Climate_of_Barcelona#Barcelona:~:text=Mean%20maximums%20and%20minimums%5Bedit%5D" target="_blank">🇪🇸 Barcelona Climate Page</a></li>
+  </ul>
+</section>
+<section id="getapp">
+  <h1>📦 Get the App</h1>
+  <p>For solar radiation, rainfall models, and more complex simulation scenarios, try the full-featured Java version:</p>
+  <a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">
+    <button>Get Java Version</button>
+  </a>
+</section>
+
+<script src="js\wsim.js"></script>
+  <script src="js/wsim2.js"</script>
+</body><style>
     body {
       font-family: 'Roboto', sans-serif;
       background: url("pc/cisland.png");
@@ -128,150 +275,4 @@
       }
     }
   </style>
-</head>
-<body>
-<div class="top-left-nav">
-  <a href="wsimlondon.html" target="_blank">🌧 Simulate London Weather</a>
-</div>
-
-<div class="top-right-nav">
-  <a href="wsimbarcelona.html" target="_blank">☀️ Simulate Barcelona Weather</a>
-</div>
-
-<nav>
-  <a href="#curc">Current Conditions</a>
-  <a href="#setup">Settings</a>
-  <a href="#clim">Climate Description</a>
-  <a href="#getapp">Get the App</a>
-</nav>
-
-<section id="curc">
-  <h1 id="cucnh">Weather Conditions at Pacific Island</h1>
-  <p id="tmp">🌡 Temperature:</p>
-  <p id="hum">💧 Humidity:</p>
-  <p id="wind">🌬 Wind Speed:</p>
-  <p id="pres">📊 Pressure:</p>
-</section>
-
-<section id="clock">
-  <h2>⏰ Time</h2>
-  <p id="hour">Hour: --</p>
-  <p id="day">Date: --</p>
-</section>
-<script src="js/wsim2.js"</script>
-<div>
-  <button id="startup" onclick="main()">Start</button>
-  <button id="update" onclick="tempM()" step="0.2">Update</button>
-</div>
-
-<section id="setup">
-  <h1>⚙️ Settings</h1>
-
-  <label for="tmpi">Temperature (°C):</label>
-  <input id="tmpi" type="number" step="0.1" />
-
-  <label for="humi">Humidity (%):</label>
-  <input id="humi" type="number" step="0.1" />
-
-  <label for="presi">Pressure (hPa):</label>
-  <input id="presi" type="number" step="0.1" />
-
-  <label for="windi">Wind Speed (km/h):</label>
-  <input id="windi" type="number" step="0.1" />
-
-  <label for="houri">Hour (0–23):</label>
-  <input id="houri" type="number" min="0" max="23" />
-
-  <label for="moni">Month (1–12):</label>
-  <input id="moni" type="number" min="1" max="12" />
-
-  <label for="yei">Year:</label>
-  <input id="yei" type="number" min="0" max="4500" />
-
-  <label for="titi">Title:</label>
-  <input id="titi" type="text" />
-
-  <button id="set" onclick="getText()">Set</button>
-</section>
-
-  <section class="chart-wrap">
-  <div class="chart-container" id="chartBox">
-    <div class="chart-header" style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
-      <h3 style="margin:0">Weather</h3>
-      <div class="pills" style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <span class="pill">Temperature: <strong id="pillTotal">—</strong></span>
-        <span class="pill">Humidity: <strong id="pillMales">—</strong></span>
-        <span class="pill">Pressure: <strong id="pillFemales">—</strong></span>
-        <span class="pill">Wind Speed: <strong id="pillYear">—</strong></span>
-        <span class="pill">Rain: <strong id="pillMode">steady</strong></span>
-      </div>
-    </div>
-
-    <!-- Combo controls -->
-    <div class="chart-controls" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;align-items:end;">
-      <div class="field" style="display:grid;gap:.25rem;">
-        <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
-        <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
-      </div>
-      <div class="field" style="display:grid;gap:.25rem;">
-        <label for="popInput" style="font-size:12px;">Set pressure</label>
-        <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
-      </div>
-
-      
-      <div class="field" style="display:grid;gap:.25rem;">
-        <label for="trendSelect" style="font-size:12px;">Trend</label>
-        <select id="trendSelect" aria-label="Trend"
-                style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
-                onchange="this.value==='rise'?rise():this.value==='steady'?steady():fall();">
-          <option value="steady" selected>Steady</option>
-          <option value="rise">Rise</option>
-          <option value="fall">Decline</option>
-        </select>
-      </div>
-
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
-      </div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
-      </div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
-      </div>
-    </div>
-
-    <canvas id="varChart"></canvas>
-
-    <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
-      <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
-    </div>
-  </div>
-  
-  </section>
-
-<section id="clim" class="climate">
-  <h1>🌴 Climate Description</h1>
-  <p>This coastal Pacific–Southern Hemisphere village experiences warm, humid conditions year-round. Summers occur early in the year (January–March), and winters mid-year (June–August).</p>
-  <p>The average temperature is around 25 °C, and humidity averages 80%, creating a hot and sticky climate.</p>
-  <p>Rain is frequent but moderate, with an annual average of 1200 mm. Gentle NW trade winds are common, but tropical storms can sometimes occur.</p>
-</section>
-<section id="related">
-  <h1>🌍 Explore Real Climate Data</h1>
-  <p>Compare the simulator with real-life data from other places around the world:</p>
-  <ul style="list-style: none; padding: 0;">
-    <li><a href="https://en.wikipedia.org/wiki/Climate_of_London#London%20Weather%20Centre" target="_blank">🇬🇧 London Climate Page</a></li>
-    <li><a href="https://en.wikipedia.org/wiki/Climate_of_Barcelona#Barcelona:~:text=Mean%20maximums%20and%20minimums%5Bedit%5D" target="_blank">🇪🇸 Barcelona Climate Page</a></li>
-  </ul>
-</section>
-<section id="getapp">
-  <h1>📦 Get the App</h1>
-  <p>For solar radiation, rainfall models, and more complex simulation scenarios, try the full-featured Java version:</p>
-  <a href="https://github.com/kyzipstar6/ordaliarts/tree/main/WeatherSimulatorFX" target="_blank">
-    <button>Get Java Version</button>
-  </a>
-</section>
-
-<script src="js\wsim.js"></script>
-</body>
 </html>
