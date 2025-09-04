@@ -26,12 +26,12 @@ const varChart = varCtx ? new Chart(varCtx, {
 }) : null;
 
 
-const pill = id => document.getElementById(id);
-const pillTotal   = pill('pillTotal');
-const pillMales   = pill('pillMales');
-const pillFemales = pill('pillFemales');
-const pillYear    = pill('pillYear');
-const pillMode    = pill('pillMode');
+//const pill = id => document.getElementById(id);
+//const pillTotal   = pill('pillTotal');
+//const pillMales   = pill('pillMales');
+//const pillFemales = pill('pillFemales');
+//const pillYear    = pill('pillYear');
+//const pillMode    = pill('pillMode');
 
 const dirInput = document.getElementById('dirInput');
 const pressureInput  = document.getElementById('pressureInput');
