@@ -1,5 +1,4 @@
-let inc1 =0.02; let inc2=0.05; let inc3= inc1*5; let inc4 =inc2*5;   
-    inc1 = inc1*2; inc2 = inc2*2;  let trend =0;
+ let trend =0;
 
 const canvas = document.getElementById('varChart');
 if (!canvas) {
@@ -101,14 +100,20 @@ if (hum>100) hum =89;
             temp -=0.05;
             hum += 0.05;}
             if(temp>20)temp = 19; if(temp<-30)temp = -27;
+			if(vbl==0){
 			if(trend ==-1) temp-=0.2; 
-			if(trend ==1) temp+=0.2; 
+			if(trend ==1) temp+=0.2;
+			if(trend==0) temp +=0;}
+			if(vbl==1){
+			if(trend ==-1) hum-=0.2; 
+			if(trend ==1) hum+=0.2;
+			if(trend==0) hum +=0;}
         }, 60000);  
            
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
     let wspm =87;
-let wtrend= 0;
+let vbl= 0;
     function wind(){  
 
         setInterval(() => {  
