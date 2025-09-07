@@ -1,5 +1,5 @@
 let inc1 =0.02; let inc2=0.05; let inc3= inc1*5; let inc4 =inc2*5;   
-    inc1 = inc1*2; inc2 = inc2*2;  
+    inc1 = inc1*2; inc2 = inc2*2;  let trend =0;
 
 const canvas = document.getElementById('varChart');
 if (!canvas) {
@@ -101,6 +101,8 @@ if (hum>100) hum =89;
             temp -=0.05;
             hum += 0.05;}
             if(temp>20)temp = 19; if(temp<-30)temp = -27;
+			if(trend ==-1) temp-=0.2; 
+			if(trend ==1) temp+=0.2; 
         }, 60000);  
            
     }  let acumulator =0;
@@ -171,7 +173,7 @@ function rise(){ trend = 1;  updatePills('grow'); }
 function steady(){ trend = 0;  updatePills('steady'); }
 function fall(){ trend=-1; } 
 
-function mkChart{
+function mkChart(){
   if(!varChart){
     varChart.data.labels.length = 0;                 // clear safely
     varChart.data.datasets[0].data.length = 0;
