@@ -106,13 +106,14 @@ if (hum>100) hum =89;
         }, 60000);  
            
     }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspd = 7;
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
     let wspm =87;
+let wtrend= 0;
     function wind(){  
 
         setInterval(() => {  
-      wspm = 1 + (-0.5 + Math.random())/wspd;
-          if (wspd>wspm)wspm = 1 + (-0.4 + Math.random())/wspd;
+      wspm = 1 + (-0.5 + Math.random())/wspdd;
+          if (wspd>wspm)wspm = 1 + (-0.4 + Math.random())/wspdd;
           if (wspd<0.1) wspd = 5;
           wspd*=wspm;
           if (hour >0 && hour<7 || hour >22) wspm =65;
