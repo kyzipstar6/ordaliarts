@@ -40,7 +40,7 @@ function rise(){ trend = 1;  updatePills('grow'); }
 function steady(){ trend = 0;  updatePills('steady'); }
 function fall(){ trend=-1; } 
 
-function mkChart{
+function mkChart(){
   if(!varChart){
     varChart.data.labels.length = 0;                 // clear safely
     varChart.data.datasets[0].data.length = 0;
