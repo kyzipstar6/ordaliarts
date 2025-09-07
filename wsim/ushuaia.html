@@ -110,11 +110,11 @@
 </head>
 <body>
 <div class="top-left-nav">
-  <a href="wsimlondon.html" target="_blank">🌧 Simulate London Weather</a>
+  <a href="london.html" target="_blank">🌧 Simulate London Weather</a>
 </div>
 
 <div class="top-right-nav">
-  <a href="wsimhelsinki.html" target="_blank">🌨️ Simulate Helsinki Weather</a>
+  <a href="helsinki.html" target="_blank">🌨️ Simulate Helsinki Weather</a>
 </div>
 
 <nav>
@@ -196,7 +196,17 @@
         <label for="popInput" style="font-size:12px;">Set pressure</label>
         <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
       </div>
-
+<div class="field" style="display:grid;gap:.25rem;">
+        <label for="varSelect" style="font-size:12px;">Trend</label>
+        <select id="varSelect" aria-label="Trend"
+                style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
+                onchange="this.value==='temp'?applyTmp():this.value=='wspd'?applyWspd():this.value==='hum'?applyHum():applyPres();">
+          <option value="temp" selected>Temperature</option>
+          <option value="hum">Humidity</option>
+          <option value="pres">Pressure</option>
+          <option value="pres">Wind speed</option>
+        </select>
+</div>
       
       <div class="field" style="display:grid;gap:.25rem;">
         <label for="trendSelect" style="font-size:12px;">Trend</label>
