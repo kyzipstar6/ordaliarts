@@ -230,7 +230,8 @@ function upChartAs(){
   setInterval(()=>upChart(), 2000);
 }
 mkChart();
-upChartAs();
+
 tempM();   
 wind();  
  presssure();   
+ upChartAs();
