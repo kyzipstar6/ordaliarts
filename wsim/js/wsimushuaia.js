@@ -5,28 +5,7 @@ const canvas = document.getElementById('varChart');
 if (!canvas) {
   console.warn('varChart canvas not found');
 }
-const varCtx = canvas ? canvas.getContext('2d') : null;
 
-const varChart = varCtx ? new Chart(varCtx, {
-  type: 'line',
-  data: {
-    labels: [],
-    datasets: [
-      { label: 'Temperature', data: [], borderColor: 'rgba(17,24,39,1)', tension: 0.25 },
-
-    ]
-  },
-  options: {
-    animation: true,
-    parsing: false,
-    normalized: true,
-    scales: {
-      x: { title: { display: true, text: 'Time' } },
-      y: { title: { display: true, text: 'Temperature' }, beginAtZero: false}
-    },
-    plugins: { legend: { position: 'bottom' } }
-  }
-}) : null;
 
 function updatePills(text){
     pillTrend.innerText= `${text}`;
@@ -58,7 +37,11 @@ let temp = 20;  let hum =50;
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
             document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
-            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`;  
+            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+            pillTmp.innerText = `${temp.toFixed(1)} °C`;  
+            pillHum.innerText = `${hum.toFixed(1)} %`;
+            pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;
+            pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
@@ -181,7 +164,28 @@ function update(){let aci = acumulator/36000;
 function rise(){ trend = 1;  updatePills('grow'); }
 function steady(){ trend = 0;  updatePills('steady'); }
 function fall(){ trend=-1; updatePills('fall');} 
+const varCtx = canvas ? canvas.getContext('2d') : null;
 
+const varChart = varCtx ? new Chart(varCtx, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [
+      { label: 'Temperature', data: [], borderColor: 'rgba(17,24,39,1)', tension: 0.25 },
+
+    ]
+  },
+  options: {
+    animation: true,
+    parsing: false,
+    normalized: true,
+    scales: {
+      x: { title: { display: true, text: 'Time' } },
+      y: { title: { display: true, text: 'Temperature' }, beginAtZero: false}
+    },
+    plugins: { legend: { position: 'bottom' } }
+  }
+}) : null;
 
 function mkChart(){
   if(!varChart){
@@ -202,7 +206,7 @@ function upChart(){
     if(chd==0)varChart.data.datasets[0].data.push(temp);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
     if(chd==2)varChart.data.datasets[0].data.push(wspd);
-    if(chd==3)varChart.data.datasets[0].data.push(pres);
+    if(chd==3)varChart.data.datasets[0].data.push(pressure);
     chdmem=chd;
     varChart.update();
   counter +=1;}
