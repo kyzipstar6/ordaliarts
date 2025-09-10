@@ -126,7 +126,7 @@ let vbl= 0;
           if (hour >12 && hour<18) wspm =87;
           if (hour >18 && hour<22) wspm =72;
            }, 1000);   
-    }  }
+    }  
     let pressure = 1023 *(1+ (-0.5+ Math.random()));  
     function presssure() {  
 	if (pressure<977){pressure = 977;}  
