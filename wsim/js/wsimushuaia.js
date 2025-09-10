@@ -107,7 +107,7 @@ let vbl= 0;
       wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
           if (trend == 1) wspm = 1 + (-0.65 + Math.random())/wspdd;
-          if (trend == 1) wspm = 1 + (-0.35 + Math.random())/wspdd;
+          if (trend == -1) wspm = 1 + (-0.35 + Math.random())/wspdd;
           if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd<0.1) wspd = 5;
           wspd*=wspm;
@@ -137,8 +137,8 @@ let vbl= 0;
             if (hour >-1 && hour<7 || hour >22){  
             pressure = pressure -0.1;  
             }  
-            if(trend ==-1) pressure -=0.1;
-            if(trend ==1) pressure +=0.1;
+            if(trend ==-1) pressure -=0.2;
+            if(trend ==1) pressure +=0.2;
     if (acumulator>36000*6) acumulator = 0;
 	},444);  
 	
@@ -229,9 +229,32 @@ function stmp(){chd =0; upn('Temperature');}function shum(){chd =1;upn('Humidity
 function upChartAs(){
   setInterval(()=>upChart(), 2000);
 }
+const wals = ["It is to windy, you should make wind slower.","You are about to let buildings go flying.", "It is time to let wind cease, isn't it?"];
+const thals = ["It is too hot, if you don't make temperature lower, fauna will die.", "It is too hot, if you don't make temperature lower, fauna will die.",
+    "It is too hot, if you don't make temperature lower, habitants will go elsewhere."];
+const tlals = ["It is too cold, if you don't make temperature higher, fauna will die.", "It is too cold, if you don't make temperature higher, fauna will die.", 
+    "It is too cold, if you don't make temperature higher, habitants will go elsewhere."];
+const hlals = ["The vegetation will dry out if you don't make humidity higher.", "The vegetation will dry out if you don't make humidity higher.", 
+    "Who has let humidity fall so low?"];
+const phals= ["The pressure is too high, you should make it lower.","The pressure is too high, you should make it lower.","The pressure is too high, you should make it lower."]
+const plals= ["The pressure is too low, you should make it higher.","The pressure is too low, you should make it higher.",
+    "The pressure is too low, you should make it higher."]
+
+function wfoals(){
+    let ran = (Math.random()*3).toFixed(0);
+    setInterval(()=>{
+            if(temp>35) alert(thals[ran]);
+            if(temp<-30) alert(tlals[ran]);
+            if(wspd>135) alert(wals[ran]);
+            if(hum<15) alert(hlals[ran]);
+            if(pressure>1045) alert(phals[ran]);
+            if(pressure<950) alert(plals[ran]);
+    }, 180000);
+}
 mkChart();
 
 tempM();   
 wind();  
- presssure();   
- upChartAs();
+presssure();   
+upChartAs();
+wfoals();
