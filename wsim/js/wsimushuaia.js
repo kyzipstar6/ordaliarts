@@ -37,10 +37,11 @@ let temp = 20;  let hum =50;
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
             document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
+            
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
-            pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;
+             try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
@@ -176,7 +177,7 @@ const varChart = varCtx ? new Chart(varCtx, {
   data: {
     labels: [],
     datasets: [
-      { label: 'Temperature', data: [], borderColor: 'rgba(17,24,39,1)', tension: 0.25 },
+      { label: 'Temperature', data: [], borderColor: 'rgba(22, 71, 16, 1)', tension: 0.25 },
 
     ]
   },
