@@ -26,7 +26,7 @@ const varChart = varCtx ? new Chart(varCtx, {
 }) : null;
 
 function updatePills(text){
-    pillTrend.innerText(text);
+    pillTrend.innerText= `${text}`;
 }
 const pill = id => document.getElementById(id);
 const pillTmp   = pill('pillTmp');
