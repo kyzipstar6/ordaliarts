@@ -22,7 +22,7 @@ const pressureInput  = document.getElementById('pressureInput');
 
 
 
-let temp = 20;  let hum =50;
+let temp = 20;  let hum =50; let chd= 0;
         let hour = 4;  
         let minute = 54;  
         let day = 8;  
@@ -87,34 +87,36 @@ if (hum>100) hum =89;
             temp -=0.05;
             hum += 0.05;}
             if(temp>20)temp = 19; if(temp<-30)temp = -27;
-			if(vbl==0){
-			if(trend ==-1) temp-=0.2; 
-			if(trend ==1) temp+=0.2;
-			if(trend==0) temp +=0;}
-			if(vbl==1){
+			
+			if(trend ==-1&&chd==0;) temp-=0.2; 
+			if(trend ==1&&chd==0) temp+=0.2;
+			if(trend==0) temp +=0;
+			
 			if(trend ==-1) hum-=0.2; 
 			if(trend ==1) hum+=0.2;
-			if(trend==0) hum +=0;}
+			if(trend==0) hum +=0;
         }, 60000);  
            
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
-    let wspM =87;
+    let wspM =87; 
 let vbl= 0;
     function wind(){  
 
         setInterval(() => {  
       wspm = 1 + (-0.5 + Math.random())/wspdd;
-          if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
-          if (trend == 1) wspm = 1 + (-0.65 + Math.random())/wspdd;
-          if (trend == -1) wspm = 1 + (-0.35 + Math.random())/wspdd;
+          
+		 wspm = 1 + (-0.5 + Math.random())/wspdd;
+          if (trend == 1&&chd==0) wspm = 1 + (-0.65 + Math.random())/wspdd;
+          if (trend == -1&&chd==0) wspm = 1 + (-0.35 + Math.random())/wspdd;
           if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd<0.1) wspd = 5;
+			if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
           wspd*=wspm;
-          if (hour >0 && hour<7 || hour >22) wspm =65;
-          if (hour >7 && hour<12) wspm= 75;
-          if (hour >12 && hour<18) wspm =87;
-          if (hour >18 && hour<22) wspm =72;
+          if (hour >0 && hour<7 || hour >22) wspM =65;
+          if (hour >7 && hour<12) wspM= 75;
+          if (hour >12 && hour<18) wspM =87;
+          if (hour >18 && hour<22) wspM =72;
            }, 1000);   
     }  
     let pressure = 1023 *(1+ (-0.5+ Math.random()));  
@@ -137,8 +139,8 @@ let vbl= 0;
             if (hour >-1 && hour<7 || hour >22){  
             pressure = pressure -0.1;  
             }  
-            if(trend ==-1) pressure -=0.2;
-            if(trend ==1) pressure +=0.2;
+            if(trend ==-1&&chd==3) pressure -=0.2;
+            if(trend ==1&&chd==3) pressure +=0.2;
     if (acumulator>36000*6) acumulator = 0;
 	},444);  
 	
@@ -200,7 +202,7 @@ function mkChart(){
     varChart.update();
   }
 }
-let chd= 0;
+
 let counter = 1; let chdmem= chd;
 function upChart(){
   if(varChart){
@@ -251,10 +253,10 @@ function wfoals(){
             if(pressure<950) alert(plals[ran]);
     }, 180000);
 }
-mkChart();
 
-tempM();   
+
+tempM();  
 wind();  
-presssure();   
+presssure();   mkChart(); 
 upChartAs();
 wfoals();
