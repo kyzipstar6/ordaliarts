@@ -17,7 +17,7 @@ const pillPres = pill('pillPres');
 const pillWspd    = pill('pillWspd');
 const pillRain    = pill('pillRain');
 const pillTrend = pill('pillTrend');
-const dirInput = document.getElementById('dirInput');
+const dirInput = document.getElementById('Input');
 const pressureInput  = document.getElementById('pressureInput');
 
 
@@ -105,6 +105,9 @@ let vbl= 0;
         setInterval(() => {  
       wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
+          if (trend == 1) wspm = 1 + (-0.65 + Math.random())/wspdd;
+          if (trend == 1) wspm = 1 + (-0.35 + Math.random())/wspdd;
+          if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd<0.1) wspd = 5;
           wspd*=wspm;
           if (hour >0 && hour<7 || hour >22) wspm =65;
@@ -133,6 +136,8 @@ let vbl= 0;
             if (hour >-1 && hour<7 || hour >22){  
             pressure = pressure -0.1;  
             }  
+            if(trend ==-1) pressure -=0.1;
+            if(trend ==1) pressure +=0.1;
     if (acumulator>36000*6) acumulator = 0;
 	},444);  
 	
@@ -211,7 +216,14 @@ function upChart(){
     varChart.update();
   counter +=1;}
 }
-function stmp(){chd =0;}function shum(){chd =1;}function swspd(){chd =2;}function spres(){chd =3;}
+const chlab = varChart.data.datasets[0].label;
+const ylab = varChart.options.scales.y.text;
+function upn(text){
+    chlab.innerText =`${text}`;
+    ylab.innerText =`${text}`;
+}
+function stmp(){chd =0; upn('Temperature');}function shum(){chd =1;upn('Humidity');}function swspd(){chd =2;upn('Wind Speed');
+}function spres(){chd =3;upn('Pressure');}
 
 function upChartAs(){
   setInterval(()=>upChart(), 2000);
