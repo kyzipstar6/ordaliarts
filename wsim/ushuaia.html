@@ -178,11 +178,12 @@
     <div class="chart-header" style="display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
       <h3 style="margin:0">Weather</h3>
       <div class="pills" style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <span class="pill">Temperature: <strong id="pillTotal">—</strong></span>
-        <span class="pill">Humidity: <strong id="pillMales">—</strong></span>
-        <span class="pill">Pressure: <strong id="pillFemales">—</strong></span>
-        <span class="pill">Wind Speed: <strong id="pillYear">—</strong></span>
-        <span class="pill">Rain: <strong id="pillMode">steady</strong></span>
+         <span class="pill">Temperature: <strong id="pillTmp">—</strong></span>
+        <span class="pill">Humidity: <strong id="pillHum">—</strong></span>
+        <span class="pill">Pressure: <strong id="pillPres">—</strong></span>
+        <span class="pill">Wind Speed: <strong id="pillWspd">—</strong></span>
+        <span class="pill">Rain: <strong id="pillRain">-</strong></span>
+        <span class="pill">Trend: <strong id="pillTrend">steady</strong></span>
       </div>
     </div>
 
@@ -200,7 +201,7 @@
         <label for="varSelect" style="font-size:12px;">Trend</label>
         <select id="varSelect" aria-label="Trend"
                 style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
-                onchange="this.value==='temp'?applyTmp():this.value=='wspd'?applyWspd():this.value==='hum'?applyHum():applyPres();">
+                onchange="this.value==='temp'?stmp():this.value=='wspd'?swspd():this.value==='hum'?shum():spres();">
           <option value="temp" selected>Temperature</option>
           <option value="hum">Humidity</option>
           <option value="pres">Pressure</option>
