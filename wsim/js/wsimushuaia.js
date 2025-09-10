@@ -1,3 +1,4 @@
+
  let trend =0;
 
 const canvas = document.getElementById('varChart');
@@ -27,20 +28,22 @@ const varChart = varCtx ? new Chart(varCtx, {
   }
 }) : null;
 
-
-//const pill = id => document.getElementById(id);
-//const pillTotal   = pill('pillTotal');
-//const pillMales   = pill('pillMales');
-//const pillFemales = pill('pillFemales');
-//const pillYear    = pill('pillYear');
-//const pillMode    = pill('pillMode');
-
+function updatePills(text){
+    pillTrend.innerText= `${text}`;
+}
+const pill = id => document.getElementById(id);
+const pillTmp   = pill('pillTmp');
+const pillHum   = pill('pillHum');
+const pillPres = pill('pillPres');
+const pillWspd    = pill('pillWspd');
+const pillRain    = pill('pillRain');
+const pillTrend = pill('pillTrend');
 const dirInput = document.getElementById('dirInput');
 const pressureInput  = document.getElementById('pressureInput');
 
 
 
-let temp = 20;  
+let temp = 20;  let hum =50;
         let hour = 4;  
         let minute = 54;  
         let day = 8;  
@@ -177,7 +180,8 @@ function update(){let aci = acumulator/36000;
   }
 function rise(){ trend = 1;  updatePills('grow'); }
 function steady(){ trend = 0;  updatePills('steady'); }
-function fall(){ trend=-1; } 
+function fall(){ trend=-1; updatePills('fall');} 
+
 
 function mkChart(){
   if(!varChart){
@@ -186,14 +190,25 @@ function mkChart(){
     varChart.update();
   }
 }
-let counter = 1;
+let chd= 0;
+let counter = 1; let chdmem= chd;
 function upChart(){
   if(varChart){
-  varChart.data.labels.push(counter);                 // clear safely
-    varChart.data.datasets[0].data.push(temp);
+  varChart.data.labels.push(counter);     
+  if(chdmem!=chd){
+    varChart.data.labels.length = 0;               
+    varChart.data.datasets[0].data.length = 0;counter=0;
+  }            
+    if(chd==0)varChart.data.datasets[0].data.push(temp);
+    if(chd==1)varChart.data.datasets[0].data.push(hum);
+    if(chd==2)varChart.data.datasets[0].data.push(wspd);
+    if(chd==3)varChart.data.datasets[0].data.push(pres);
+    chdmem=chd;
     varChart.update();
   counter +=1;}
 }
+function stmp(){chd =0;}function shum(){chd =1;}function swspd(){chd =2;}function spres(){chd =3;}
+
 function upChartAs(){
   setInterval(()=>upChart(), 2000);
 }
