@@ -88,7 +88,7 @@ if (hum>100) hum =89;
             hum += 0.05;}
             if(temp>20)temp = 19; if(temp<-30)temp = -27;
 			
-			if(trend ==-1&&chd==0;) temp-=0.2; 
+			if(trend ==-1&&chd==0) temp-=0.2; 
 			if(trend ==1&&chd==0) temp+=0.2;
 			if(trend==0) temp +=0;
 			
