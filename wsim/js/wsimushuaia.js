@@ -207,17 +207,20 @@ let counter = 1; let chdmem= chd;
 function upChart(){
   if(varChart){
   varChart.data.labels.push(counter);     
-  if(chdmem!=chd){
-    varChart.data.labels.length = 0;               
-    varChart.data.datasets[0].data.length = 0;counter=0;
-  }            
+  
     if(chd==0)varChart.data.datasets[0].data.push(temp);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
     if(chd==2)varChart.data.datasets[0].data.push(wspd);
     if(chd==3)varChart.data.datasets[0].data.push(pressure);
-    chdmem=chd;
-    varChart.update();
-  counter +=1;}
+   varChart.update('none');
+	  if(chdmem!=chd){
+    varChart.data.labels.length = 0;               
+    varChart.data.datasets[0].data.length = 0;counter=0;
+  }            
+	  chdmem=chd;
+    
+  counter +=1;
+  }
 }
 const chlab = varChart.data.datasets[0].label;
 const ylab = varChart.options.scales.y.text;
