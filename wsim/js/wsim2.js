@@ -50,11 +50,13 @@ function mkChart(){
     varChart.update();
   }
 }
+let temp = document.getElementById('tmp');
 let counter = 1;
 function upChart(){
   if(varChart){
-  varChart.data.labels.push(counter);                 // clear safely
-    varChart.data.datasets[0].data.push(temp);
+    let tmp =temp.replace("🌡 Temperature:","").replace("°C","");
+  varChart.data.labels.push(counter);                 
+    varChart.data.datasets[0].data.push(tmp);
     varChart.update();
   counter +=1;}
 }
