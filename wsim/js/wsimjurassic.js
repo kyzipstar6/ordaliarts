@@ -22,12 +22,12 @@ const pressureInput  = document.getElementById('pressureInput');
 
 
 
-let temp = 20;  let hum =50; let chd= 0;
+let temp = 24;  let hum =50; let chd= 0;
         let hour = 4;  
         let minute = 54;  
         let day = 8;  
         let month = 6;  
-        let year = 2026;  
+        let year = 125e6;  
     function main() {  
        setInterval(() => {  
                
@@ -35,7 +35,7 @@ let temp = 20;  let hum =50; let chd= 0;
             document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
           if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
-            document.getElementById("day").innerText = `Date: ${day}/${month}/${year}`;  
+            document.getElementById("day").innerText = `Date: ${day}/${month}/${year} BC`;  
             document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
             
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
@@ -207,7 +207,7 @@ let counter = 1; let chdmem= chd;
 function upChart(){
   if(varChart){
   varChart.data.labels.push(counter);     
-  
+  varChart.data.datasets[0].data.push(temp);
     if(chd==0)varChart.data.datasets[0].data.push(temp);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
     if(chd==2)varChart.data.datasets[0].data.push(wspd);
