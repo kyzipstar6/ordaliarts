@@ -194,16 +194,16 @@ const varChart = varCtx ? new Chart(varCtx, {
     plugins: { legend: { position: 'bottom' } }
   }
 }) : null;
-
+let counter = 1;
 function mkChart(){
   if(!varChart){
     varChart.data.labels.length = 0;                 // clear safely
-    varChart.data.datasets[].data.length = 0;
+    varChart.data.datasets[0].data.push(temp);
     varChart.update();
   }
 }
 
-let counter = 1; let chdmem= chd;
+ let chdmem= chd;
 function upChart(){
   if(varChart){
   varChart.data.labels.push(counter);     
