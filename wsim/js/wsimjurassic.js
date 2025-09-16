@@ -63,10 +63,10 @@ if (hum>100) hum =89;
     }  
     function tempM(){  
           
-        if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=11;} if(month ==5 || month==8){ temp=2;}if(month ==4 || month==9){ temp=5;}  
-        if(month ==3 || month==10){ temp=7;}if(month ==2 || month==11){ temp=9;}if(month ==1 || month==12){ temp=11;}}  
-        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=-4;}if(month ==5 || month==8){ temp=-5;} if(month ==4 || month==9){ temp=-3;}  
-        if(month ==3 || month==10){ temp=-1;}if(month ==2 || month==11){ temp=4;}if(month ==1 || month==12){ temp=7;}}  
+        if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=25;} if(month ==5 || month==8){ temp=34;}if(month ==4 || month==9){ temp=33;}  
+        if(month ==3 || month==10){ temp=29.7;}if(month ==2 || month==11){ temp=27.5;}if(month ==1 || month==12){ temp=26.2;}}  
+        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=29.4;}if(month ==5 || month==8){ temp=28.5;} if(month ==4 || month==9){ temp=24.3;}  
+        if(month ==3 || month==10){ temp=22.1;}if(month ==2 || month==11){ temp=20.4;}if(month ==1 || month==12){ temp=18.7;}}  
         if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
         if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
@@ -107,8 +107,8 @@ let vbl= 0;
       wspm = 1 + (-0.5 + Math.random())/wspdd;
           
 		 wspm = 1 + (-0.5 + Math.random())/wspdd;
-          if (trend == 1&&chd==0) wspm = 1 + (-0.65 + Math.random())/wspdd;
-          if (trend == -1&&chd==0) wspm = 1 + (-0.35 + Math.random())/wspdd;
+          if (trend == 1&&chd==2) wspm = 1 + (-0.65 + Math.random())/wspdd;
+          if (trend == -1&&chd==2) wspm = 1 + (-0.35 + Math.random())/wspdd;
           if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd<0.1) wspd = 5;
 			if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
@@ -198,7 +198,7 @@ const varChart = varCtx ? new Chart(varCtx, {
 function mkChart(){
   if(!varChart){
     varChart.data.labels.length = 0;                 // clear safely
-    varChart.data.datasets[0].data.length = 0;
+    
     varChart.update();
   }
 }
@@ -209,8 +209,8 @@ function upChart(){
   varChart.data.labels.push(counter);     
   varChart.data.datasets[0].data.push(temp);
     if(chd==0)varChart.data.datasets[0].data.push(temp);
-    if(chd==1)varChart.data.datasets[0].data.push(hum);
-    if(chd==2)varChart.data.datasets[0].data.push(wspd);
+    if(chd==1)varChart.data.datasets[].data.push(hum);
+    if(chd==2)varChart.data.datasets[].data.push(wspd);
     if(chd==3)varChart.data.datasets[0].data.push(pressure);
    varChart.update('none');
 	  if(chdmem!=chd){
