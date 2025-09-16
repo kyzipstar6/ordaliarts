@@ -198,7 +198,7 @@ const varChart = varCtx ? new Chart(varCtx, {
 function mkChart(){
   if(!varChart){
     varChart.data.labels.length = 0;                 // clear safely
-    
+    varChart.data.datasets[].data.length = 0;
     varChart.update();
   }
 }
@@ -215,7 +215,7 @@ function upChart(){
    varChart.update('none');
 	  if(chdmem!=chd){
     varChart.data.labels.length = 0;               
-    varChart.data.datasets[0].data.length = 0;counter=0;
+    varChart.data.datasets[].data.length = 0;counter=0;
   }            
 	  chdmem=chd;
     
