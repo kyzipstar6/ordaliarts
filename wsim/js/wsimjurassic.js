@@ -19,7 +19,30 @@ const pillRain    = pill('pillRain');
 const pillTrend = pill('pillTrend');
 const dirInput = document.getElementById('Input');
 const pressureInput  = document.getElementById('pressureInput');
+const varCtx = canvas.getContext('2d');
 
+const varChart = new Chart(varCtx, {
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [
+      { label: 'Temperature', 
+        data: [22,22.3,21.5], 
+        borderColor: 'rgba(22, 71, 16, 1)', 
+        tension: 0.25 ,
+        
+      }
+      
+    ]
+  },
+  options: {
+    scales: {
+      x: { title: { display: true, text: 'Time' } },
+      y: { title: { display: true, text: 'Temperature' }}
+    },
+    plugins: { legend: { position: 'bottom' } }
+  }
+}) ;
 
 
 let temp = 24;  let hum =50; let chd= 0;
@@ -92,9 +115,9 @@ if (hum>100) hum =89;
 			if(trend ==1&&chd==0) temp+=0.2;
 			if(trend==0) temp +=0;
 			
-			if(trend ==-1) hum-=0.2; 
-			if(trend ==1) hum+=0.2;
-			if(trend==0) hum +=0;
+			if(trend ==-1&&chd==1) hum-=0.2; 
+			if(trend ==1&&chd==1) hum+=0.2;
+			if(trend==0&&chd==1) hum +=0;
         }, 60000);  
            
     }  let acumulator =0;
@@ -144,7 +167,7 @@ let vbl= 0;
     if (acumulator>36000*6) acumulator = 0;
 	},444);  
 	
-	  
+	 mkChart();  upChartAs();
 }  
 let title = "";
 
@@ -172,28 +195,7 @@ function update(){let aci = acumulator/36000;
 function rise(){ trend = 1;  updatePills('grow'); }
 function steady(){ trend = 0;  updatePills('steady'); }
 function fall(){ trend=-1; updatePills('fall');} 
-const varCtx = canvas ? canvas.getContext('2d') : null;
 
-const varChart = varCtx ? new Chart(varCtx, {
-  type: 'line',
-  data: {
-    labels: [],
-    datasets: [
-      { label: 'Temperature', data: [], borderColor: 'rgba(22, 71, 16, 1)', tension: 0.25 },
-
-    ]
-  },
-  options: {
-    animation: true,
-    parsing: false,
-    normalized: true,
-    scales: {
-      x: { title: { display: true, text: 'Time' } },
-      y: { title: { display: true, text: 'Temperature' }, beginAtZero: false}
-    },
-    plugins: { legend: { position: 'bottom' } }
-  }
-}) : null;
 let counter = 1;
 function mkChart(){
   if(!varChart){
@@ -207,15 +209,16 @@ function mkChart(){
 function upChart(){
   if(varChart){
   varChart.data.labels.push(counter);     
-  varChart.data.datasets[0].data.push(temp);
+  
     if(chd==0)varChart.data.datasets[0].data.push(temp);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
     if(chd==2)varChart.data.datasets[0].data.push(wspd);
     if(chd==3)varChart.data.datasets[0].data.push(pressure);
+    
    varChart.update('none');
 	  if(chdmem!=chd){
     varChart.data.labels.length = 0;               
-    varChart.data.datasets[].data.length = 0;counter=0;
+    varChart.data.datasets[0].data.length = 0;counter=0;
   }            
 	  chdmem=chd;
     
@@ -260,6 +263,6 @@ function wfoals(){
 
 tempM();  
 wind();  
-presssure();   mkChart(); 
-upChartAs();
+presssure();   
+
 wfoals();
