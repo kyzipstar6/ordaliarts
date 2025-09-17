@@ -209,8 +209,8 @@ function upChart(){
   varChart.data.labels.push(counter);     
   varChart.data.datasets[0].data.push(temp);
     if(chd==0)varChart.data.datasets[0].data.push(temp);
-    if(chd==1)varChart.data.datasets[].data.push(hum);
-    if(chd==2)varChart.data.datasets[].data.push(wspd);
+    if(chd==1)varChart.data.datasets[0].data.push(hum);
+    if(chd==2)varChart.data.datasets[0].data.push(wspd);
     if(chd==3)varChart.data.datasets[0].data.push(pressure);
    varChart.update('none');
 	  if(chdmem!=chd){
