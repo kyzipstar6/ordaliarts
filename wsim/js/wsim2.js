@@ -15,8 +15,6 @@ const varChart = varCtx ? new Chart(varCtx, {
   },
   options: {
     animation: true,
-    parsing: false,
-    normalized: true,
     scales: {
       x: { title: { display: true, text: 'Time' } },
       y: { title: { display: true, text: 'Temperature' }, beginAtZero: false}
