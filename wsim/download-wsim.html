@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Simulator - Experience Weather Like Never Before</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .slides-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 20px 0;
+            scrollbar-width: none;
+        }
+        
+        .slides-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .slide {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .slide-content {
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .nav-dots {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .dot.active {
+            background: #fff;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+        
+        .buy-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .buy-button:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .slide-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Weather Simulator</h1>
+            <p class="tagline">Experience Weather Like Never Before</p>
+        </header>
+        
+        <div class="slides-container" id="slidesContainer">
+            <!-- Slide 1: Introduction -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Control the Weather</h2>
+                    <p>Our revolutionary Weather Simulator allows you to experience and control weather conditions from around the globe. Whether you want to create a sunny day in the middle of winter or simulate a thunderstorm in your living room, the power is in your hands.</p>
+                    <div class="image-placeholder">
+                        <img src="pc/3.png"" alt="Weather control interface">
+                    </div>
+                    <p>With our intuitive interface, you can adjust temperature, precipitation, wind speed, and atmospheric pressure with simple controls.</p>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Built-in Scenarios -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Built-in Weather Scenarios</h2>
+                    <p>Choose from dozens of pre-built weather scenarios from different locations and seasons around the world. Experience the monsoon season in Southeast Asia, the dry heat of the Sahara Desert, or a snowy day in the Alps.</p>
+                    <div class="image-placeholder">
+                        <img src="pc/7.png" alt="Various weather scenarios">
+                    </div>
+                    <p>Each scenario comes with accurate meteorological data and stunning visual representations.</p>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Create Your Own Weather -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Create Your Own Weather</h2>
+                    <p>Unleash your creativity with our custom weather creation tools. Design unique weather patterns that don't exist in nature or combine elements from different climates to create something entirely new.</p>
+                    <div class="image-placeholder">
+                        <img src="pc/3.png" alt="Custom weather creation interface">
+                    </div>
+                    <p>Adjust parameters like cloud density, precipitation type, lightning frequency, and more to craft your perfect atmospheric conditions.</p>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Real-time Control -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Real-time Weather Control</h2>
+                    <p>Watch as your changes take effect in real-time. Gradually increase temperature to simulate global warming effects, or rapidly drop pressure to create storm conditions. The dynamic system responds to your every command.</p>
+                    <div class="image-placeholder">
+                        <img src="pc/8.png" alt="Real-time weather control">
+                    </div>
+                    <p>Our advanced physics engine ensures that all weather interactions are realistic and visually stunning.</p>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Stunning Animations -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h2>Stunning Visual Animations</h2>
+                    <p>Experience weather like never before with our hyper-realistic animations. Watch as clouds form and dissipate, rain falls with accurate physics, and lightning illuminates the sky with breathtaking detail.</p>
+                    <div class="image-placeholder">
+                        <img src="pc/0.png" alt="Weather animations">
+                    </div>
+                    <p>Every weather element is rendered with attention to detail, creating an immersive experience that's both educational and entertaining.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-dots" id="navDots">
+            <!-- Dots will be generated by JavaScript -->
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">🌍</div>
+                <h3>Global Weather Data</h3>
+                <p>Access accurate meteorological data from locations worldwide</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Real-time Controls</h3>
+                <p>Adjust weather parameters and see immediate changes</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h3>Custom Scenarios</h3>
+                <p>Create and save your own unique weather patterns</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔬</div>
+                <h3>Educational Value</h3>
+                <p>Perfect for students, educators, and weather enthusiasts</p>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Ready to Control the Weather?</h2>
+            <p>Download our Weather Simulator today and experience a 30-day free trial. After the trial period, continue enjoying all features for just $29.99.</p>
+            <a href="#" class="buy-button">Download Free Trial</a>
+            <p><small>No credit card required for the trial. Cancel anytime during the trial period.</small></p>
+        </div>
+        
+        <footer>
+            <p>Weather Simulator &copy; 2023 | All rights reserved</p>
+        </footer>
+    </div>
+
+    <script>
+        // Slide navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slidesContainer = document.getElementById('slidesContainer');
+            const navDots = document.getElementById('navDots');
+            const slides = document.querySelectorAll('.slide');
+            
+            // Create navigation dots
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    slidesContainer.scrollTo({
+                        left: index * slidesContainer.offsetWidth,
+                        behavior: 'smooth'
+                    });
+                });
+                navDots.appendChild(dot);
+            });
+            
+            // Update active dot on scroll
+            slidesContainer.addEventListener('scroll', () => {
+                const scrollPos = slidesContainer.scrollLeft;
+                const slideWidth = slidesContainer.offsetWidth;
+                const currentIndex = Math.round(scrollPos / slideWidth);
+                
+                document.querySelectorAll('.dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            });
+            
+            // Auto-advance slides (optional)
+            let currentSlide = 0;
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                slidesContainer.scrollTo({
+                    left: currentSlide * slidesContainer.offsetWidth,
+                    behavior: 'smooth'
+                });
+            }, 8000);
+        });
+    </script>
+</body>
+</html>
