@@ -140,7 +140,7 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
     let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
     let UPPER_BOUND = 17;let LOWER_BOUND = 3;  
     function wind(){  
-        boundSetter();  
+        
         setInterval(() => {  
             wspeed1= (Math.random()*200);  
 			wspeed2= (Math.random()*200);  
@@ -294,7 +294,7 @@ function wfoals(){
 }
 
 
-tempM();  
+tempM();  boundSetter();
 wind();  
 presssure();   
 
