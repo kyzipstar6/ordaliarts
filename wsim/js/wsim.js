@@ -45,13 +45,26 @@ const varChart = new Chart(varCtx, {
 }) ;
 
 
-let temp = 24;  let hum =50; let chd= 0;
-        let hour = 4;  
-        let minute = 54;  
-        let day = 8;  
-        let month = 6;  
-        let year = 125e6;  
+let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
+    inc1 = inc1*2; inc2 = inc2*2;  
+let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
+        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
+        let hour = Math.ceil(ran*24);  
+        let minute = Math.ceil(ran2*60);  
+        let day = Math.ceil(ran3*31);  
+        let month = Math.ceil(ran4*12);  
+        let year = Math.ceil(ran5*4500);  let chd=0;
     function main() {  
+		
+        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=22;} if(month ==5 || month==8){ temp=24;}if(month ==4 || month==9){ temp=25.5;}  
+        if(month ==3 || month==10){ temp=27.5;}if(month ==2 || month==11){ temp=28.4;}if(month ==1 || month==12){ temp=29.5;}}  
+        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=19;}if(month ==5 || month==8){ temp=21;} if(month ==4 || month==9){ temp=22.5;}  
+        if(month ==3 || month==10){ temp=23.5;}if(month ==2 || month==11){ temp=25.4;}if(month ==1 || month==12){ temp=26.5;}}  
+        if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
+        if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
+        if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
+        if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
+        if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
        setInterval(() => {  
                
             document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
@@ -123,25 +136,41 @@ if (hum>100) hum =89;
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
     let wspM =87; 
-let vbl= 0;
+let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
+    let UPPER_BOUND = 17;let LOWER_BOUND = 3;  
     function wind(){  
-
+        boundSetter();  
         setInterval(() => {  
-      wspm = 1 + (-0.5 + Math.random())/wspdd;
-          
-		 wspm = 1 + (-0.5 + Math.random())/wspdd;
-          if (trend == 1&&chd==2) wspm = 1 + (-0.65 + Math.random())/wspdd;
-          if (trend == -1&&chd==2) wspm = 1 + (-0.35 + Math.random())/wspdd;
-          if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
-          if (wspd<0.1) wspd = 5;
-			if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
-          wspd*=wspm;
-          if (hour >0 && hour<7 || hour >22) wspM =65;
-          if (hour >7 && hour<12) wspM= 75;
-          if (hour >12 && hour<18) wspM =87;
-          if (hour >18 && hour<22) wspM =72;
-           }, 1000);   
+            wspeed1= (Math.random()*200);  
+			wspeed2= (Math.random()*200);  
+		  
+				  
+			if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND   
+					&& wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND && (wspeed1/wspeed2<= 0.985)  
+					)  
+			 filter= wspeed2;  
+			filterrecord = filter;  
+			if(wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND  && wspeed2 < UPPER_BOUND && wspeed2> LOWER_BOUND && wspeed1/filter <= 0.985  
+					) {wspd = wspeed1;}  
+	     }, 100);   
     }  
+    function boundSetter(){  
+        setInterval(() => {  
+        wspeed1  = (Math.random()*200);  
+		wspeed2  = (Math.random()*200);  
+			  
+		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && UPPER_BOUND/wspeed1 <= 1.3&& wspeed1 > LOWER_BOUND   
+				&& (wspeed1 - UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
+		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && wspeed1/UPPER_BOUND <= 1.3&& wspeed1 > LOWER_BOUND   
+				&& (wspeed1 + UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
+		if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (LOWER_BOUND/wspeed2 <= 1.3)&& UPPER_BOUND > wspeed2   
+				&& (wspeed2 - LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2; }  
+				if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (wspeed2/LOWER_BOUND <= 1.3)&& UPPER_BOUND > wspeed2   
+						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
+           }}, 4200);   
+    }  
+    
     let pressure = 1023 *(1+ (-0.5+ Math.random()));  
     function presssure() {  
 	if (pressure<977){pressure = 977;}  
