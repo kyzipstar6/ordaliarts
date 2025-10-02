@@ -101,6 +101,52 @@
       input {
         width: 95%;
       }
+    }/* Combo (tabs + select) */
+.chart-combo { display: grid; gap: .75rem; }
+
+/* Golden theme for the combo controls */
+.combo-tabs{
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  background: linear-gradient(180deg, #f6e9b5, #f0d776);
+  border: 1px solid #d8b84e;
+  padding: .35rem; border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 2px 6px rgba(0,0,0,.08);
+}
+
+.combo-tab{
+  appearance: none; border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.5); color: #5b4300;
+  padding: .45rem .75rem; border-radius: 999px; cursor: pointer; font-weight: 600;
+}
+.combo-tab.is-active{
+  background: #fff2bd; border-color: #caa842; color: #3c2e00;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+
+.combo-select{
+  margin-left: auto;
+  padding: .45rem .6rem; border-radius: 10px;
+  border: 1px solid #d8b84e; background: #fff8dc; color: #5b4300;
+}
+
+/* Panels */
+.combo-panels { display: block; }
+.combo-panel[hidden] { display: none !important; }
+
+/* Make existing chart-container/pills/buttons pick up theme variables */
+:root[data-theme="dark"] .combo-tabs{
+  background: linear-gradient(180deg, #786210, #907a23);
+  border-color: #bda13b;
+}
+:root[data-theme="dark"] .combo-tab{
+  background: rgba(255,255,255,.08); color: #f7e8ad;
+  border-color: rgba(255,255,255,.15);
+}
+:root[data-theme="dark"] .combo-tab.is-active{
+  background: rgba(255,255,255,.15); color: #fff4c2; border-color: #d9bf5a;
+}
+:root[data-theme="dark"] .combo-select{
+  background: #4a3e10; color: #f6eab8; border-color: #bda13b;
     }
   </style>
 </head>
@@ -169,7 +215,112 @@
 
   <button id="set" onclick="getText()">Set</button>
 </section>
+<!-- CHARTS SECTION (combo) -->
+<section class="chart-wrap">
+  <div class="chart-combo">
+    <!-- tabs -->
+    <div class="combo-tabs" role="tablist" aria-label="Evolution tabs">
+      <button class="combo-tab is-active" role="tab" id="tab-evolution" aria-controls="panel-evolution" aria-selected="true">Evolution</button>
+      <button class="combo-tab" role="tab" id="tab-emails" aria-controls="panel-emails" aria-selected="false">Emails</button>
 
+      <!-- compact combo for small screens -->
+      <select id="comboSelect" class="combo-select" aria-label="Switch section">
+        <option value="evolution" selected>Evolution</option>
+        <option value="emails">Emails</option>
+      </select>
+    </div>
+
+    <!-- panels -->
+    <div class="combo-panels">
+      <!-- Evolution panel (line chart) -->
+      <div class="combo-panel is-active" id="panel-evolution" role="tabpanel" aria-labelledby="tab-evolution">
+        <div class="chart-container" id="chartBox">
+          <div class="chart-header">
+            <h3 style="margin:0">Population over time</h3>
+            <div class="pills">
+              <span class="pill">Total: <strong id="pillTotal">—</strong></span>
+              <span class="pill">Males: <strong id="pillMales">—</strong></span>
+              <span class="pill">Females: <strong id="pillFemales">—</strong></span>
+              <span class="pill">Year: <strong id="pillYear">—</strong></span>
+              <span class="pill">Mode: <strong id="pillMode">steady</strong></span>
+            </div>
+          </div>
+
+          <div class="chart-controls">
+            <div class="field">
+              <label for="yearInput">Set year</label>
+              <input id="yearInput" type="number" step="1" value="4650000000" />
+            </div>
+            <div class="field">
+              <label for="popInput">Set population</label>
+              <input id="popInput" type="number" step="1" value="2500000" />
+            </div>
+
+            <div class="field">
+              <label for="trendSelect">Trend</label>
+              <select id="trendSelect"
+                      onchange="this.value==='grow'?mkgr():this.value==='steady'?mkst():mide();">
+                <option value="steady" selected>Stay steady</option>
+                <option value="grow">Grow</option>
+                <option value="decline">Decline</option>
+              </select>
+            </div>
+
+            <div class="buttons">
+              <button class="btn steady"  type="button" onclick="mkst()">Make population stay steady</button>
+            </div>
+            <div class="buttons">
+              <button class="btn grow"    type="button" onclick="mkgr()">Make population grow</button>
+            </div>
+            <div class="buttons">
+              <button class="btn decline" type="button" onclick="mide()">Make population decline</button>
+            </div>
+          </div>
+
+          <canvas id="popChart"></canvas>
+
+          <div class="buttons">
+            <button class="btn secondary" type="button" onclick="applyYearPop()">Apply year & population</button>
+            <button class="btn secondary" type="button" onclick="updateData()" title="Advance one step">Tick +1 year</button>
+            <button class="btn secondary" type="button" onclick="toggleAutoUpdate(this)">Auto-update: OFF</button>
+            <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Emails panel (pie chart) -->
+      <div class="combo-panel" id="panel-emails" role="tabpanel" aria-labelledby="tab-emails" hidden>
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 style="margin:0">Emails breakdown</h3>
+            <div class="pills">
+              <span class="pill">Emails: <strong id="pillEmails">—</strong></span>
+              <span class="pill">Other: <strong id="pillOther">—</strong></span>
+              <span class="pill">Rate: <strong id="pillRate">—</strong></span>
+            </div>
+          </div>
+
+          <div class="chart-controls">
+            <div class="field">
+              <label for="emailsTotal">Total items</label>
+              <input id="emailsTotal" type="number" min="0" step="1" value="100" />
+            </div>
+            <div class="field">
+              <label for="emailsRate">Email rate (%)</label>
+              <input id="emailsRate" type="number" min="0" max="100" step="1" value="50" />
+            </div>
+            <div class="buttons">
+              <button class="btn secondary" type="button" onclick="applyEmailData()">Apply</button>
+              <button class="btn secondary" type="button" onclick="randomizeEmailData()">Randomize</button>
+            </div>
+          </div>
+
+          <canvas id="emailChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="clim">
   <h1>🏙 Climate Description of London</h1>
   <p>London features a relatively mild climate compared to other cities at similar latitudes. Its weather reputation is often gloomy, but in reality, the Atlantic Ocean moderates the climate significantly.</p>
