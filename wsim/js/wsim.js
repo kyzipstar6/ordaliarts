@@ -71,7 +71,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
           if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
-            document.getElementById("day").innerText = `Date: ${day}/${month}/${year} BC`;  
+            document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
             document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
             
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
@@ -146,7 +146,8 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
 			wspeed2= (Math.random()*200);  
 		  
 				wspm = 1 + (-0.5 + Math.random())/wspdd;
-          if (trend == 1&&chd==2) wspm = 1 + (-0.35 + Math.random())/wspdd;
+			wspd*=wspm;
+          if (trend == 1&&chd==2) {wspm = 1 + (-0.35 + Math.random())/wspdd;}
           if (trend == -1&&chd==2) wspm = 1 + (-0.65 + Math.random())/wspdd;
           if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
            
@@ -265,6 +266,7 @@ function upn(text){
     ylab.innerText =`${text}`;
 }
 function stmp(){chd =0; upn('Temperature');}function shum(){chd =1;upn('Humidity');}function swspd(){chd =2;upn('Wind Speed');
+			 if (trend == 1&&chd==2) {UPPER_BOUND+=5;LOWER_BOUND+=5;} if (trend == -1&&chd==2) {UPPER_BOUND-=5;LOWER_BOUND-=5;}
 }function spres(){chd =3;upn('Pressure');}
 
 function upChartAs(){
