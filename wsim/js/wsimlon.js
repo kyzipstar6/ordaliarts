@@ -7,6 +7,74 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let day = Math.ceil(ran3*31);  
         let month = Math.ceil(ran4*12);  
         let year = Math.ceil(ran5*4500);  
+// ===== Emails pie chart =====
+const emailCtx = document.getElementById('emailChart')?.getContext('2d');
+const emailChart = emailCtx ? new Chart(emailCtx, {
+  type: 'pie',
+  data: {
+    labels: ['Emails', 'Other'],
+    datasets: [{
+      data: [50, 50],           // default: “half emails”
+      backgroundColor: [
+        'rgba(234, 179, 8, 0.9)',  // gold-ish for Emails
+        'rgba(107, 114, 128, 0.9)' // gray for Other
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom' }
+    }
+  }
+}) : null;
+
+window.emailChart = emailChart; // expose so the tab code can resize
+// Email pills/inputs
+const pillEmails = document.getElementById('pillEmails');
+const pillOther  = document.getElementById('pillOther');
+const pillRate   = document.getElementById('pillRate');
+const emailsTotalInput = document.getElementById('emailsTotal');
+const emailsRateInput  = document.getElementById('emailsRate');
+
+function fmtPct(n){ return `${(Number(n)||0).toFixed(0)}%`; }
+
+function updateEmailPills(total, rate){
+  const emails = Math.round(total * (rate/100));
+  const other  = Math.max(0, total - emails);
+  if (pillEmails) pillEmails.textContent = emails.toLocaleString();
+  if (pillOther)  pillOther.textContent  = other.toLocaleString();
+  if (pillRate)   pillRate.textContent   = fmtPct(rate);
+}
+
+function applyEmailData(){
+  const total = Math.max(0, Math.floor(Number(emailsTotalInput?.value) || 0));
+  const rate  = Math.max(0, Math.min(100, Number(emailsRateInput?.value) || 0));
+  const emails = Math.round(total * (rate/100));
+  const other  = Math.max(0, total - emails);
+
+  if (emailChart){
+    emailChart.data.datasets[0].data = [emails, other];
+    emailChart.update('none');
+  }
+  updateEmailPills(total, rate);
+}
+
+function randomizeEmailData(){
+  const total = Math.floor(50 + Math.random()*950); // 50..999
+  const rate  = Math.floor(Math.random()*101);      // 0..100
+  if (emailsTotalInput) emailsTotalInput.value = String(total);
+  if (emailsRateInput)  emailsRateInput.value  = String(rate);
+  applyEmailData();
+}
+
+// init email pills once
+updateEmailPills(Number(emailsTotalInput?.value||100), Number(emailsRateInput?.value||50));
+
+// expose for HTML buttons
+window.applyEmailData = applyEmailData;
+window.randomizeEmailData = randomizeEmailData;
     function main() {  
        setInterval(() => {  
                
