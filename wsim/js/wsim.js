@@ -145,7 +145,11 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
             wspeed1= (Math.random()*200);  
 			wspeed2= (Math.random()*200);  
 		  
-				  
+				wspm = 1 + (-0.5 + Math.random())/wspdd;
+          if (trend == 1&&chd==2) wspm = 1 + (-0.35 + Math.random())/wspdd;
+          if (trend == -1&&chd==2) wspm = 1 + (-0.65 + Math.random())/wspdd;
+          if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
+           
 			if( wspeed1 < UPPER_BOUND && wspeed1 > LOWER_BOUND   
 					&& wspeed2 < UPPER_BOUND && wspeed2 > LOWER_BOUND && (wspeed1/wspeed2<= 0.985)  
 					)  
