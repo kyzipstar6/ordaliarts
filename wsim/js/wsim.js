@@ -43,6 +43,10 @@ const varChart = new Chart(varCtx, {
     plugins: { legend: { position: 'bottom' } }
   }
 }) ;
+let score = 0;
+const tempT = ['Keep the temperature within 20°C and 26°C for a day'];
+const humT = ['Keep the humidity within 60% and 80% for 6 hours'];
+const windT = ['Do not let the wind blow over 50 km/h today'];
 
 
 let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
@@ -138,7 +142,7 @@ if (hum>100) hum =89;
     let wspM =87; 
 let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
-    let UPPER_BOUND = 17;let LOWER_BOUND = 3;  
+    let UPPER_BOUND = 37;let LOWER_BOUND = 13;  
     function wind(){  
         
         setInterval(() => {  
@@ -147,6 +151,8 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
 		  
 				wspm = 1 + (-0.5 + Math.random())/wspdd;
 			wspd*=wspm;
+      UPPER_BOUND*=wspm;
+      LOWER_BOUND*=wspm;
           if (trend == 1&&chd==2) {wspm = 1 + (-0.35 + Math.random())/wspdd;}
           if (trend == -1&&chd==2) wspm = 1 + (-0.65 + Math.random())/wspdd;
           if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
@@ -226,7 +232,7 @@ function update(){let aci = acumulator/36000;
       temp+=1*aci; hum-=8*aci; pressure -= 0.87*aci;}
     
   }
-function rise(){ trend = 1;  updatePills('grow'); }
+function rise(){ trend = 1;  updatePills('rise'); }
 function steady(){ trend = 0;  updatePills('steady'); }
 function fall(){ trend=-1; updatePills('fall');} 
 
@@ -266,7 +272,7 @@ function upn(text){
     ylab.innerText =`${text}`;
 }
 function stmp(){chd =0; upn('Temperature');}function shum(){chd =1;upn('Humidity');}function swspd(){chd =2;upn('Wind Speed');
-			 if (trend == 1&&chd==2) {UPPER_BOUND+=5;LOWER_BOUND+=5;} if (trend == -1&&chd==2) {UPPER_BOUND-=5;LOWER_BOUND-=5;}
+			 if (trend == 1) {UPPER_BOUND+=5;LOWER_BOUND+=5;} if (trend == -1) {UPPER_BOUND-=5;LOWER_BOUND-=5;}
 }function spres(){chd =3;upn('Pressure');}
 
 function upChartAs(){
