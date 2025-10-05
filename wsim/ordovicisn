@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordovician Weather Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .period-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .period-btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .period-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .period-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .simulator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .weather-display {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .weather-icon {
+            font-size: 6rem;
+            text-align: center;
+            margin: 20px 0;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .weather-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .data-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .data-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .data-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .slider {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .slider-value {
+            width: 50px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .info-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .info-content {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .simulator-container {
+                flex-direction: column;
+            }
+            
+            .weather-data {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ordovician Weather Simulator</h1>
+            <p class="subtitle">Experience Earth's climate 485 to 443 million years ago</p>
+        </header>
+        
+        <div class="period-selector">
+            <button class="period-btn active" id="early-btn">Early Ordovician</button>
+            <button class="period-btn" id="middle-btn">Middle Ordovician</button>
+            <button class="period-btn" id="late-btn">Late Ordovician</button>
+        </div>
+        
+        <div class="simulator-container">
+            <div class="weather-display">
+                <h2>Current Conditions</h2>
+                <div class="weather-icon" id="weather-icon">☀️</div>
+                <div class="weather-data">
+                    <div class="data-item">
+                        <div class="data-label">Temperature</div>
+                        <div class="data-value" id="temperature">25°C</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Humidity</div>
+                        <div class="data-value" id="humidity">65%</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Atmospheric CO₂</div>
+                        <div class="data-value" id="co2">4200 ppm</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Sea Level</div>
+                        <div class="data-value" id="sea-level">+150m</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <h2>Climate Controls</h2>
+                
+                <div class="control-group">
+                    <label class="control-label">Global Temperature</label>
+                    <div class="slider-container">
+                        <input type="range" min="10" max="40" value="25" class="slider" id="temp-slider">
+                        <span class="slider-value" id="temp-value">25°C</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Humidity</label>
+                    <div class="slider-container">
+                        <input type="range" min="10" max="90" value="65" class="slider" id="humidity-slider">
+                        <span class="slider-value" id="humidity-value">65%</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">CO₂ Concentration</label>
+                    <div class="slider-container">
+                        <input type="range" min="1000" max="8000" value="4200" class="slider" id="co2-slider">
+                        <span class="slider-value" id="co2-value">4200 ppm</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Sea Level</label>
+                    <div class="slider-container">
+                        <input type="range" min="-200" max="300" value="150" class="slider" id="sea-slider">
+                        <span class="slider-value" id="sea-value">+150m</span>
+                    </div>
+                </div>
+                
+                <button class="btn" id="randomize-btn">Randomize Climate</button>
+                <button class="btn" id="reset-btn">Reset to Default</button>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3 class="info-title" id="period-title">Early Ordovician Period (485-470 million years ago)</h3>
+            <div class="info-content" id="period-info">
+                The Early Ordovician was characterized by warm, tropical climates with high sea levels. 
+                Atmospheric CO₂ levels were extremely high compared to today, leading to a greenhouse Earth. 
+                Shallow seas covered much of the continents, creating extensive marine habitats for the diverse 
+                invertebrate life that flourished during this time.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const earlyBtn = document.getElementById('early-btn');
+        const middleBtn = document.getElementById('middle-btn');
+        const lateBtn = document.getElementById('late-btn');
+        const weatherIcon = document.getElementById('weather-icon');
+        const temperatureEl = document.getElementById('temperature');
+        const humidityEl = document.getElementById('humidity');
+        const co2El = document.getElementById('co2');
+        const seaLevelEl = document.getElementById('sea-level');
+        
+        const tempSlider = document.getElementById('temp-slider');
+        const humiditySlider = document.getElementById('humidity-slider');
+        const co2Slider = document.getElementById('co2-slider');
+        const seaSlider = document.getElementById('sea-slider');
+        
+        const tempValue = document.getElementById('temp-value');
+        const humidityValue = document.getElementById('humidity-value');
+        const co2Value = document.getElementById('co2-value');
+        const seaValue = document.getElementById('sea-value');
+        
+        const randomizeBtn = document.getElementById('randomize-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        
+        const periodTitle = document.getElementById('period-title');
+        const periodInfo = document.getElementById('period-info');
+        
+        // Period data
+        const periodData = {
+            early: {
+                title: "Early Ordovician Period (485-470 million years ago)",
+                info: "The Early Ordovician was characterized by warm, tropical climates with high sea levels. Atmospheric CO₂ levels were extremely high compared to today, leading to a greenhouse Earth. Shallow seas covered much of the continents, creating extensive marine habitats for the diverse invertebrate life that flourished during this time.",
+                defaults: {
+                    temperature: 25,
+                    humidity: 65,
+                    co2: 4200,
+                    seaLevel: 150
+                }
+            },
+            middle: {
+                title: "Middle Ordovician Period (470-458 million years ago)",
+                info: "During the Middle Ordovician, Earth experienced a gradual cooling trend. Sea levels remained high, but some glaciation began at the poles. This period saw the Great Ordovician Biodiversification Event, where marine life diversified dramatically. CO₂ levels started to decline from their Early Ordovician peaks.",
+                defaults: {
+                    temperature: 22,
+                    humidity: 60,
+                    co2: 3500,
+                    seaLevel: 120
+                }
+            },
+            late: {
+                title: "Late Ordovician Period (458-443 million years ago)",
+                info: "The Late Ordovician was marked by significant climate changes, including the onset of extensive glaciation. This led to a major drop in sea levels and the Ordovician-Silurian extinction event, one of the five major extinction events in Earth's history. CO₂ levels continued to decline as the climate cooled.",
+                defaults: {
+                    temperature: 18,
+                    humidity: 55,
+                    co2: 2800,
+                    seaLevel: 50
+                }
+            }
+        };
+        
+        let currentPeriod = 'early';
+        
+        // Initialize the simulator
+        function initSimulator() {
+            setPeriod('early');
+            
+            // Add event listeners to sliders
+            tempSlider.addEventListener('input', updateTemperature);
+            humiditySlider.addEventListener('input', updateHumidity);
+            co2Slider.addEventListener('input', updateCO2);
+            seaSlider.addEventListener('input', updateSeaLevel);
+            
+            // Add event listeners to buttons
+            earlyBtn.addEventListener('click', () => setPeriod('early'));
+            middleBtn.addEventListener('click', () => setPeriod('middle'));
+            lateBtn.addEventListener('click', () => setPeriod('late'));
+            
+            randomizeBtn.addEventListener('click', randomizeClimate);
+            resetBtn.addEventListener('click', resetToDefaults);
+            
+            // Initial weather icon update
+            updateWeatherIcon();
+        }
+        
+        // Set the current period
+        function setPeriod(period) {
+            currentPeriod = period;
+            
+            // Update active button
+            earlyBtn.classList.remove('active');
+            middleBtn.classList.remove('active');
+            lateBtn.classList.remove('active');
+            
+            if (period === 'early') earlyBtn.classList.add('active');
+            if (period === 'middle') middleBtn.classList.add('active');
+            if (period === 'late') lateBtn.classList.add('active');
+            
+            // Update period info
+            periodTitle.textContent = periodData[period].title;
+            periodInfo.textContent = periodData[period].info;
+            
+            // Reset to period defaults
+            resetToDefaults();
+        }
+        
+        // Update temperature display
+        function updateTemperature() {
+            const temp = tempSlider.value;
+            tempValue.textContent = `${temp}°C`;
+            temperatureEl.textContent = `${temp}°C`;
+            updateWeatherIcon();
+        }
+        
+        // Update humidity display
+        function updateHumidity() {
+            const humidity = humiditySlider.value;
+            humidityValue.textContent = `${humidity}%`;
+            humidityEl.textContent = `${humidity}%`;
+            updateWeatherIcon();
+        }
+        
+        // Update CO2 display
+        function updateCO2() {
+            const co2 = co2Slider.value;
+            co2Value.textContent = `${co2} ppm`;
+            co2El.textContent = `${co2} ppm`;
+        }
+        
+        // Update sea level display
+        function updateSeaLevel() {
+            const seaLevel = seaSlider.value;
+            const prefix = seaLevel >= 0 ? '+' : '';
+            seaValue.textContent = `${prefix}${seaLevel}m`;
+            seaLevelEl.textContent = `${prefix}${seaLevel}m`;
+        }
+        
+        // Update weather icon based on conditions
+        function updateWeatherIcon() {
+            const temp = parseInt(tempSlider.value);
+            const humidity = parseInt(humiditySlider.value);
+            
+            let icon = '☀️'; // Default sunny
+            
+            if (temp < 15) {
+                if (humidity > 70) {
+                    icon = '❄️'; // Snow
+                } else {
+                    icon = '☁️'; // Cloudy
+                }
+            } else if (temp >= 15 && temp < 25) {
+                if (humidity > 70) {
+                    icon = '🌧️'; // Rain
+                } else {
+                    icon = '⛅'; // Partly cloudy
+                }
+            } else {
+                if (humidity > 70) {
+                    icon = '⛈️'; // Thunderstorm
+                } else if (humidity > 50) {
+                    icon = '🌤️'; // Partly sunny
+                } else {
+                    icon = '☀️'; // Sunny
+                }
+            }
+            
+            weatherIcon.textContent = icon;
+        }
+        
+        // Randomize climate parameters
+        function randomizeClimate() {
+            const defaults = periodData[currentPeriod].defaults;
+            
+            // Generate random values within reasonable ranges for the period
+            const randomTemp = Math.floor(Math.random() * 15) + (defaults.temperature - 7);
+            const randomHumidity = Math.floor(Math.random() * 30) + (defaults.humidity - 15);
+            const randomCO2 = Math.floor(Math.random() * 2000) + (defaults.co2 - 1000);
+            const randomSea = Math.floor(Math.random() * 100) + (defaults.seaLevel - 50);
+            
+            // Apply random values
+            tempSlider.value = Math.max(10, Math.min(40, randomTemp));
+            humiditySlider.value = Math.max(10, Math.min(90, randomHumidity));
+            co2Slider.value = Math.max(1000, Math.min(8000, randomCO2));
+            seaSlider.value = Math.max(-200, Math.min(300, randomSea));
+            
+            // Update displays
+            updateTemperature();
+            updateHumidity();
+            updateCO2();
+            updateSeaLevel();
+        }
+        
+        // Reset to period defaults
+        function resetToDefaults() {
+            const defaults = periodData[currentPeriod].defaults;
+            
+            tempSlider.value = defaults.temperature;
+            humiditySlider.value = defaults.humidity;
+            co2Slider.value = defaults.co2;
+            seaSlider.value = defaults.seaLevel;
+            
+            updateTemperature();
+            updateHumidity();
+            updateCO2();
+            updateSeaLevel();
+        }
+        
+        // Initialize the simulator when the page loads
+        window.addEventListener('DOMContentLoaded', initSimulator);
+    </script>
+</body>
+</html>
