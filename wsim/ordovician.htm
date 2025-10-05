@@ -1,5 +1,4 @@
-tive');
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -395,36 +394,66 @@ tive');
             
             <div class="tab-content active" id="charts-tab">
                 <h3>Climate Data Visualization</h3>
-                <div class="chart-container">
-                    <canvas id="climate-chart"></canvas>
-                </div>
-                <p>This chart shows the relationship between CO₂ levels and other climate variables throughout the Ordovician period.</p>
-            </div>
+                <div class="chart-controls" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;align-items:end;">
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
+        <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+      </div>
+      <div class="field" style="display:grid;gap:.25rem;">
+        <label for="popInput" style="font-size:12px;">Set pressure</label>
+        <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+      </div>
+<div class="field" style="display:grid;gap:.25rem;">
+        <label for="varSelect" style="font-size:12px;">Trend</label>
+        <select id="varSelect" aria-label="Trend"
+                style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
+                onchange="this.value==='temp'?stmp():this.value=='wspd'?swspd():this.value==='hum'?shum():spres();">
+          <option value="temp" selected>Temperature</option>
+          <option value="hum">Humidity</option>
+          <option value="pres">Pressure</option>
+          <option value="wspd">Wind speed</option>
+        </select>
+</div>
+      
+      
+
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
+      </div>
+    </div>
+
+    <canvas id="varChart"></canvas>
+
+    <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
+    </div>
+  </div>
+  
+  </section></div>
             
             <div class="tab-content" id="tasks-tab">
-                <h3>Research Tasks</h3>
-                <div class="tasks-container">
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <span class="task-text">Analyze the impact of high CO₂ levels on Ordovician marine life</span>
-                    </div>
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <span class="task-text">Study the relationship between sea level changes and biodiversity</span>
-                    </div>
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <span class="task-text">Compare Ordovician atmospheric conditions with modern climate</span>
-                    </div>
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <span class="task-text">Investigate the causes of the Late Ordovician glaciation</span>
-                    </div>
-                    <div class="task-item">
-                        <input type="checkbox" class="task-checkbox">
-                        <span class="task-text">Model the effects of wind patterns on Ordovician ocean currents</span>
-                    </div>
-                </div>
+                <h3>WeatherTasks</h3>
+                <p>Keep variables within the reasonable limits for the current climate. Each task shows OK/warn and contributes to your score.</p>
+
+    <div id="tasksList">
+      <!-- tasks inserted by JS -->
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+      <div>
+        <div>Current score</div>
+        <div class="score-display" id="score">0</div>
+      </div>
+      <div style="text-align:right">
+        <button id="submitScoreBtn">Submit score</button>
+      </div>
+    </div>
                 <button class="btn" id="add-task-btn" style="margin-top: 15px;">Add New Task</button>
             </div>
         </div>
@@ -831,5 +860,126 @@ tive');
         // Initialize the simulator when the page loads
         window.addEventListener('DOMContentLoaded', initSimulator);
     </script>
+        <script src="js/wsim.js"></script>
+<script>
+/* Leaderboard + Tasks logic (localStorage-based) */
+const TASKS = [
+  { id: 'temp', label: 'Temperature (°C)', key: 'tmpi', goal: [20, 30], weight: 3 },
+  { id: 'hum', label: 'Humidity (%)', key: 'humi', goal: [50, 80], weight: 2 },
+  { id: 'wind', label: 'Wind (km/h)', key: 'windi', goal: [0, 40], weight: 1 },
+  { id: 'pres', label: 'Pressure (hPa)', key: 'presi', goal: [1005, 1025], weight: 2 }
+];
+
+function $(id){return document.getElementById(id);} 
+
+function renderTasks(){
+  const container = $('tasksList');
+  container.innerHTML = '';
+  TASKS.forEach(t=>{
+    const div = document.createElement('div');
+    div.className = 'task';
+    div.id = 'task-'+t.id;
+    div.innerHTML = `<div style="text-align:left"><strong>${t.label}</strong><div style="font-size:12px;color:#556">Target: ${t.goal[0]} — ${t.goal[1]}</div></div><div class="task-val" id="val-${t.id}">—</div>`;
+    container.appendChild(div);
+  });
+}
+
+function readInputValue(key){
+  const el = $(key);
+  if(!el) return NaN;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? NaN : v;
+}
+
+function computeScore(){
+  let totalWeight = 0;
+  let score = 0;
+  TASKS.forEach(t=>{
+    totalWeight += t.weight;
+    const v = readInputValue(t.key);
+    const el = $('task-'+t.id);
+    const valEl = $('val-'+t.id);
+    if(isNaN(v)){
+      el.className = 'task warn';
+      valEl.textContent = '—';
+      return;
+    }
+    valEl.textContent = v;
+    const [low, high] = t.goal;
+    // if inside range -> full points; if outside -> partial based on distance
+    if(v >= low && v <= high){
+      el.className = 'task ok';
+      score += t.weight;
+    } else {
+      el.className = 'task warn';
+      // partial credit: the further away, the smaller (clamped)
+      const dist = Math.min(Math.abs(v - (v < low ? low : high)), Math.max(1, Math.abs(v))); // simple scale
+      const partial = Math.max(0, t.weight - Math.min(t.weight, dist/5));
+      score += partial;
+    }
+  });
+  // normalize to integer 0..100
+  const normalized = Math.round((score / totalWeight) * 100);
+  $('score').textContent = normalized;
+  return normalized;
+}
+
+function attachListeners(){
+  ['tmpi','humi','windi','presi','houri','moni','yei','titi'].forEach(id=>{
+    const el = $(id);
+    if(el) el.addEventListener('input', computeScore);
+  });
+  $('randomizeBtn').addEventListener('click', ()=>{
+    $('tmpi').value = (20 + Math.random()*10).toFixed(1);
+    $('humi').value = (50 + Math.random()*30).toFixed(1);
+    $('windi').value = (5 + Math.random()*20).toFixed(1);
+    $('presi').value = (1008 + Math.random()*20).toFixed(1);
+    computeScore();
+  });
+  $('resetInputs').addEventListener('click', ()=>{
+    $('tmpi').value=''; $('humi').value=''; $('windi').value=''; $('presi').value=''; computeScore();
+  });
+  $('submitScoreBtn').addEventListener('click', submitScore);
+  $('clearLeaderboard').addEventListener('click', ()=>{ if(confirm('Clear leaderboard?')){ localStorage.removeItem('wsim_leaderboard'); renderLeaderboard(); }});
+  $('exportLeaderboard').addEventListener('click', ()=>{ exportLeaderboard(); });
+}
+
+function submitScore(){
+  const score = computeScore();
+  const name = prompt('Enter your name for the leaderboard (max 24 chars):') || '';
+  const trimmed = name.trim().slice(0,24) || 'Anonymous';
+  const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
+  board.push({ name: trimmed, score, date: new Date().toISOString() });
+  board.sort((a,b)=>b.score - a.score || new Date(a.date) - new Date(b.date));
+  const top = board.slice(0, 10);
+  localStorage.setItem('wsim_leaderboard', JSON.stringify(top));
+  renderLeaderboard();
+  alert('Score submitted!');
+}
+
+function renderLeaderboard(){
+  const list = $('leaderList');
+  const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
+  list.innerHTML = '';
+  board.forEach((row,i)=>{
+    const li = document.createElement('li');
+    li.textContent = `${i+1}. ${row.name} — ${row.score}`;
+    list.appendChild(li);
+  });
+}
+
+function exportLeaderboard(){
+  const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
+  const blob = new Blob([JSON.stringify(board, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'wsim-leaderboard.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+// init
+renderTasks(); attachListeners(); renderLeaderboard();
+// compute initial if values present
+computeScore();
+</script>
 </body>
 </html>
