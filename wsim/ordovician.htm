@@ -316,13 +316,19 @@
                 <h2>Current Conditions</h2>
                 <div class="weather-icon" id="weather-icon">🌊</div>
                 <div class="weather-data">
+                    
                     <div class="data-item">
-                        <div class="data-label">Atmospheric CO₂</div>
-                        <div class="data-value" id="co2">4200 ppm</div>
+                        <div class="data-label">Temperature</div>
+                        <div class="data-value" id="tmpVal">25 °C</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">Humidity</div>
+                        <div class="data-value" id="humVal">65%</div>
                     </div>
                     <div class="data-item">
                         <div class="data-label">Wind Speed</div>
-                        <div class="data-value" id="wind-speed">15 km/h</div>
+                        <div class="data-value" id="wspdVal">15 km/h</div>
                     </div>
                     <div class="data-item">
                         <div class="data-label">Pressure</div>
@@ -331,6 +337,10 @@
                     <div class="data-item">
                         <div class="data-label">Sea Level</div>
                         <div class="data-value" id="sea-level">+150m</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Atmospheric CO₂</div>
+                        <div class="data-value" id="co2">4200 ppm</div>
                     </div>
                 </div>
             </div>
@@ -860,7 +870,7 @@
         // Initialize the simulator when the page loads
         window.addEventListener('DOMContentLoaded', initSimulator);
     </script>
-        <script src="js/wsim.js"></script>
+        <script src="js/wsimorodovician.js"></script>
 <script>
 /* Leaderboard + Tasks logic (localStorage-based) */
 const TASKS = [
