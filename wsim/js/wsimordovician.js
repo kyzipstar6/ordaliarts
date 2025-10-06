@@ -1,5 +1,4 @@
-
- let trend =0;
+let trend =0;
 
 const canvas = document.getElementById('varChart');
 if (!canvas) {
