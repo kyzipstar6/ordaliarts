@@ -759,7 +759,7 @@
         function initChart() {
             const ctx = document.getElementById('climate-chart').getContext('2d');
             
-            climateChart = new Chart(ctx, {
+            const climateChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: ['Early', 'Middle', 'Late'],
@@ -858,11 +858,11 @@
             // Update the dataset for the current period
             const periodIndex = currentPeriod === 'early' ? 0 : currentPeriod === 'middle' ? 1 : 2;
             
-            climateChart.data.datasets[0].data[periodIndex] = co2;
-            climateChart.data.datasets[1].data[periodIndex] = wind;
-            climateChart.data.datasets[2].data[periodIndex] = seaLevel;
+           if(climateChart) climateChart.data.datasets[0].data[periodIndex] = co2;
+           if(climateChart)  climateChart.data.datasets[1].data[periodIndex] = wind;
+           if(climateChart)  climateChart.data.datasets[2].data[periodIndex] = seaLevel;
             
-            climateChart.update();
+            if(climateChart) climateChart.update();
         }
         
         // Initialize the simulator when the page loads
