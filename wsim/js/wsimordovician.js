@@ -44,7 +44,7 @@ const varChart = new Chart(varCtx, {
 }) ;
 let utmp =35; let ltmp = 21; let tarjh = 12;
 let score = 0;
-let tempT = 'Keep the temperature within '+ ltmp +'°C and '+ htmp +'°C for '+ tarjh + ' hours.';
+let tempT = 'Keep the temperature within '+ ltmp +'°C and '+ utmp +'°C for '+ tarjh + ' hours.';
 const humT = ['Keep the humidity within 60% and 80% for 6 hours'];
 const windT = ['Do not let the wind blow over 50 km/h today'];
 
