@@ -615,8 +615,8 @@
         // Update CO2 display
         function updateCO2() {
             const co2 = co2Slider.value;
-            co2Value.textContent = `${co2} ppm`;
-            co2El.textContent = `${co2} ppm`;
+            
+        //    co2El.textContent = `${co2} ppm`;
             updateWeatherIcon();
             updateChart();
         }
@@ -624,8 +624,8 @@
         // Update wind display
         function updateWind() {
             const wind = windSlider.value;
-            windValue.textContent = `${wind} km/h`;
-            windSpeedEl.textContent = `${wind} km/h`;
+         //   windValue.textContent = `${wind} km/h`;
+          //  windSpeedEl.textContent = `${wind} km/h`;
             updateWeatherIcon();
             updateChart();
         }
@@ -633,8 +633,8 @@
         // Update pressure display
         function updatePressure() {
             const pressure = pressureSlider.value;
-            pressureValue.textContent = `${pressure} hPa`;
-            pressureEl.textContent = `${pressure} hPa`;
+            //pressureValue.textContent = `${pressure} hPa`;
+           // pressureEl.textContent = `${pressure} hPa`;
             updateWeatherIcon();
             updateChart();
         }
@@ -643,8 +643,8 @@
         function updateSeaLevel() {
             const seaLevel = seaSlider.value;
             const prefix = seaLevel >= 0 ? '+' : '';
-            seaValue.textContent = `${prefix}${seaLevel}m`;
-            seaLevelEl.textContent = `${prefix}${seaLevel}m`;
+           // seaValue.textContent = `${prefix}${seaLevel}m`;
+            //seaLevelEl.textContent = `${prefix}${seaLevel}m`;
             updateWeatherIcon();
             updateChart();
         }
@@ -937,7 +937,7 @@ function attachListeners(){
     const el = $(id);
     if(el) el.addEventListener('input', computeScore);
   });
-  $('randomizeBtn').addEventListener('click', ()=>{
+  $('randomize-btn').addEventListener('click', ()=>{
     $('tmpi').value = (20 + Math.random()*10).toFixed(1);
     $('humi').value = (50 + Math.random()*30).toFixed(1);
     $('windi').value = (5 + Math.random()*20).toFixed(1);
