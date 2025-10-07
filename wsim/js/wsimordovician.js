@@ -42,8 +42,9 @@ const varChart = new Chart(varCtx, {
     plugins: { legend: { position: 'bottom' } }
   }
 }) ;
+let utmp =35; let ltmp = 21; let tarjh = 12;
 let score = 0;
-const tempT = ['Keep the temperature within 20°C and 26°C for a day'];
+let tempT = 'Keep the temperature within '+ ltmp +'°C and '+ htmp +'°C for '+ tarjh + ' hours.';
 const humT = ['Keep the humidity within 60% and 80% for 6 hours'];
 const windT = ['Do not let the wind blow over 50 km/h today'];
 
