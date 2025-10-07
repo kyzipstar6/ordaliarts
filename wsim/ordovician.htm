@@ -401,34 +401,51 @@
                 <button class="tab-btn active" data-tab="charts">Climate Charts</button>
                 <button class="tab-btn" data-tab="tasks">Research Tasks</button>
             </div>
-            
+              <div class="tab-content" id="tasks-tab">
+                <h3>WeatherTasks</h3>
+                <p>Keep variables within the reasonable limits for the current climate. Each task shows OK/warn and contributes to your score.</p>
+
+                <div id="tasksList">
+                  <!-- tasks inserted by JS -->
+                </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+              <div>
+                <div>Current score</div>
+                <div class="score-display" id="score">0</div>
+              </div>
+              <div style="text-align:right">
+                <button id="submitScoreBtn">Submit score</button>
+                </div>
+                </div>
+                <button class="btn" id="add-task-btn" style="margin-top: 15px;">Add New Task</button>
+            </div>
+        </div>
             <div class="tab-content active" id="charts-tab">
                 <h3>Climate Data Visualization</h3>
                 <div class="chart-controls" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;align-items:end;">
-      <div class="field" style="display:grid;gap:.25rem;">
-        <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
-        <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
-      </div>
-      <div class="field" style="display:grid;gap:.25rem;">
-        <label for="popInput" style="font-size:12px;">Set pressure</label>
-        <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
-      </div>
-<div class="field" style="display:grid;gap:.25rem;">
-        <label for="varSelect" style="font-size:12px;">Trend</label>
-        <select id="varSelect" aria-label="Trend"
-                style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
+                <div class="field" style="display:grid;gap:.25rem;">
+                    <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
+                    <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+                 </div>
+                <div class="field" style="display:grid;gap:.25rem;">
+                    <label for="popInput" style="font-size:12px;">Set pressure</label>
+                    <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+                  </div>
+                <div class="field" style="display:grid;gap:.25rem;">
+                    <label for="varSelect" style="font-size:12px;">Trend</label>
+                    <select id="varSelect" aria-label="Trend" style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
                 onchange="this.value==='temp'?stmp():this.value=='wspd'?swspd():this.value==='hum'?shum():spres();">
-          <option value="temp" selected>Temperature</option>
-          <option value="hum">Humidity</option>
-          <option value="pres">Pressure</option>
-          <option value="wspd">Wind speed</option>
-        </select>
-</div>
+              <option value="temp" selected>Temperature</option>
+                    <option value="hum">Humidity</option>
+                  <option value="pres">Pressure</option>
+                  <option value="wspd">Wind speed</option>
+                </select>
+                </div>
       
       
 
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+                 <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
       </div>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
         <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
@@ -447,26 +464,7 @@
   
   </section></div>
             
-            <div class="tab-content" id="tasks-tab">
-                <h3>WeatherTasks</h3>
-                <p>Keep variables within the reasonable limits for the current climate. Each task shows OK/warn and contributes to your score.</p>
-
-    <div id="tasksList">
-      <!-- tasks inserted by JS -->
-    </div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
-      <div>
-        <div>Current score</div>
-        <div class="score-display" id="score">0</div>
-      </div>
-      <div style="text-align:right">
-        <button id="submitScoreBtn">Submit score</button>
-      </div>
-    </div>
-                <button class="btn" id="add-task-btn" style="margin-top: 15px;">Add New Task</button>
-            </div>
-        </div>
+          
     </div>
 <script src="https://kyzipstar6.github.io/ordaliarts/wsim/js/wsimordovician.js"></script>
     <script>
