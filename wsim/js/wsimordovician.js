@@ -9,6 +9,15 @@ if (!canvas) {
 function updatePills(text){
     pillTrend.innerText= `${text}`;
 }
+let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
+    inc1 = inc1*2; inc2 = inc2*2;  
+let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
+        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 32.5;  
+        let hour = Math.ceil(ran*24);  
+        let minute = Math.ceil(ran2*60);  
+        let day = Math.ceil(ran3*31);  
+        let month = Math.ceil(ran4*12);  
+        let year = 4.3245213e08;  let chd=0;
 const pill = id => document.getElementById(id);
 const pillTmp   = pill('pillTmp');
 const pillHum   = pill('pillHum');
@@ -18,8 +27,57 @@ const pillRain    = pill('pillRain');
 const pillTrend = pill('pillTrend');
 const dirInput = document.getElementById('Input');
 const pressureInput  = document.getElementById('pressureInput');
-const varCtx = canvas.getContext('2d');
+const varCtx = canvas.getContext('2d');    
+    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+  let utmp =35; let ltmp = 21; let tarjh = 12; let hwind= 50; 
+let score = 0;
+let tempT = 'Keep the temperature within '+ ltmp +'°C and '+ utmp +'°C for '+ tarjh + ' hours.';
+const humT = 'Keep the humidity within 60% and 80% for 6 hours';
+let windT = 'Do not let the wind blow over 50 km/h today';
+const presT = 'Keep the pressure within 992 mb and 1035 mb for 6 hours';
 
+const tmptsk = document.getElementById('val-temp');
+const wndtsk = document.getElementById('val-wind');
+const humtsk = document.getElementById('val-hum'); 
+const prestsk = document.getElementById('val-pres');
+
+const scoreEl = document.getElementById('score');
+let hcounttmp , hcounthum,hcountwspd ,hcountpres=0; let hmem= hour; let mult= 1;
+let hhum= 80; let lhum= 60; let hpres=1035; let lpres=992;
+let acumulator =0;
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
+    let wspM =87; 
+let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
+    let UPPER_BOUND = 37;let LOWER_BOUND = 13; 
+function tasks(){
+    if(temp<utmp&&temp>ltmp) score +=1*mult;
+    if(temp>utmp||temp<ltmp) score -=1*mult;
+    if (wspd<hwind) score +=1*mult;
+    if (wspd>hwind) score -=1*mult;
+    if (wspd>hwind*2) score -=2*mult;
+
+    if (hum<hhum&&hum>lhum) score +=1*mult;
+    if (hum>hhum||hum<lhum) score -=1*mult;
+    if (pressure<hpres&&pressure>lpres) score +=1*mult;
+    if (pressure>hpres||pressure<lpres) score -=1*mult;
+    if(hmem!=hour){
+        
+        hcounttmp , hcounthum,hcountwspd ,hcountpres +=1*mult; 
+        
+        hmem=hour;
+    }
+    if (score>433*mult){
+        mult*=2;
+        if(utmp-ltmp>1){utmp-=1;ltmp+=1;}
+    }
+   if(tmptsk) tmptsk.innerText=`${tempT}`;
+   humtsk.innerText=`${humT}`;
+   wndtsk.innerText=`${windT}`;
+   prestsk.innerText=`${presT}`;
+    scoreEl.innerText=`${score} points `;
+
+} 
 const varChart = new Chart(varCtx, {
   type: 'line',
   data: {
@@ -42,22 +100,9 @@ const varChart = new Chart(varCtx, {
     plugins: { legend: { position: 'bottom' } }
   }
 }) ;
-let utmp =35; let ltmp = 21; let tarjh = 12;
-let score = 0;
-let tempT = 'Keep the temperature within '+ ltmp +'°C and '+ utmp +'°C for '+ tarjh + ' hours.';
-const humT = ['Keep the humidity within 60% and 80% for 6 hours'];
-const windT = ['Do not let the wind blow over 50 km/h today'];
 
 
-let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
-    inc1 = inc1*2; inc2 = inc2*2;  
-let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 32.5;  
-        let hour = Math.ceil(ran*24);  
-        let minute = Math.ceil(ran2*60);  
-        let day = Math.ceil(ran3*31);  
-        let month = Math.ceil(ran4*12);  
-        let year = 4.3245213e08;  let chd=0;
+
     function main() {  
 		
         if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=22;} if(month ==5 || month==8){ temp=24;}if(month ==4 || month==9){ temp=25.5;}  
@@ -71,14 +116,14 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
        setInterval(() => {  
                
-            document.getElementById("tmpVal").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
-            document.getElementById("humVal").innerText = `Humidity: ${hum.toFixed(1)} %`;  
-          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
-	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
-            document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
-            document.getElementById("wspdVal").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
+            document.getElementById("tmpVal").innerText = `${temp.toFixed(1)} °C`;  
+            document.getElementById("humVal").innerText = `${hum.toFixed(1)} %`;  
+          if(minute<10)  document.getElementById("hour").innerText = `${hour}:0${minute}`;  
+	       if(minute>9)  document.getElementById("hour").innerText = `${hour}:${minute}`; 
+            document.getElementById("day").innerText = `${day}/${month}/${year} BC`;  
+            document.getElementById("wspdVal").innerText = `${wspd.toFixed(1)} km/h`;  
             
-            document.getElementById("pressure").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+            document.getElementById("pressure").innerText = `${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
@@ -86,7 +131,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
-            minute = minute +3;  
+            minute = minute +9;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 24){hour =0; day = day + 1;}
 
@@ -94,11 +139,12 @@ if (day > daysInMonth[month - 1]) {
 day = 1;
 month++;
 }
+
 if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
 
 }, 20000);   
-          
+       
         
     }  
     function tempM(){  
@@ -110,34 +156,29 @@ if (hum>100) hum =89;
                setInterval(() => {  
            
             if (hour >9 && hour<14){  
-            temp +=0.1;
-            hum -= 0.1;}  
+            temp +=0.3;
+            hum -= 0.6;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.2;
-            hum += 0.2;}    
+            temp +=0.8;
+            hum += 0.6;}    
             if (hour >16 && hour<22){  
-            temp +=0.05;
-            hum -= 0.05;}    
+            temp +=0.15;
+            hum -= 0.25;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=0.05;
-            hum += 0.05;}
-            if(temp>20)temp = 19; if(temp<-30)temp = -27;
+            temp -=0.15;
+            hum += 0.25;}
+            if(temp>65)temp = 59; if(temp<-30)temp = -27;
 			
-			if(trend ==-1&&chd==0) temp-=0.2; 
-			if(trend ==1&&chd==0) temp+=0.2;
+			if(trend ==-1&&chd==0) temp-=0.6; 
+			if(trend ==1&&chd==0) temp+=0.6;
 			if(trend==0) temp +=0;
 			
-			if(trend ==-1&&chd==1) hum-=1; 
-			if(trend ==1&&chd==1) hum+=1;
+			if(trend ==-1&&chd==1) hum-=1*mult; 
+			if(trend ==1&&chd==1) hum+=1*mult;
 			if(trend==0&&chd==1) hum +=0;
         }, 60000);  
            
-    }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
-    let wspM =87; 
-let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
-    let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
-    let UPPER_BOUND = 37;let LOWER_BOUND = 13;  
+    }   
     function wind(){  
         
         setInterval(() => {  
@@ -176,8 +217,7 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
 						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
            }}, 4200);   
     }  
-    
-    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+
     function presssure() {  
 	if (pressure<977){pressure = 977;}  
 	if (pressure>1029){pressure = 1029;}  
@@ -249,7 +289,7 @@ function upChart(){
     if(chd==1)varChart.data.datasets[0].data.push(hum);
     if(chd==2)varChart.data.datasets[0].data.push(wspd);
     if(chd==3)varChart.data.datasets[0].data.push(pressure);
-    
+    tasks();
    varChart.update('none');
 	  if(chdmem!=chd){
     varChart.data.labels.length = 0;               
@@ -257,7 +297,7 @@ function upChart(){
   }            
 	  chdmem=chd;
     
-  counter +=1;
+  counter +=1*mult;
   }
 }
 const chlab = varChart.data.datasets[0].label;
@@ -296,7 +336,7 @@ function wfoals(){
     }, 180000);
 }
 
-
+main();
 tempM();  boundSetter();
 wind();  
 presssure();   
