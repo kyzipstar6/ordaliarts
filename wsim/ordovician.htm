@@ -342,6 +342,10 @@
                         <div class="data-label">Atmospheric CO₂</div>
                         <div class="data-value" id="co2">4200 ppm</div>
                     </div>
+                    <div class="data-item">
+                        <div class="data-label">Day & Date</div>
+                        <div class="data-value" id="hour">0:00</div> <div class="data-value" id="day">465498765 BC</div>
+                    </div>
                 </div>
             </div>
             
@@ -401,21 +405,22 @@
                 <button class="tab-btn active" data-tab="charts">Climate Charts</button>
                 <button class="tab-btn" data-tab="tasks">Research Tasks</button>
             </div>
-              <div class="tab-content" id="tasks-tab">
+              <div class="tab-content active" id="tasks-tab">
                 <h3>WeatherTasks</h3>
                 <p>Keep variables within the reasonable limits for the current climate. Each task shows OK/warn and contributes to your score.</p>
 
-                <div id="tasksList">
-                  <!-- tasks inserted by JS -->
-                </div>
+                <div id="tasksLis"><div class="task warn" id="task-temp"><div style="text-align:left"><strong>Temperature (°C)</strong><div style="font-size:12px;color:#556">Target: 20 — 30</div></div><div class="task-val" id="val-temp">—</div></div><div class="task warn" id="task-hum"><div style="text-align:left"><strong>Humidity (%)</strong><div style="font-size:12px;color:#556">Target: 50 — 80</div></div><div class="task-val" id="val-hum">—</div></div><div class="task warn" id="task-wind"><div style="text-align:left"><strong>Wind (km/h)</strong><div style="font-size:12px;color:#556">Target: 0 — 40</div></div><div class="task-val" id="val-wind">—</div></div><div class="task warn" id="task-pres"><div style="text-align:left"><strong>Pressure (hPa)</strong><div style="font-size:12px;color:#556">Target: 1005 — 1025</div></div><div class="task-val" id="val-pres">—</div></div></div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
               <div>
-                <div>Current score</div>
-                <div class="score-display" id="score">0</div>
+                <div>Current score :</div><div class="score-display" id="score">0</div>
+
+                <div class="score-display" id="leaderList"><li>1. francis — 100</li></div>
               </div>
               <div style="text-align:right">
                 <button id="submitScoreBtn">Submit score</button>
-                </div>
+                <button id="exportLeaderboard">Export Leaderboard</button>
+
+                 </div>
                 </div>
                 <button class="btn" id="add-task-btn" style="margin-top: 15px;">Add New Task</button>
             </div>
@@ -462,11 +467,15 @@
     </div>
   </div>
   
-  </section></div>
+  </div>
+  <div class ="tab-content-active" id ="climate-tab">
+    <canvas id="climate-chart"></canvas>
+
+  </div>
             
           
     </div>
-<script src="https://kyzipstar6.github.io/ordaliarts/wsim/js/wsimordovician.js"></script>
+<script src="js/wsimordovician.js"></script>
     <script>
         // DOM Elements
         const earlyBtn = document.getElementById('early-btn');
@@ -881,7 +890,7 @@ const TASKS = [
 function $(id){return document.getElementById(id);} 
 
 function renderTasks(){
-  const container = $('tasksList');
+  const container = $('tasksLis');
   container.innerHTML = '';
   TASKS.forEach(t=>{
     const div = document.createElement('div');
@@ -889,6 +898,13 @@ function renderTasks(){
     div.id = 'task-'+t.id;
     div.innerHTML = `<div style="text-align:left"><strong>${t.label}</strong><div style="font-size:12px;color:#556">Target: ${t.goal[0]} — ${t.goal[1]}</div></div><div class="task-val" id="val-${t.id}">—</div>`;
     container.appendChild(div);
+  });
+}
+let score = 0;
+function readScore(){
+    ['score','score'].forEach(id=>{
+    const el = $(id);
+    if(el) score =el;
   });
 }
 
@@ -901,7 +917,7 @@ function readInputValue(key){
 
 function computeScore(){
   let totalWeight = 0;
-  let score = 0;
+
   TASKS.forEach(t=>{
     totalWeight += t.weight;
     const v = readInputValue(t.key);
@@ -944,12 +960,12 @@ function attachListeners(){
     $('presi').value = (1008 + Math.random()*20).toFixed(1);
     computeScore();
   });
-  $('resetInputs').addEventListener('click', ()=>{
+  $('reset-btn').addEventListener('click', ()=>{
     $('tmpi').value=''; $('humi').value=''; $('windi').value=''; $('presi').value=''; computeScore();
   });
-  $('submitScoreBtn').addEventListener('click', submitScore);
-  $('clearLeaderboard').addEventListener('click', ()=>{ if(confirm('Clear leaderboard?')){ localStorage.removeItem('wsim_leaderboard'); renderLeaderboard(); }});
+  $('submitScoreBtn').addEventListener('click',readScore, submitScore);
   $('exportLeaderboard').addEventListener('click', ()=>{ exportLeaderboard(); });
+
 }
 
 function submitScore(){
