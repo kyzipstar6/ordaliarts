@@ -318,7 +318,7 @@ const thals = ["It is too hot, if you don't make temperature lower, fauna will d
     "It is too hot, if you don't make temperature lower, habitants will go elsewhere."];
 const tlals = ["It is too cold, if you don't make temperature higher, fauna will die.", "It is too cold, if you don't make temperature higher, fauna will die.", 
     "It is too cold, if you don't make temperature higher, habitants will go elsewhere."];
-const hlals = ["The vegetation will dry out if you don't make humidity higher.", "The vegetation will dry out if you don't make humidity higher.", 
+const hlals = ["The vegetation will dry out if you don't make humidity higher.", "I'm so thirsty... I wish the air was more wet..", 
     "Who has let humidity fall so low?"];
 const phals= ["The pressure is too high, you should make it lower.","The pressure is too high, you should make it lower.","The pressure is too high, you should make it lower."]
 const plals= ["The pressure is too low, you should make it higher.","The pressure is too low, you should make it higher.",
