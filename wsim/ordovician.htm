@@ -415,8 +415,8 @@
                 <div class="score-display" id="leaderList"><li>1. francis — 100</li></div>
               </div>
               <div style="text-align:right">
-                <button class="tab-btn" id="submitScoreBtn" onclickn=submitScore>Submit score</button>
-                <button class="tab-btn id="exportLeaderboard" onaction=exportLeaderboard()>Export Leaderboard</button>
+                <button class="btn steady" id="submitScoreBtn" onclick=submitScore()>Submit score</button>
+                <button class="btn steady" id="exportLeaderboard" onclick=exportLeaderboard()>Export Leaderboard</button>
 
                  </div>
                 </div>
@@ -443,22 +443,8 @@
                   <option value="pres">Pressure</option>
                   <option value="wspd">Wind speed</option>
                 </select>
-                </div>
-      
-      
-
-                <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-                 <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
-      </div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
-      </div>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
-      </div>
-    </div>
-
-    <canvas id="varChart"></canvas>
+                
+      <canvas id="varChart"></canvas>
 
     <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
       <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
@@ -472,24 +458,31 @@
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
         <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
       </div>
+      
+
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+                 <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
+      </div>
     </div>
 
-    <canvas id="varChart"></canvas>
-
-    <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
-      <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
+    
     </div>
-  </div>
-  
-  </div>
-  <div class ="tab-content-active" id ="climate-tab">
-    <canvas id="climate-chart"></canvas>
-  
-  </div>
-  <div class ="tab-content-active" id ="climate-tab">
-    <canvas id="climate-chart"></canvas>
 
+    
   </div>
+  
+  
+  <div class ="tab-content-active" id ="climate-tab">
+    <canvas id="climate-chart"></canvas>
+  </div>
+  </div>
+
             
           
     </div>
