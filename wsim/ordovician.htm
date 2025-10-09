@@ -444,12 +444,12 @@
                   <option value="wspd">Wind speed</option>
                 </select>
                 
-      <canvas id="varChart"></canvas>
+      <canvas id="varChart">
 
     <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
       <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
     </div>
-  </div><div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
                  <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
       </div>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
@@ -469,23 +469,25 @@
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
         <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
       </div>
-    </div>
-
-    
-    </div>
-
-    
-  </div>
-  
-  
-  <div class ="tab-content-active" id ="climate-tab">
+          
     <canvas id="climate-chart"></canvas>
-  </div>
-  </div>
+          </div>
+      </canvas>
+    </div>
+
+    
+    </div>
+
+    
+  
+  
+  
+  
+  
 
             
           
-    </div>
+    
 <script src="js/wsimordovician.js"></script>
     <script>
         // DOM Elements
