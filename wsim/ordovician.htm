@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordovician Weather Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .period-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .period-btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .period-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .period-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .simulator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .weather-display {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .weather-icon {
+            font-size: 6rem;
+            text-align: center;
+            margin: 20px 0;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .weather-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .data-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .data-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .data-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        .control-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .slider {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .slider-value {
+            width: 50px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .info-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .info-content {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        /* Tabs Section */
+        .tabs-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tabs-header {
+            display: flex;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 25px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .tasks-container {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .task-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .task-checkbox {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+        
+        .task-text {
+            flex: 1;
+        }
+        
+        .task-completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .simulator-container {
+                flex-direction: column;
+            }
+            
+            .weather-data {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ordovician Weather Simulator</h1>
+            <p class="subtitle">Experience Earth's climate 485 to 443 million years ago</p>
+        </header>
+        
+        <div class="period-selector">
+            <button class="period-btn active" id="early-btn">Early Ordovician</button>
+            <button class="period-btn" id="middle-btn">Middle Ordovician</button>
+            <button class="period-btn" id="late-btn">Late Ordovician</button>
+        </div>
+        
+        <div class="simulator-container">
+            <div class="weather-display">
+                <h2>Current Conditions</h2>
+                <div class="weather-icon" id="weather-icon">🌊</div>
+                <div class="weather-data">
+                    
+                    <div class="data-item">
+                        <div class="data-label">Temperature</div>
+                        <div class="data-value" id="tmpVal">25 °C</div>
+                    </div>
+                    
+                    <div class="data-item">
+                        <div class="data-label">Humidity</div>
+                        <div class="data-value" id="humVal">65%</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Wind Speed</div>
+                        <div class="data-value" id="wspdVal">15 km/h</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Pressure</div>
+                        <div class="data-value" id="pressure">1015 hPa</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Sea Level</div>
+                        <div class="data-value" id="sea-level">+150m</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Atmospheric CO₂</div>
+                        <div class="data-value" id="co2">4200 ppm</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Day & Date</div>
+                        <div class="data-value" id="hour">0:00</div> <div class="data-value" id="day">465498765 BC</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <h2>Climate Controls</h2>
+                
+                <div class="control-group">
+                    <label class="control-label">CO₂ Concentration</label>
+                    <div class="slider-container">
+                        <input type="range" min="1000" max="8000" value="4200" class="slider" id="co2-slider">
+                        <span class="slider-value" id="co2-value">4200 ppm</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Wind Speed</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="15" class="slider" id="wind-slider">
+                        <span class="slider-value" id="wind-value">15 km/h</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Pressure</label>
+                    <div class="slider-container">
+                        <input type="range" min="980" max="1040" value="1015" class="slider" id="pressure-slider">
+                        <span class="slider-value" id="pressure-value">1015 hPa</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Sea Level</label>
+                    <div class="slider-container">
+                        <input type="range" min="-200" max="300" value="150" class="slider" id="sea-slider">
+                        <span class="slider-value" id="sea-value">+150m</span>
+                    </div>
+                </div>
+                
+                <button class="btn" id="randomize-btn">Randomize Climate</button>
+                <button class="btn" id="reset-btn">Reset to Default</button>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3 class="info-title" id="period-title">Early Ordovician Period (485-470 million years ago)</h3>
+            <div class="info-content" id="period-info">
+                The Early Ordovician was characterized by warm, tropical climates with high sea levels. 
+                Atmospheric CO₂ levels were extremely high compared to today, leading to a greenhouse Earth. 
+                Shallow seas covered much of the continents, creating extensive marine habitats for the diverse 
+                invertebrate life that flourished during this time.
+            </div>
+        </div>
+        
+        <!-- Tabs Section -->
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="charts">Climate Charts</button>
+                <button class="tab-btn" data-tab="tasks">Research Tasks</button>
+            </div>
+              <div class="tab-content active" id="tasks-tab">
+                <h3>WeatherTasks</h3>
+                <p>Keep variables within the reasonable limits for the current climate. Each task shows OK/warn and contributes to your score.</p>
+
+                <div id="tasksLis"><div class="task warn" id="task-temp"><div style="text-align:left"><strong>Temperature (°C)</strong><div style="font-size:12px;color:#556">Target: 20 — 30</div></div><div class="task-val" id="val-temp">—</div></div><div class="task warn" id="task-hum"><div style="text-align:left"><strong>Humidity (%)</strong><div style="font-size:12px;color:#556">Target: 50 — 80</div></div><div class="task-val" id="val-hum">—</div></div><div class="task warn" id="task-wind"><div style="text-align:left"><strong>Wind (km/h)</strong><div style="font-size:12px;color:#556">Target: 0 — 40</div></div><div class="task-val" id="val-wind">—</div></div><div class="task warn" id="task-pres"><div style="text-align:left"><strong>Pressure (hPa)</strong><div style="font-size:12px;color:#556">Target: 1005 — 1025</div></div><div class="task-val" id="val-pres">—</div></div></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+              <div>
+                <div>Current score :</div><div class="score-display" id="score">0</div>
+
+                <div class="score-display" id="leaderList"><li>1. francis — 100</li></div>
+              </div>
+              <div style="text-align:right">
+                <button id="submitScoreBtn" onaction=submitScore()>Submit score</button>
+                <button id="exportLeaderboard" onaction=exportLeaderboard()>Export Leaderboard</button>
+
+                 </div>
+                </div>
+                <button class="btn" id="add-task-btn" style="margin-top: 15px;">Add New Task</button>
+            </div>
+        </div>
+            <div class="tab-content active" id="charts-tab">
+                <h3>Climate Data Visualization</h3>
+                <div class="chart-controls" style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.5rem;align-items:end;">
+                <div class="field" style="display:grid;gap:.25rem;">
+                    <label for="windDirInput" style="font-size:12px;">Change Wind direction</label>
+                    <input id="Input" type="number" step="1" value="22" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+                 </div>
+                <div class="field" style="display:grid;gap:.25rem;">
+                    <label for="popInput" style="font-size:12px;">Set pressure</label>
+                    <input id="popInput" type="number" step="1" value="1023" style="padding:.5rem .6rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;">
+                  </div>
+                <div class="field" style="display:grid;gap:.25rem;">
+                    <label for="varSelect" style="font-size:12px;">Trend</label>
+                    <select id="varSelect" aria-label="Trend" style="padding:.55rem .7rem;border:1px solid #cfcfcf;border-radius:10px;font-size:14px;"
+                onchange="this.value==='temp'?stmp():this.value=='wspd'?swspd():this.value==='hum'?shum():spres();">
+              <option value="temp" selected>Temperature</option>
+                    <option value="hum">Humidity</option>
+                  <option value="pres">Pressure</option>
+                  <option value="wspd">Wind speed</option>
+                </select>
+                </div>
+      
+      
+
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+                 <button class="btn steady"  type="button" onclick="steady()">Make value steady</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn grow"    type="button" onclick="rise()">Make value rise</button>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn decline" type="button" onclick="fall()">Make value fall</button>
+      </div>
+    </div>
+
+    <canvas id="varChart"></canvas>
+
+    <div class="buttons" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <button class="btn secondary" type="button" onclick="resetChart()">Reset chart</button>
+    </div>
+  </div>
+  
+  </div>
+  <div class ="tab-content-active" id ="climate-tab">
+    <canvas id="climate-chart"></canvas>
+
+  </div>
+            
+          
+    </div>
+<script src="js/wsimordovician.js"></script>
+    <script>
+        // DOM Elements
+        const earlyBtn = document.getElementById('early-btn');
+        const middleBtn = document.getElementById('middle-btn');
+        const lateBtn = document.getElementById('late-btn');
+        const weatherIcon = document.getElementById('weather-icon');
+        const co2El = document.getElementById('co2');
+        const windSpeedEl = document.getElementById('wind-speed');
+        const pressureEl = document.getElementById('pressure');
+        const seaLevelEl = document.getElementById('sea-level');
+        
+        const co2Slider = document.getElementById('co2-slider');
+        const windSlider = document.getElementById('wind-slider');
+        const pressureSlider = document.getElementById('pressure-slider');
+        const seaSlider = document.getElementById('sea-slider');
+        
+        const co2Value = document.getElementById('co2-value');
+        const windValue = document.getElementById('wind-value');
+        const pressureValue = document.getElementById('pressure-value');
+        const seaValue = document.getElementById('sea-value');
+        
+        const randomizeBtn = document.getElementById('randomize-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        
+        const periodTitle = document.getElementById('period-title');
+        const periodInfo = document.getElementById('period-info');
+        
+        // Tab elements
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Task elements
+        const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+        const addTaskBtn = document.getElementById('add-task-btn');
+        
+        // Chart variable
+        let climateChart;
+        
+        // Period data
+        const periodData = {
+            early: {
+                title: "Early Ordovician Period (485-470 million years ago)",
+                info: "The Early Ordovician was characterized by warm, tropical climates with high sea levels. Atmospheric CO₂ levels were extremely high compared to today, leading to a greenhouse Earth. Shallow seas covered much of the continents, creating extensive marine habitats for the diverse invertebrate life that flourished during this time.",
+                defaults: {
+                    co2: 4200,
+                    wind: 15,
+                    pressure: 1015,
+                    seaLevel: 150
+                }
+            },
+            middle: {
+                title: "Middle Ordovician Period (470-458 million years ago)",
+                info: "During the Middle Ordovician, Earth experienced a gradual cooling trend. Sea levels remained high, but some glaciation began at the poles. This period saw the Great Ordovician Biodiversification Event, where marine life diversified dramatically. CO₂ levels started to decline from their Early Ordovician peaks.",
+                defaults: {
+                    co2: 3500,
+                    wind: 18,
+                    pressure: 1012,
+                    seaLevel: 120
+                }
+            },
+            late: {
+                title: "Late Ordovician Period (458-443 million years ago)",
+                info: "The Late Ordovician was marked by significant climate changes, including the onset of extensive glaciation. This led to a major drop in sea levels and the Ordovician-Silurian extinction event, one of the five major extinction events in Earth's history. CO₂ levels continued to decline as the climate cooled.",
+                defaults: {
+                    co2: 2800,
+                    wind: 22,
+                    pressure: 1008,
+                    seaLevel: 50
+                }
+            }
+        };
+        
+        let currentPeriod = 'early';
+        
+        // Initialize the simulator
+        function initSimulator() {
+            setPeriod('early');
+            
+            // Add event listeners to sliders
+            co2Slider.addEventListener('input', updateCO2);
+            windSlider.addEventListener('input', updateWind);
+            pressureSlider.addEventListener('input', updatePressure);
+            seaSlider.addEventListener('input', updateSeaLevel);
+            
+            // Add event listeners to buttons
+            earlyBtn.addEventListener('click', () => setPeriod('early'));
+            middleBtn.addEventListener('click', () => setPeriod('middle'));
+            lateBtn.addEventListener('click', () => setPeriod('late'));
+            
+            randomizeBtn.addEventListener('click', randomizeClimate);
+            resetBtn.addEventListener('click', resetToDefaults);
+            
+            // Tab functionality
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    openTab(tabId);
+                });
+            });
+            
+            // Task functionality
+            taskCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const taskText = this.nextElementSibling;
+                    if (this.checked) {
+                        taskText.classList.add('task-completed');
+                    } else {
+                        taskText.classList.remove('task-completed');
+                    }
+                });
+            });
+            
+            addTaskBtn.addEventListener('click', addNewTask);
+            
+            // Initialize chart
+            initChart();
+            
+            // Initial weather icon update
+            updateWeatherIcon();
+        }
+        
+        // Set the current period
+        function setPeriod(period) {
+            currentPeriod = period;
+            
+            // Update active button
+            earlyBtn.classList.remove('active');
+            middleBtn.classList.remove('active');
+            lateBtn.classList.remove('active');
+            
+            if (period === 'early') earlyBtn.classList.add('active');
+            if (period === 'middle') middleBtn.classList.add('active');
+            if (period === 'late') lateBtn.classList.add('active');
+            
+            // Update period info
+            periodTitle.textContent = periodData[period].title;
+            periodInfo.textContent = periodData[period].info;
+            
+            // Reset to period defaults
+            resetToDefaults();
+            
+            // Update chart
+            updateChart();
+        }
+        
+        // Update CO2 display
+        function updateCO2() {
+            const co2 = co2Slider.value;
+            
+        //    co2El.textContent = `${co2} ppm`;
+            updateWeatherIcon();
+            updateChart();
+        }
+        
+        // Update wind display
+        function updateWind() {
+            const wind = windSlider.value;
+         //   windValue.textContent = `${wind} km/h`;
+          //  windSpeedEl.textContent = `${wind} km/h`;
+            updateWeatherIcon();
+            updateChart();
+        }
+        
+        // Update pressure display
+        function updatePressure() {
+            const pressure = pressureSlider.value;
+            //pressureValue.textContent = `${pressure} hPa`;
+           // pressureEl.textContent = `${pressure} hPa`;
+            updateWeatherIcon();
+            updateChart();
+        }
+        
+        // Update sea level display
+        function updateSeaLevel() {
+            const seaLevel = seaSlider.value;
+            const prefix = seaLevel >= 0 ? '+' : '';
+           // seaValue.textContent = `${prefix}${seaLevel}m`;
+            //seaLevelEl.textContent = `${prefix}${seaLevel}m`;
+            updateWeatherIcon();
+            updateChart();
+        }
+        
+        // Update weather icon based on conditions
+        function updateWeatherIcon() {
+            const co2 = parseInt(co2Slider.value);
+            const wind = parseInt(windSlider.value);
+            const pressure = parseInt(pressureSlider.value);
+            
+            let icon = '🌊'; // Default marine
+            
+            if (co2 > 5000) {
+                icon = '🔥'; // High CO2 - hot conditions
+            } else if (wind > 50) {
+                icon = '💨'; // High wind
+            } else if (pressure < 1000) {
+                icon = '🌪️'; // Low pressure - stormy
+            } else if (pressure > 1020) {
+                icon = '☀️'; // High pressure - calm
+            } else {
+                icon = '🌊'; // Normal marine conditions
+            }
+            
+            weatherIcon.textContent = icon;
+        }
+        
+        // Randomize climate parameters
+        function randomizeClimate() {
+            const defaults = periodData[currentPeriod].defaults;
+            
+            // Generate random values within reasonable ranges for the period
+            const randomCO2 = Math.floor(Math.random() * 2000) + (defaults.co2 - 1000);
+            const randomWind = Math.floor(Math.random() * 30) + (defaults.wind - 15);
+            const randomPressure = Math.floor(Math.random() * 40) + (defaults.pressure - 20);
+            const randomSea = Math.floor(Math.random() * 100) + (defaults.seaLevel - 50);
+            
+            // Apply random values
+            co2Slider.value = Math.max(1000, Math.min(8000, randomCO2));
+            windSlider.value = Math.max(0, Math.min(100, randomWind));
+            pressureSlider.value = Math.max(980, Math.min(1040, randomPressure));
+            seaSlider.value = Math.max(-200, Math.min(300, randomSea));
+            
+            // Update displays
+            updateCO2();
+            updateWind();
+            updatePressure();
+            updateSeaLevel();
+        }
+        
+        // Reset to period defaults
+        function resetToDefaults() {
+            const defaults = periodData[currentPeriod].defaults;
+            
+            co2Slider.value = defaults.co2;
+            windSlider.value = defaults.wind;
+            pressureSlider.value = defaults.pressure;
+            seaSlider.value = defaults.seaLevel;
+            
+            updateCO2();
+            updateWind();
+            updatePressure();
+            updateSeaLevel();
+        }
+        
+        // Tab functionality
+        function openTab(tabId) {
+            // Hide all tab contents
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            tabBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+            
+            // Activate the clicked tab button
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        }
+        
+        // Task functionality
+        function addNewTask() {
+            const taskText = prompt("Enter a new research task:");
+            if (taskText) {
+                const tasksContainer = document.querySelector('.tasks-container');
+                const taskItem = document.createElement('div');
+                taskItem.className = 'task-item';
+                taskItem.innerHTML = `
+                    <input type="checkbox" class="task-checkbox">
+                    <span class="task-text">${taskText}</span>
+                `;
+                tasksContainer.appendChild(taskItem);
+                
+                // Add event listener to the new checkbox
+                const newCheckbox = taskItem.querySelector('.task-checkbox');
+                newCheckbox.addEventListener('change', function() {
+                    const taskTextElement = this.nextElementSibling;
+                    if (this.checked) {
+                        taskTextElement.classList.add('task-completed');
+                    } else {
+                        taskTextElement.classList.remove('task-completed');
+                    }
+                });
+            }
+        }
+        
+        // Chart functionality
+        function initChart() {
+            const ctx = document.getElementById('climate-chart').getContext('2d');
+            
+            const climateChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Early', 'Middle', 'Late'],
+                    datasets: [
+                        {
+                            label: 'CO₂ (ppm)',
+                            data: [4200, 3500, 2800],
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            yAxisID: 'y',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Wind Speed (km/h)',
+                            data: [15, 18, 22],
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            yAxisID: 'y1',
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Sea Level (m)',
+                            data: [150, 120, 50],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            yAxisID: 'y2',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Ordovician Period'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'CO₂ (ppm)'
+                            },
+                            min: 2000,
+                            max: 5000
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Wind Speed (km/h)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                            min: 10,
+                            max: 30
+                        },
+                        y2: {
+                            type: 'linear',
+                            display: false,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Sea Level (m)'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                            min: 0,
+                            max: 200
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateChart() {
+            // Update chart data based on current slider values
+            const co2 = parseInt(co2Slider.value);
+            const wind = parseInt(windSlider.value);
+            const seaLevel = parseInt(seaSlider.value);
+            
+            // Update the dataset for the current period
+            const periodIndex = currentPeriod === 'early' ? 0 : currentPeriod === 'middle' ? 1 : 2;
+            
+           if(climateChart) climateChart.data.datasets[0].data[periodIndex] = co2;
+           if(climateChart)  climateChart.data.datasets[1].data[periodIndex] = wind;
+           if(climateChart)  climateChart.data.datasets[2].data[periodIndex] = seaLevel;
+            
+            if(climateChart) climateChart.update();
+        }
+        
+        // Initialize the simulator when the page loads
+        window.addEventListener('DOMContentLoaded', initSimulator);
+    </script>
+        
+<script>
+/* Leaderboard + Tasks logic (localStorage-based) */
+const TASKS = [
+  { id: 'temp', label: 'Temperature (°C)', key: 'tmpi', goal: [20, 30], weight: 3 },
+  { id: 'hum', label: 'Humidity (%)', key: 'humi', goal: [50, 80], weight: 2 },
+  { id: 'wind', label: 'Wind (km/h)', key: 'windi', goal: [0, 40], weight: 1 },
+  { id: 'pres', label: 'Pressure (hPa)', key: 'presi', goal: [1005, 1025], weight: 2 }
+];
+
+function $(id){return document.getElementById(id);} 
+
+function renderTasks(){
+  const container = $('tasksLis');
+  container.innerHTML = '';
+  TASKS.forEach(t=>{
+    const div = document.createElement('div');
+    div.className = 'task';
+    div.id = 'task-'+t.id;
+    div.innerHTML = `<div style="text-align:left"><strong>${t.label}</strong><div style="font-size:12px;color:#556">Target: ${t.goal[0]} — ${t.goal[1]}</div></div><div class="task-val" id="val-${t.id}">—</div>`;
+    container.appendChild(div);
+  });
+}
+let score = 0;
+function readScore(){
+    ['score','score'].forEach(id=>{
+    const el = $(id);
+    if(el) score =el;
+  });
+}
+
+function readInputValue(key){
+  const el = $(key);
+  if(!el) return NaN;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? NaN : v;
+}
+
+function computeScore(){
+  let totalWeight = 0;
+
+  TASKS.forEach(t=>{
+    totalWeight += t.weight;
+    const v = readInputValue(t.key);
+    const el = $('task-'+t.id);
+    const valEl = $('val-'+t.id);
+    if(isNaN(v)){
+      el.className = 'task warn';
+      valEl.textContent = '—';
+      return;
+    }
+    valEl.textContent = v;
+    const [low, high] = t.goal;
+    // if inside range -> full points; if outside -> partial based on distance
+    if(v >= low && v <= high){
+      el.className = 'task ok';
+      score += t.weight;
+    } else {
+      el.className = 'task warn';
+      // partial credit: the further away, the smaller (clamped)
+      const dist = Math.min(Math.abs(v - (v < low ? low : high)), Math.max(1, Math.abs(v))); // simple scale
+      const partial = Math.max(0, t.weight - Math.min(t.weight, dist/5));
+      score += partial;
+    }
+  });
+  // normalize to integer 0..100
+  const normalized = Math.round((score / totalWeight) * 100);
+  $('score').textContent = normalized;
+  return normalized;
+}
+
+function attachListeners(){
+  ['tmpi','humi','windi','presi','houri','moni','yei','titi'].forEach(id=>{
+    const el = $(id);
+    if(el) el.addEventListener('input', computeScore);
+  });
+  $('randomize-btn').addEventListener('click', ()=>{
+    $('tmpi').value = (20 + Math.random()*10).toFixed(1);
+    $('humi').value = (50 + Math.random()*30).toFixed(1);
+    $('windi').value = (5 + Math.random()*20).toFixed(1);
+    $('presi').value = (1008 + Math.random()*20).toFixed(1);
+    computeScore();
+  });
+  $('reset-btn').addEventListener('click', ()=>{
+    $('tmpi').value=''; $('humi').value=''; $('windi').value=''; $('presi').value=''; computeScore();
+  });
+  $('submitScoreBtn').addEventListener('click',readScore, submitScore);
+  $('exportLeaderboard').addEventListener('click', ()=>{ exportLeaderboard(); });
+
+}
+
+function submitScore(){
+  const score = computeScore();
+  const name = prompt('Enter your name for the leaderboard (max 24 chars):') || '';
+  const trimmed = name.trim().slice(0,24) || 'Anonymous';
+  const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
+  board.push({ name: trimmed, score, date: new Date().toISOString() });
+  board.sort((a,b)=>b.score - a.score || new Date(a.date) - new Date(b.date));
+  const top = board.slice(0, 10);
+  localStorage.setItem('wsim_leaderboard', JSON.stringify(top));
+  renderLeaderboard();
+  alert('Score submitted!');
+}
+
+function renderLeaderboard(){
+  const list = $('leaderList');
+  const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
+  list.innerHTML = '';
+  board.forEach((row,i)=>{
+    const li = document.createElement('li');
+    li.textContent = `${i+1}. ${row.name} — ${row.score}`;
+    list.appendChild(li);
+  });
+}
+
+function exportLeaderboard(){
+  const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
+  const blob = new Blob([JSON.stringify(board, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'wsim-leaderboard.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+// init
+renderTasks(); attachListeners(); renderLeaderboard();
+// compute initial if values present
+computeScore();
+</script>
+</body>
+</html>
