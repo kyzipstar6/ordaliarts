@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(to bottom, #1a2a6c, #b21f1f, #fdbb2d);
+            background: url('pc/ordo.png');
             color: white;
             min-height: 100vh;
             padding: 20px;
@@ -417,8 +417,8 @@
                 <div class="score-display" id="leaderList"><li>1. francis — 100</li></div>
               </div>
               <div style="text-align:right">
-                <button id="submitScoreBtn" onaction=submitScore()>Submit score</button>
-                <button id="exportLeaderboard" onaction=exportLeaderboard()>Export Leaderboard</button>
+                <button class ="btn" id="submitScoreBtn" onaction=submitScore()>Submit score</button>
+                <button class ="btn" id="exportLeaderboard" onaction=exportLeaderboard()>Export Leaderboard</button>
 
                  </div>
                 </div>
@@ -782,8 +782,8 @@
                             tension: 0.3
                         },
                         {
-                            label: 'Wind Speed (km/h)',
-                            data: [15, 18, 22],
+                            label: 'Temperature (°C)',
+                            data: [33, 28, 22],
                             borderColor: 'rgba(54, 162, 235, 1)',
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             yAxisID: 'y1',
@@ -969,12 +969,12 @@ function attachListeners(){
 }
 
 function submitScore(){
-  const score = computeScore();
+  const scorec = computeScore();
   const name = prompt('Enter your name for the leaderboard (max 24 chars):') || '';
   const trimmed = name.trim().slice(0,24) || 'Anonymous';
   const board = JSON.parse(localStorage.getItem('wsim_leaderboard') || '[]');
-  board.push({ name: trimmed, score, date: new Date().toISOString() });
-  board.sort((a,b)=>b.score - a.score || new Date(a.date) - new Date(b.date));
+  board.push({ name: trimmed, scorec, date: new Date().toISOString() });
+  board.sort((a,b)=>b.scorec - a.scorec || new Date(a.date) - new Date(b.date));
   const top = board.slice(0, 10);
   localStorage.setItem('wsim_leaderboard', JSON.stringify(top));
   renderLeaderboard();
