@@ -478,6 +478,9 @@
 <script src="js/wsimordovician.js"></script>
     <script>
         // DOM Elements
+        const submitBtn = document.getElementById('submitScoreBtn');
+        const exportBtn = document.getElementById('exportLeaderboard');
+
         const earlyBtn = document.getElementById('early-btn');
         const middleBtn = document.getElementById('middle-btn');
         const lateBtn = document.getElementById('late-btn');
@@ -567,7 +570,9 @@
             
             randomizeBtn.addEventListener('click', randomizeClimate);
             resetBtn.addEventListener('click', resetToDefaults);
-            
+            submitBtn.addEventListener('click', submitScore);
+            exportBtn.addEventListener('click', exportLeaderboard);
+
             // Tab functionality
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -900,11 +905,11 @@ function renderTasks(){
     container.appendChild(div);
   });
 }
-let score = 0;
+let sscore = 0;
 function readScore(){
     ['score','score'].forEach(id=>{
     const el = $(id);
-    if(el) score =el;
+    if(el) sscore =el;
   });
 }
 
@@ -933,17 +938,17 @@ function computeScore(){
     // if inside range -> full points; if outside -> partial based on distance
     if(v >= low && v <= high){
       el.className = 'task ok';
-      score += t.weight;
+      sscore += t.weight;
     } else {
       el.className = 'task warn';
       // partial credit: the further away, the smaller (clamped)
       const dist = Math.min(Math.abs(v - (v < low ? low : high)), Math.max(1, Math.abs(v))); // simple scale
       const partial = Math.max(0, t.weight - Math.min(t.weight, dist/5));
-      score += partial;
+      sscore += partial;
     }
   });
   // normalize to integer 0..100
-  const normalized = Math.round((score / totalWeight) * 100);
+  const normalized = Math.round((sscore / totalWeight) * 100);
   $('score').textContent = normalized;
   return normalized;
 }
@@ -987,7 +992,7 @@ function renderLeaderboard(){
   list.innerHTML = '';
   board.forEach((row,i)=>{
     const li = document.createElement('li');
-    li.textContent = `${i+1}. ${row.name} — ${row.score}`;
+    li.textContent = `${i+1}. ${row.name} — ${row.sscore}`;
     list.appendChild(li);
   });
 }
