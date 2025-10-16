@@ -339,8 +339,8 @@
                         <div class="data-value" id="sea-level">+150m</div>
                     </div>
                     <div class="data-item">
-                        <div class="data-label">Atmospheric CO₂</div>
-                        <div class="data-value" id="co2">4200 ppm</div>
+                        <div class="data-label">Atmospheric O₂</div>
+                        <div class="data-value" id="o2">15 %</div>
                     </div>
                     <div class="data-item">
                         <div class="data-label">Day & Date</div>
@@ -390,7 +390,7 @@
         </div>
         
         <div class="info-panel">
-            <h3 class="info-title" id="period-title">Early Carboniferous Period (485-470 million years ago)</h3>
+            <h3 class="info-title" id="period-title">Early Carboniferous Period (358-322 million years ago)</h3>
             <div class="info-content" id="period-info">
                 The Early Carboniferous was characterized by cool, wet climates with low sea levels. 
                 Atmospheric O₂ levels were extremely low compared to today. 
@@ -474,14 +474,14 @@
             
           
     </div>
-<script src="js/wsimordovician.js"></script>
+<script src="js/carbo.js"></script>
     <script>
         // DOM Elements
         const submitBtn = document.getElementById('submitScoreBtn');
         const exportBtn = document.getElementById('exportLeaderboard');
 
         const earlyBtn = document.getElementById('early-btn');
-        const middleBtn = document.getElementById('middle-btn');
+        
         const lateBtn = document.getElementById('late-btn');
         const weatherIcon = document.getElementById('weather-icon');
         const co2El = document.getElementById('co2');
@@ -519,7 +519,7 @@
         // Period data
         const periodData = {
             early: {
-                title: "Early Carboniferous Period (485-470 million years ago)",
+                title: "Early Carboniferous Period (358-323 million years ago)",
                 info: "The Early Carboniferous features a deacreasing of the sea level due to global cooling, with the Global Average Temperature of 13 °C at this period, -23°C at the poles and 24°C at the tropics. The level of atmospheric oxygen (O2) it is being thought to have been as low as 15%. ",
                 defaults: {
                     co2: 4200,
@@ -600,11 +600,11 @@
             
             // Update active button
             earlyBtn.classList.remove('active');
-            middleBtn.classList.remove('active');
+            ;
             lateBtn.classList.remove('active');
             
             if (period === 'early') earlyBtn.classList.add('active');
-            if (period === 'middle') middleBtn.classList.add('active');
+            
             if (period === 'late') lateBtn.classList.add('active');
             
             // Update period info
