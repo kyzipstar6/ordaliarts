@@ -217,7 +217,12 @@ if (hum>100) hum =89;
 						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
            }}, 4200);   
     }  
-
+    function pennsylvanian(){
+		year = 2.9945213e08; temp= 21;
+	}
+function missian(){
+		year = 3.2945213e08; temp= 31;
+}
     function presssure() {  
 	if (pressure<977){pressure = 977;}  
 	if (pressure>1029){pressure = 1029;}  
