@@ -17,7 +17,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
         let month = Math.ceil(ran4*12);  
-        let year = 4.3245213e08;  let chd=0;
+        let year = 3.3245213e08;  let chd=0;
 const pill = id => document.getElementById(id);
 const pillTmp   = pill('pillTmp');
 const pillHum   = pill('pillHum');
