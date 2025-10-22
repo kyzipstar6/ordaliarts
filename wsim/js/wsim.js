@@ -84,9 +84,9 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
              }, 1000);  
-	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
+	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
-            minute = minute +3;  
+            minute = minute +3*tacc;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 24){hour =0; day = day + 1;}
 
@@ -98,7 +98,7 @@ if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
 
 }, 20000);   
-          
+    
         
     }  
     function tempM(){  
@@ -115,25 +115,25 @@ if (hum>100) hum =89;
         setInterval(() => {  
            
             if (hour >9 && hour<14){  
-            temp +=0.1;
-            hum -= 0.1;}  
+            temp +=0.1*tacc;
+            hum -= 0.1*tacc;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.2;
-            hum += 0.2;}    
+            temp +=0.2*tacc;
+            hum += 0.2*tacc;}    
             if (hour >16 && hour<22){  
-            temp +=0.05;
-            hum -= 0.05;}    
+            temp +=0.05*tacc;
+            hum -= 0.05*tacc;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=0.05;
-            hum += 0.05;}
-            if(temp>20)temp = 19; if(temp<-30)temp = -27;
+            temp -=0.05*tacc;
+            hum += 0.05*tacc;}
+            
 			
-			if(trend ==-1&&chd==0) temp-=0.2; 
-			if(trend ==1&&chd==0) temp+=0.2;
+			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
+			if(trend ==1&&chd==0) temp+=0.2*tacc;
 			if(trend==0) temp +=0;
 			
-			if(trend ==-1&&chd==1) hum-=0.2; 
-			if(trend ==1&&chd==1) hum+=0.2;
+			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
+			if(trend ==1&&chd==1) hum+=0.2*tacc;
 			if(trend==0&&chd==1) hum +=0;
         }, 60000);  
            
@@ -191,26 +191,27 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
 	if (pressure>1029){pressure = 1029;}  
 		  
 		if (hour >9 && hour<14){  
-            pressure = pressure +0.1;;  
+            pressure = pressure +0.1*tacc;;  
            }  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            pressure = pressure +0.04;  
+            pressure = pressure +0.04*tacc;  
             }  
             if (hour >16 && hour<22){  
-            pressure = pressure -0.05;  
+            pressure = pressure -0.05*tacc;  
             }  
             if (hour >-1 && hour<7 || hour >22){  
-            pressure = pressure -0.1;  
+            pressure = pressure -0.1*tacc;  
             }  
-            if(trend ==-1&&chd==3) pressure -=0.2;
-            if(trend ==1&&chd==3) pressure +=0.2;
+            if(trend ==-1&&chd==3) pressure -=0.2*tacc;
+            if(trend ==1&&chd==3) pressure +=0.2*tacc;
     if (acumulator>36000*6) acumulator = 0;
 	},444);  
 	
 	 mkChart();  upChartAs();
 }  
 let title = "";
-
+function accTime(){tacc *=2; alert('Successfully accelerated time to x'+tacc);}
+function decTime(){if(tacc>0.5)tacc /=2; alert('Successfully deccelerated time to x'+tacc);}
 function getText(){
 if (document.getElementById("tmpi").value !=""){ temp = parseFloat(document.getElementById("tmpi").value);}
 if (document.getElementById("humi").value!=""){hum = parseFloat(document.getElementById("humi").value);}
