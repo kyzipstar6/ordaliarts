@@ -293,10 +293,21 @@
         <div class="cta-section">
             <h2>Ready to Control the Weather?</h2>
             <p>Download our Weather Simulator today and experience a 30-day free trial. After the trial period, continue enjoying all features for just $29.99.</p>
-            <a href="#" class="buy-button">Download Free Trial</a>
+            <a href="weather.zip" class="buy-button">Download Free Trial</a>
             <p><small>No credit card required for the trial. Cancel anytime during the trial period.</small></p>
         </div>
-        
+        <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('buy-button');
+    btn.addEventListener('click', (e) => {
+      // Skip if already a real link (no #)
+      if (!btn.href || btn.getAttribute('href') === '#') return;
+      const ok = confirm('This is a large 3 GB download. Continue?');
+      if (!ok) e.preventDefault();
+    });
+  });
+</script>
+
         <footer>
             <p>Weather Simulator &copy; 2023 | All rights reserved</p>
         </footer>
@@ -346,4 +357,5 @@
         });
     </script>
 </body>
+
 </html>
