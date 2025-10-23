@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buy Weather Simulator License</title>
+  <!--
+    BUY FLOW OVERVIEW
+    1) This page collects the buyer's email and creates a Stripe Checkout Session via your backend at /api/create-checkout-session.
+    2) After successful payment, Stripe redirects the buyer to /success (configure in your backend).
+    3) Your BACKEND webhook (e.g., /api/stripe/webhook) listens for `checkout.session.completed`.
+       On that event, you generate a license key server-side, store it, and email it to `customer_email` from the session.
+
+    You MUST implement the server-side pieces; this file is only the client UI.
+    Replace the placeholders: STRIPE_PUBLISHABLE_KEY and PRICE_ID.
+  -->
+  <script src="https://js.stripe.com/v3"></script>
+  <style>
+    :root {
+      --bg1: #1a2980; /* deep blue */
+      --bg2: #26d0ce; /* teal */
+      --card: rgba(255, 255, 255, 0.1);
+      --glass: rgba(255, 255, 255, 0.12);
+      --text: #fff;
+      --accent: #ff6b6b;
+      --accent-2: #ff5252;
+      --ok: #2ecc71;
+      --warn: #f1c40f;
+      --muted: rgba(255, 255, 255, 0.75);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; color: var(--text);
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 24px; }
+    header { text-align: center; padding: 32px 0 12px; }
+    h1 { font-size: clamp(1.8rem, 2.6vw + 1rem, 3rem); margin: 0 0 8px; text-shadow: 0 2px 10px rgba(0,0,0,.25); }
+    .subtitle { color: var(--muted); font-size: 1.05rem; }
+
+    .card { background: var(--glass); backdrop-filter: blur(10px); border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    @media (min-width: 880px){ .grid { grid-template-columns: 1.3fr .7fr; } }
+
+    .price {
+      background: var(--card); border-radius: 16px; padding: 20px; text-align: center;
+    }
+    .price h2 { margin: 0 0 6px; font-size: 1.4rem; }
+    .price .amount { font-size: 2.2rem; font-weight: 700; margin: 6px 0 2px; }
+    .small { font-size: .95rem; color: var(--muted); }
+
+    label { display:block; font-weight: 600; margin: 8px 0 6px; }
+    input[type="email"], input[type="text"] {
+      width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.15); color: var(--text); outline: none;
+    }
+    input::placeholder { color: rgba(255,255,255,.6); }
+
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .row > * { flex: 1; }
+
+    .checkbox { display:flex; gap:10px; align-items:flex-start; margin-top: 10px; }
+    .checkbox input { transform: translateY(2px); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      background: var(--accent); color: #fff; padding: 14px 18px; border-radius: 999px;
+      font-size: 1.1rem; font-weight: 700; border: none; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, background .2s;
+      box-shadow: 0 10px 20px rgba(255, 107, 107, .35);
+    }
+    .btn:hover { background: var(--accent-2); transform: translateY(-1px); box-shadow: 0 14px 26px rgba(255, 107, 107, .45); }
+    .btn[disabled] { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .hint { color: var(--muted); font-size: .95rem; margin-top: 8px; }
+
+    .banner { margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; }
+    .banner.ok { background: rgba(46, 204, 113, .15); border: 1px solid rgba(46, 204, 113, .4); }
+    .banner.warn { background: rgba(241, 196, 15, .15); border: 1px solid rgba(241, 196, 15, .45); }
+    .banner.error { background: rgba(231, 76, 60, .18); border: 1px solid rgba(231, 76, 60, .5); }
+
+    footer { text-align:center; margin: 26px 0 6px; color: var(--muted); font-size: .9rem; }
+    a { color: #fff; }
+
+    .spinner { display:none; place-items:center; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 10; }
+    .spinner.active { display: grid; }
+    .loader { width: 54px; height: 54px; border-radius: 50%; border: 5px solid rgba(255,255,255,.35); border-top-color: #fff; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="spinner" id="spinner"><div class="loader" aria-label="Loading"></div></div>
+  <div class="container">
+    <header>
+      <h1>Buy Weather Simulator — Lifetime License</h1>
+      <p class="subtitle">Secure checkout. Your license key will be emailed automatically after payment is confirmed.</p>
+    </header>
+
+    <div class="grid card">
+      <form id="buyForm" class="section" autocomplete="on">
+        <div class="row">
+          <div>
+            <label for="name">Full name (on receipt)</label>
+            <input id="name" name="name" type="text" placeholder="Ada Lovelace" />
+          </div>
+          <div>
+            <label for="email">Email for license key <span aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+
+        <div class="checkbox">
+          <input id="gdpr" name="gdpr" type="checkbox" required />
+          <label for="gdpr">I agree to receive my license and purchase emails to the address above. I accept the <a href="/terms" target="_blank" rel="noopener">Terms</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</label>
+        </div>
+
+        <div class="banner warn"><strong>Note:</strong> The installer download is ~3&nbsp;GB. A resumable link will be provided after purchase.</div>
+
+        <p class="hint">After payment, you'll be redirected to a success page. Within minutes, you'll get an email containing your license key and download link. Keep that email safe.</p>
+
+        <button id="buyBtn" class="btn" type="submit">Pay €29.99 &amp; Get License</button>
+
+        <div id="msg" class="banner error" style="display:none; margin-top:12px"></div>
+      </form>
+
+      <aside class="price">
+        <h2>Weather Simulator</h2>
+        <div class="amount">€29.99</div>
+        <div class="small">One-time • Lifetime license • Email support</div>
+        <hr style="opacity:.25; margin:16px 0" />
+        <ul style="list-style: none; padding: 0; text-align: left; display:grid; gap:8px">
+          <li>✔ License for 1 device (transferable)</li>
+          <li>✔ Offline activation available</li>
+          <li>✔ Free minor updates</li>
+          <li>✔ Big 3&nbsp;GB installer with sample data</li>
+        </ul>
+        <p class="hint" style="margin-top:12px">Have a VAT ID or need an invoice? You'll add details during checkout.</p>
+      </aside>
+    </div>
+
+    <footer>
+      <p>Questions? <a href="mailto:support@yourdomain.com">support@yourdomain.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Replace with your real Stripe publishable key
+    const STRIPE_PUBLISHABLE_KEY = "pk_live_REPLACE_ME"; // or test key during development
+    // Replace with your real Price ID (one-time price)
+    const PRICE_ID = "price_REPLACE_ME";
+
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+    const form = document.getElementById('buyForm');
+    const btn = document.getElementById('buyBtn');
+    const msg = document.getElementById('msg');
+    const spinner = document.getElementById('spinner');
+
+    function setBusy(busy){
+      if (busy) { spinner.classList.add('active'); btn.setAttribute('disabled', ''); }
+      else { spinner.classList.remove('active'); btn.removeAttribute('disabled'); }
+    }
+
+    function showError(text){
+      msg.style.display = 'block';
+      msg.textContent = text;
+      msg.className = 'banner error';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.style.display = 'none';
+      const email = document.getElementById('email').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const consent = document.getElementById('gdpr').checked;
+
+      if (!email) { showError('Please enter a valid email.'); return; }
+      if (!consent) { showError('Please agree to receive your license via email.'); return; }
+
+      try {
+        setBusy(true);
+        // Call your backend to create a Checkout Session
+        const res = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            priceId: PRICE_ID,
+            customerEmail: email,
+            customerName: name,
+            // Pass any metadata that helps fulfillment later (e.g. preferred OS)
+            metadata: { product: 'Weather Simulator', plan: 'lifetime', locale: navigator.language || 'en' },
+            // Optional: provide a client_reference_id to correlate later with your license issuance
+            clientReferenceId: crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+          }),
+        });
+
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error(t || 'Failed to create checkout session');
+        }
+
+        const { sessionId } = await res.json();
+        if (!sessionId) throw new Error('No sessionId returned from server');
+
+        // Redirect to Stripe-hosted checkout
+        const { error } = await stripe.redirectToCheckout({ sessionId });
+        if (error) throw error;
+      } catch (err) {
+        console.error(err);
+        showError(err.message || 'Something went wrong. Please try again.');
+        setBusy(false);
+      }
+    });
+  </script>
+</body>
+</html>
