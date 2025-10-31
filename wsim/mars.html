@@ -1,0 +1,481 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mars Weather Simulator — 3 Epochs</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root{
+      /* Aurora neon palette for a sci‑fi Mars feel */
+      --bg: #0a0c10;
+      --panel: #12141a;
+      --panel-2: #0f1621;
+      --ink: #e8f1ff;
+      --muted: #9fb5d1;
+      --accent: #8bf3ff;
+      --accent-2:#ff7a59;
+      --ok:#29e07b; --warn:#ffd166; --bad:#ff5c7a;
+      --ring: 0 0 0 2px rgba(139,243,255,.25);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); background: radial-gradient(1200px 700px at 10% 0%, #111827 0%, #0b0f16 50%, #07090d 100%), url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2070&auto=format&fit=crop') center/cover fixed no-repeat;
+      backdrop-filter: saturate(1.1);
+      font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:28px}
+    header{display:grid;gap:6px;justify-items:center;margin-bottom:16px;text-align:center}
+    h1{font-size:clamp(1.5rem,2.4vw,2.2rem);letter-spacing:.2px;margin:0;text-shadow:0 6px 30px rgba(139,243,255,.25)}
+    .subtitle{color:var(--muted)}/* Period Selector */
+.periods{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
+.pill{border:1px solid rgba(139,243,255,.35);background:linear-gradient(180deg, rgba(21,29,44,.8), rgba(12,18,29,.65));padding:10px 16px;border-radius:999px;color:var(--ink);cursor:pointer;transition:.2s;box-shadow:var(--shadow)}
+.pill:hover{transform:translateY(-1px)}
+.pill[aria-pressed="true"]{outline:var(--ring);border-color:var(--accent)}
+
+/* Layout */
+.grid{display:grid;gap:20px;grid-template-columns:1.2fr 1fr}
+@media (max-width:920px){.grid{grid-template-columns:1fr}}
+
+.panel{background:linear-gradient(180deg, rgba(10,14,22,.75), rgba(10,14,22,.55));border:1px solid rgba(139,243,255,.12);border-radius:var(--radius);box-shadow:var(--shadow)}
+.pad{padding:18px}
+
+/* Weather display */
+.weather-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.weather-emoji{font-size:56px;filter:drop-shadow(0 10px 30px rgba(139,243,255,.25))}
+.kpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+@media (max-width:520px){.kpi{grid-template-columns:1fr}}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(139,243,255,.1);border-radius:12px;padding:12px}
+.lbl{font-size:12px;color:var(--muted)}
+.val{font-size:20px;font-weight:700}
+
+/* Controls */
+.controls .group{margin-bottom:18px}
+.controls .lab{display:flex;justify-content:space-between;align-items:end;margin-bottom:6px}
+input[type=range]{width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;border-radius:12px;border:1px solid rgba(139,243,255,.35);background:linear-gradient(180deg, rgba(21,29,44,.8), rgba(12,18,29,.65));color:var(--ink);cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-1px)}
+.btn.full{width:100%}
+
+/* Tabs */
+.tabs{margin-top:22px}
+.tab-bar{display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:10px 12px;border-radius:10px;border:1px solid rgba(139,243,255,.25);cursor:pointer;background:rgba(255,255,255,.03)}
+.tab[aria-selected="true"]{outline:var(--ring)}
+.tabpan{display:none;margin-top:12px}
+.tabpan[aria-hidden="false"]{display:block}
+
+/* Tasks */
+.tasks{display:grid;gap:8px;max-height:320px;overflow:auto}
+.tsk{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px;border:1px solid rgba(139,243,255,.15);border-radius:10px;background:rgba(255,255,255,.04)}
+.tsk .tname{font-weight:600}
+.tsk.ok{border-color:rgba(41,224,123,.45)}
+.tsk.warn{border-color:rgba(255,209,102,.35)}
+.score{font-size:28px;font-weight:800}
+
+/* Get App */
+#getapp{margin-top:26px}
+#getapp .panel{display:grid;gap:10px;align-items:center;grid-template-columns:1fr auto}
+@media (max-width:720px){#getapp .panel{grid-template-columns:1fr}}
+a.btn{ text-decoration:none }
+
+/* Micro UI sparkles */
+.scan{
+  position:relative;overflow:hidden;isolation:isolate
+}
+.scan::after{content:"";position:absolute;inset:-120% -60%;background: conic-gradient(from 90deg at 50% 50%, transparent 0 25%, rgba(139,243,255,.06) 30% 60%, transparent 65% 100%);animation: spin 10s linear infinite;z-index:-1;filter: blur(18px)}
+@keyframes spin{to{transform:rotate(1turn)}}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🚀 Mars Weather Simulator</h1>
+      <div class="subtitle">Three epochs: <strong>Present</strong> · <strong>2 Gyr ago</strong> · <strong>4 Gyr ago</strong>. Adjust sliders, watch charts, and keep variables in-limits to rack up a score.</div>
+    </header><div class="periods" role="tablist" aria-label="Epochs">
+  <button class="pill" id="p-now" aria-pressed="true">Present (Amazonian Late)</button>
+  <button class="pill" id="p-2gyr" aria-pressed="false">~2 Gyr ago (Amazonian Mid)</button>
+  <button class="pill" id="p-4gyr" aria-pressed="false">~4 Gyr ago (Early Noachian)</button>
+</div>
+
+<div class="grid">
+  <!-- Weather Display -->
+  <section class="panel pad scan" aria-live="polite">
+    <div class="weather-head">
+      <h2 style="margin:0">Current Conditions</h2>
+      <div class="weather-emoji" id="ico">🛰️</div>
+    </div>
+    <div class="kpi">
+      <div class="card"><div class="lbl">Temperature</div><div class="val" id="val-temp">-60 °C</div></div>
+      <div class="card"><div class="lbl">Wind Speed</div><div class="val" id="val-wind">15 m/s</div></div>
+      <div class="card"><div class="lbl">Surface Pressure</div><div class="val" id="val-pres">7 hPa</div></div>
+      <div class="card"><div class="lbl">Dust Opacity (τ)</div><div class="val" id="val-dust">0.3</div></div>
+      <div class="card"><div class="lbl">Epoch</div><div class="val" id="val-epoch">Present</div></div>
+      <div class="card"><div class="lbl">Local Time</div><div class="val" id="val-time">00:00</div></div>
+    </div>
+  </section>
+
+  <!-- Controls -->
+  <aside class="panel pad controls">
+    <h2 style="margin-top:0">Climate Controls</h2>
+
+    <div class="group">
+      <div class="lab"><label for="rng-temp">Temperature (°C)</label><span id="out-temp">-60</span></div>
+      <input id="rng-temp" type="range" min="-120" max="40" step="1" value="-60" />
+    </div>
+    <div class="group">
+      <div class="lab"><label for="rng-wind">Wind (m/s)</label><span id="out-wind">15</span></div>
+      <input id="rng-wind" type="range" min="0" max="60" step="1" value="15" />
+    </div>
+    <div class="group">
+      <div class="lab"><label for="rng-pres">Surface Pressure (hPa)</label><span id="out-pres">7</span></div>
+      <input id="rng-pres" type="range" min="1" max="30" step="1" value="7" />
+    </div>
+    <div class="group">
+      <div class="lab"><label for="rng-dust">Dust Opacity τ</label><span id="out-dust">0.3</span></div>
+      <input id="rng-dust" type="range" min="0" max="5" step="0.1" value="0.3" />
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+      <button class="btn" id="btn-random">Randomize</button>
+      <button class="btn" id="btn-reset">Reset</button>
+      <button class="btn full" id="btn-steady">Make value steady</button>
+      <button class="btn full" id="btn-rise">Make value rise</button>
+      <button class="btn full" id="btn-fall">Make value fall</button>
+    </div>
+  </aside>
+</div>
+
+<!-- Info + Tabs -->
+<section class="panel pad tabs" id="info">
+  <h3 id="epoch-title" style="margin-top:0">Present (Amazonian Late)</h3>
+  <p id="epoch-text" class="subtitle">Thin CO₂ atmosphere (~7 hPa), global mean ~−60 °C, frequent dust activity. Polar caps dominate the volatile cycle.</p>
+
+  <div class="tab-bar" role="tablist">
+    <button class="tab" id="tab-charts" aria-selected="true">Climate Charts</button>
+    <button class="tab" id="tab-tasks" aria-selected="false">Research Tasks</button>
+  </div>
+  <div id="pan-charts" class="tabpan" aria-hidden="false">
+    <div style="height:320px"><canvas id="climateChart"></canvas></div>
+  </div>
+  <div id="pan-tasks" class="tabpan" aria-hidden="true">
+    <p>Keep values within target ranges for this epoch to maximize your score.</p>
+    <div class="tasks" id="tasks"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+      <div>
+        <div>Current score:</div>
+        <div class="score" id="score">0</div>
+      </div>
+      <div style="text-align:right">
+        <button class="btn" id="btn-submit">Submit score</button>
+        <button class="btn" id="btn-export">Export leaderboard</button>
+      </div>
+    </div>
+    <ol id="leaderboard" style="margin-top:12px"></ol>
+  </div>
+</section>
+
+<!-- Get the App -->
+<section id="getapp">
+  <div class="panel pad">
+    <div>
+      <h3 style="margin:0">📦 Get the App</h3>
+      <p class="subtitle" style="margin:.4rem 0 0">For solar radiation, rainfall models, and complex scenarios, try the full Windows version.</p>
+    </div>
+    <div>
+      <a class="btn" href="https://kyzipstar6.github.io/ordaliarts/wsim/download-wsim.html" target="_blank" rel="noopener">Get Desktop Version</a>
+    </div>
+  </div>
+</section>
+
+  </div>  <script>
+  // --- Data & Epochs ---------------------------------------------------------
+  const EPOCHS = {
+    now: {
+      title: 'Present (Amazonian Late)',
+      text: 'Thin CO₂ atmosphere (~7 hPa), global mean ~−60 °C, frequent dust activity. Polar caps dominate the volatile cycle.',
+      defaults: { temp:-60, wind:15, pres:7, dust:0.3 }
+    },
+    _2gyr: {
+      title: '~2 Gyr ago (Amazonian Mid)',
+      text: 'Colder than present on average but with episodic volcanism and dust storms. Slightly higher pressure pockets possible locally.',
+      defaults: { temp:-70, wind:18, pres:9, dust:0.6 }
+    },
+    _4gyr: {
+      title: '~4 Gyr ago (Early Noachian)',
+      text: 'Thicker atmosphere; transient warmer episodes and liquid water stability in places. Frequent impacts and vigorous hydrology.',
+      defaults: { temp:-10, wind:12, pres:300, dust:0.2 }
+    }
+  };
+
+  // Clamp for present chart scale if pressure is huge (Noachian)
+  function presForDisplay(p){return p>60?60:p}
+
+  // --- Elements --------------------------------------------------------------
+  const pills = { now: document.getElementById('p-now'), _2gyr: document.getElementById('p-2gyr'), _4gyr: document.getElementById('p-4gyr') };
+  const out = { temp: q('#out-temp'), wind: q('#out-wind'), pres: q('#out-pres'), dust: q('#out-dust') };
+  const val = { temp: q('#val-temp'), wind: q('#val-wind'), pres: q('#val-pres'), dust: q('#val-dust'), epoch: q('#val-epoch'), time: q('#val-time') };
+  const rng = { temp: q('#rng-temp'), wind: q('#rng-wind'), pres: q('#rng-pres'), dust: q('#rng-dust') };
+  const ico = q('#ico');
+  const epochTitle = q('#epoch-title');
+  const epochText = q('#epoch-text');
+  const scoreEl = q('#score');
+  const tasksEl = q('#tasks');
+  const lbEl = q('#leaderboard');
+
+  const tabs = { charts: q('#tab-charts'), tasks: q('#tab-tasks') };
+  const pans = { charts: q('#pan-charts'), tasks: q('#pan-tasks') };
+
+  function q(sel){return document.querySelector(sel)}
+
+  // --- State -----------------------------------------------------------------
+  let current = 'now';
+  let trend = 'steady'; // steady | rise | fall
+  let chart;
+  let tick = 0;
+
+  // --- Init ------------------------------------------------------------------
+  init();
+  function init(){
+    // Period buttons
+    Object.entries(pills).forEach(([k,btn])=>{
+      btn.addEventListener('click', ()=> setEpoch(k));
+    });
+
+    // Sliders
+    Object.entries(rng).forEach(([k,el])=>{
+      el.addEventListener('input', ()=>{
+        out[k].textContent = el.value;
+        applyValues();
+        updateTasks();
+        updateIcon();
+        updateChartPoint();
+      })
+    });
+
+    // Buttons
+    q('#btn-random').addEventListener('click', randomize);
+    q('#btn-reset').addEventListener('click', ()=> setEpoch(current));
+    q('#btn-steady').addEventListener('click', ()=> trend='steady');
+    q('#btn-rise').addEventListener('click', ()=> trend='rise');
+    q('#btn-fall').addEventListener('click', ()=> trend='fall');
+
+    // Tabs
+    tabs.charts.addEventListener('click', ()=>openTab('charts'));
+    tabs.tasks.addEventListener('click', ()=>openTab('tasks'));
+
+    // Leaderboard
+    q('#btn-submit').addEventListener('click', submitScore);
+    q('#btn-export').addEventListener('click', exportLeaderboard);
+
+    // Time loop (sol clock)
+    setInterval(()=>{
+      tick=(tick+1)%1440; // minutes
+      const hh = String(Math.floor(tick/60)).padStart(2,'0');
+      const mm = String(tick%60).padStart(2,'0');
+      val.time.textContent = `${hh}:${mm}`;
+      drift();
+    }, 900);
+
+    // Start
+    buildTasks();
+    buildChart();
+    setEpoch('now');
+  }
+
+  function setEpoch(key){
+    current = key;
+    for (const k in pills) pills[k].setAttribute('aria-pressed', String(k===key));
+
+    const e = EPOCHS[key];
+    epochTitle.textContent = e.title;
+    epochText.textContent = e.text;
+    val.epoch.textContent = e.title.split('(')[0].trim();
+
+    // Defaults
+    rng.temp.value = e.defaults.temp;
+    rng.wind.value = e.defaults.wind;
+    rng.pres.value = e.defaults.pres;
+    rng.dust.value = e.defaults.dust;
+    out.temp.textContent = e.defaults.temp;
+    out.wind.textContent = e.defaults.wind;
+    out.pres.textContent = e.defaults.pres;
+    out.dust.textContent = e.defaults.dust;
+    applyValues();
+    updateIcon();
+    updateTasks();
+
+    // Seed point in chart for epoch index 0/1/2
+    const i = key==='now'?0:(key==='_2gyr'?1:2);
+    chart.data.datasets[0].data[i] = Number(rng.temp.value);
+    chart.data.datasets[1].data[i] = Number(rng.wind.value);
+    chart.data.datasets[2].data[i] = presForDisplay(Number(rng.pres.value));
+    chart.data.datasets[3].data[i] = Number(rng.dust.value);
+    chart.update();
+  }
+
+  function applyValues(){
+    val.temp.textContent = `${rng.temp.value} °C`;
+    val.wind.textContent = `${rng.wind.value} m/s`;
+    val.pres.textContent = `${rng.pres.value} hPa`;
+    val.dust.textContent = `${Number(rng.dust.value).toFixed(1)}`;
+  }
+
+  function updateIcon(){
+    const t = Number(rng.temp.value), w = Number(rng.wind.value), p = Number(rng.pres.value), d = Number(rng.dust.value);
+    let icon = '🛰️';
+    if(d>=2.5) icon = '🌪️';
+    else if(w>=40) icon = '💨';
+    else if(t>-5 && p>40) icon = '💧';
+    else if(t<-70) icon = '❄️';
+    else if(t>-10 && d<0.5) icon = '☀️';
+    ico.textContent = icon;
+  }
+
+  function randomize(){
+    const e = EPOCHS[current].defaults;
+    const jitter = (v,span)=> Math.max(Number(rng[span].min), Math.min(Number(rng[span].max), v + (Math.random()-0.5)* (span==='dust'?1.2:20)));
+    rng.temp.value = Math.round(jitter(e.temp,'temp'));
+    rng.wind.value = Math.round(jitter(e.wind,'wind'));
+    rng.pres.value = Math.round(jitter(e.pres,'pres'));
+    rng.dust.value = Math.max(0, Math.min(5, (e.dust + (Math.random()-0.5)*1.2))).toFixed(1);
+    applyValues(); updateIcon(); updateTasks(); updateChartPoint();
+  }
+
+  function drift(){
+    // Apply gentle trend to temperature only for fun
+    const dv = trend==='rise'? 0.6 : trend==='fall'? -0.6 : 0;
+    rng.temp.value = clamp(Number(rng.temp.value) + dv, Number(rng.temp.min), Number(rng.temp.max));
+    out.temp.textContent = rng.temp.value; applyValues(); updateIcon(); updateTasks(); updateChartPoint();
+  }
+
+  function clamp(x,a,b){return Math.min(b, Math.max(a,x))}
+
+  // --- Tabs ------------------------------------------------------------------
+  function openTab(which){
+    const isCharts = which==='charts';
+    tabs.charts.setAttribute('aria-selected', String(isCharts));
+    tabs.tasks.setAttribute('aria-selected', String(!isCharts));
+    pans.charts.setAttribute('aria-hidden', String(!isCharts));
+    pans.tasks.setAttribute('aria-hidden', String(isCharts));
+  }
+
+  // --- Tasks & Score ---------------------------------------------------------
+  const TASKS = [
+    { id:'temp', label:'Temperature (°C)', target: { now:[-90,-30], _2gyr:[-110,-40], _4gyr:[-20,20] }, weight:3 },
+    { id:'wind', label:'Wind (m/s)',       target: { now:[0,40], _2gyr:[0,45], _4gyr:[0,35] }, weight:1 },
+    { id:'pres', label:'Pressure (hPa)',    target: { now:[4,12], _2gyr:[6,20], _4gyr:[50,600] }, weight:3 },
+    { id:'dust', label:'Dust τ',            target: { now:[0,2.5], _2gyr:[0,3], _4gyr:[0,1.5] }, weight:2 }
+  ];
+
+  function buildTasks(){
+    tasksEl.innerHTML = '';
+    TASKS.forEach(t=>{
+      const div = document.createElement('div');
+      div.className = 'tsk warn';
+      div.id = 'tsk-'+t.id;
+      div.innerHTML = `<div><div class="tname">${t.label}</div><div class="lbl" id="range-${t.id}"></div></div><div class="val" id="tval-${t.id}">—</div>`;
+      tasksEl.appendChild(div);
+    });
+  }
+
+  function updateTasks(){
+    let total=0, gained=0;
+    TASKS.forEach(t=> total += t.weight);
+
+    TASKS.forEach(t=>{
+      const range = t.target[current];
+      q('#range-'+t.id).textContent = `Target: ${range[0]} — ${range[1]}`;
+      const cur = Number(rng[t.id].value);
+      q('#tval-'+t.id).textContent = cur;
+      const ok = cur>=range[0] && cur<=range[1];
+      q('#tsk-'+t.id).className = 'tsk '+(ok?'ok':'warn');
+      if(ok) gained += t.weight; else {
+        // partial credit based on distance
+        const d = cur<range[0]? (range[0]-cur) : (cur-range[1]);
+        const partial = Math.max(0, t.weight - d/(t.id==='pres'?20:10));
+        gained += partial;
+      }
+    });
+    const score = Math.round(gained/total*100);
+    scoreEl.textContent = String(score);
+    return score;
+  }
+
+  function submitScore(){
+    const score = updateTasks();
+    const name = (prompt('Name for leaderboard (max 24 chars):')||'').trim().slice(0,24) || 'Anonymous';
+    const board = JSON.parse(localStorage.getItem('mars_leaderboard')||'[]');
+    board.push({ name, score, date: new Date().toISOString() });
+    board.sort((a,b)=> b.score - a.score || new Date(a.date)-new Date(b.date));
+    localStorage.setItem('mars_leaderboard', JSON.stringify(board.slice(0,15)));
+    renderLeaderboard();
+    alert('Score submitted!');
+  }
+
+  function renderLeaderboard(){
+    const board = JSON.parse(localStorage.getItem('mars_leaderboard')||'[]');
+    lbEl.innerHTML = '';
+    board.slice(0,10).forEach((row,i)=>{
+      const li = document.createElement('li');
+      li.textContent = `${i+1}. ${row.name} — ${row.score}`;
+      lbEl.appendChild(li);
+    });
+  }
+
+  function exportLeaderboard(){
+    const board = JSON.parse(localStorage.getItem('mars_leaderboard')||'[]');
+    const blob = new Blob([JSON.stringify(board, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'mars-leaderboard.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  }
+
+  // --- Chart -----------------------------------------------------------------
+  function buildChart(){
+    const ctx = document.getElementById('climateChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Present','~2 Gyr','~4 Gyr'],
+        datasets: [
+          { label:'Temperature (°C)', data:[-60,-70,-10], tension:.3 },
+          { label:'Wind (m/s)',       data:[15,18,12], tension:.3 },
+          { label:'Pressure (hPa)*',  data:[7,9,60], tension:.3 },
+          { label:'Dust τ',           data:[0.3,0.6,0.2], tension:.3 },
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        interaction:{mode:'index', intersect:false},
+        scales:{
+          y:{ title:{display:true, text:'Mixed Units'}, suggestedMin:-120, suggestedMax:120 }
+        },
+        plugins:{
+          legend:{position:'bottom'},
+          tooltip:{callbacks:{
+            footer: (items)=> items[0].dataset.label.includes('Pressure')? ['*Noachian pressure clamped for scale'] : []
+          }}
+        }
+      }
+    });
+  }
+
+  function updateChartPoint(){
+    const i = current==='now'?0:(current==='_2gyr'?1:2);
+    chart.data.datasets[0].data[i] = Number(rng.temp.value);
+    chart.data.datasets[1].data[i] = Number(rng.wind.value);
+    chart.data.datasets[2].data[i] = presForDisplay(Number(rng.pres.value));
+    chart.data.datasets[3].data[i] = Number(rng.dust.value);
+    chart.update();
+  }
+  // ---------------------------------------------------------------------------
+
+  // Render any existing leaderboard on load
+  renderLeaderboard();
+  </script></body>
+</html>
