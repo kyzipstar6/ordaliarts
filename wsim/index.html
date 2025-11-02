@@ -29,7 +29,48 @@
     .tasks .task.ok { border-style:solid; background:#f3fff6; }
     .tasks .task.warn { background:#fff9f0; border-color:#ffe5c7; }
     .score-display { font-size: 26px; font-weight:700; color:#0b6b3b; }
+/* --- Wunderground-ish metric tiles --- */
+.metrics {
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  margin:12px 0;
+}
+.metric {
+  display:flex; align-items:baseline; justify-content:center;
+  gap:8px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:#f8fafc;
+  box-shadow: 0 6px 18px rgba(20,30,60,0.06);
+}
+.metric .value {
+  font-size: 32px; line-height: 1; font-weight: 700; letter-spacing: -0.5px;
+}
+.metric .unit {
+  font-size: 14px; opacity:.75; font-weight:600; text-transform: uppercase;
+}
+.metric .label {
+  display:block; font-size:12px; opacity:.7; margin-top:2px; text-align:center;
+}
 
+/* Pills (already present, just tighten look) */
+.pills .pill {
+  font-size:12px; padding:.35rem .55rem; border-radius:999px;
+  background:#f1f5f9; border:1px solid #e5e7eb;
+}
+
+/* Thermal theme flips */
+.theme-cold .metric--temp { background:#eaf4ff; }
+.theme-cold .metric--temp .value { color:#0b6bcb; }
+
+.theme-hot .metric--temp { background:#fff1e8; }
+.theme-hot .metric--temp .value { color:#d9480f; }
+
+/* Neutral states for others */
+.metric--hum  .value { color:#0b6b3b; }
+.metric--wind .value { color:#7a5af8; }
+.metric--pres .value { color:#0f766e; }
     /* Leaderboard */
     .leaderboard { position: fixed; right: 18px; top: 80px; width: 260px; z-index: 999; }
     .leaderboard .leader { background: white; border-radius: 12px; padding: 12px; box-shadow: 0 6px 18px rgba(20,30,60,0.08); }
