@@ -302,7 +302,67 @@ function wfoals(){
     }, 180000);
 }
 
+// Format helpers
+const fmt = {
+  temp: v => `${Number(v).toFixed(1)}`,
+  hum:  v => `${Math.round(Number(v))}`,
+  wind: v => `${Number(v).toFixed(1)}`,
+  pres: v => `${Math.round(Number(v))}`
+};
 
+// Updates the 4 “metric tiles” using existing IDs (tmp, hum, wind, pres)
+function updateCurrentConditions({ tempC, humidity, windKmh, pressure }) {
+  setMetric('tmp',  fmt.temp(tempC));
+  setMetric('hum',  fmt.hum(humidity));
+  setMetric('wind', fmt.wind(windKmh));
+  setMetric('pres', fmt.pres(pressure));
+  setThermalTheme(tempC); // flip colors for hot/cold
+}
+
+// minimal DOM writer that respects your existing IDs
+function setMetric(id, valueStr) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const valueNode = el.querySelector('.value');
+  if (valueNode) valueNode.textContent = valueStr;
+}
+
+// Flip the page theme depending on temperature (°C)
+function setThermalTheme(tempC) {
+  const hotThreshold = 28; // tweak to taste
+  const coldThreshold = 12;
+  const b = document.body;
+  b.classList.remove('theme-hot','theme-cold');
+  if (typeof tempC === 'number' && !Number.isNaN(tempC)) {
+    if (tempC >= hotThreshold) b.classList.add('theme-hot');
+    else if (tempC <= coldThreshold) b.classList.add('theme-cold');
+  }
+}
+
+// Optional: call this whenever your sim ticks or user hits "Set"/"Update"
+function syncFromInputs() {
+  const get = id => parseFloat((document.getElementById(id)?.value ?? ''));
+  updateCurrentConditions({
+    tempC:   get('tmpi'),
+    humidity:get('humi'),
+    windKmh: get('windi'),
+    pressure:get('presi'),
+  });
+
+  // keep your header pills in sync too, if you like
+  const setText = (id,val)=>{ const n=document.getElementById(id); if(n) n.textContent = val; };
+  setText('pillTmp',  fmt.temp(get('tmpi')) + ' °C');
+  setText('pillHum',  fmt.hum(get('humi')) + ' %');
+  setText('pillWspd', fmt.wind(get('windi')) + ' km/h');
+  setText('pillPres', fmt.pres(get('presi')) + ' hPa');
+}
+
+// Wire up to your existing buttons without changing their IDs
+document.getElementById('set')?.addEventListener('click', syncFromInputs);
+document.getElementById('update')?.addEventListener('click', syncFromInputs);
+
+// If your sim loop updates values programmatically, just call:
+// updateCurrentConditions({ tempC: t, humidity: h, windKmh: w, pressure: p });
 tempM();  boundSetter();
 wind();  
 presssure();   
