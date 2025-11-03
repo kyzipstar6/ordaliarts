@@ -51,7 +51,7 @@ const windT = ['Do not let the wind blow over 50 km/h today'];
 let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = -30;  
+        let hum = 11; let temp = -30;  
         let hour = Math.ceil(ran*24);  
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
@@ -61,12 +61,12 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 		
         setInterval(() => {  
                
-            document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
-            document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
+            document.getElementById("out-temp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
+            document.getElementById("out-hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
           if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
-            document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} m/s`;  
+            document.getElementById("out-wspd").innerText = `Wind speed: ${wspd.toFixed(1)} m/s`;  
             
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
