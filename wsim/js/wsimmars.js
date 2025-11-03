@@ -68,7 +68,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
             document.getElementById("out-wspd").innerText = `Wind speed: ${wspd.toFixed(1)} m/s`;  
             
-            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
@@ -172,13 +172,13 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
            }}, 4200);   
     }  
     
-    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+    let pressure = 8;  
     function presssure() {  
-	if (pressure<977){pressure = 977;}  
-	if (pressure>1029){pressure = 1029;}  
+	if (pressure<0){pressure = 8;}  
+	if (pressure>29){pressure = 29;}  
 	setInterval(() => {  
-		if (pressure<977){pressure = 977;}  
-	if (pressure>1029){pressure = 1029;}  
+		if (pressure<0){pressure = 8;}  
+	if (pressure>29){pressure = 29;}  
 		  
 		if (hour >9 && hour<14){  
             pressure = pressure +0.1*tacc;;  
