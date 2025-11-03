@@ -1,5 +1,4 @@
-
- let trend =0;
+let trend =0;
 
 const canvas = document.getElementById('varChart');
 if (!canvas) {
@@ -52,7 +51,7 @@ const windT = ['Do not let the wind blow over 50 km/h today'];
 let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
+        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = -30;  
         let hour = Math.ceil(ran*24);  
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
@@ -60,23 +59,14 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let year = Math.ceil(ran5*4500);  let chd=0;
     function main() {  
 		
-        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=22;} if(month ==5 || month==8){ temp=24;}if(month ==4 || month==9){ temp=25.5;}  
-        if(month ==3 || month==10){ temp=27.5;}if(month ==2 || month==11){ temp=28.4;}if(month ==1 || month==12){ temp=29.5;}}  
-        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=19;}if(month ==5 || month==8){ temp=21;} if(month ==4 || month==9){ temp=22.5;}  
-        if(month ==3 || month==10){ temp=23.5;}if(month ==2 || month==11){ temp=25.4;}if(month ==1 || month==12){ temp=26.5;}}  
-        if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
-        if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
-        if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
-        if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
-        if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
-       setInterval(() => {  
+        setInterval(() => {  
                
             document.getElementById("tmp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
             document.getElementById("hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
           if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
-            document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
+            document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} m/s`;  
             
             document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
@@ -88,7 +78,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         setInterval(() => {  
             minute = minute +3*tacc;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
-            if(hour >= 24){hour =0; day = day + 1;}
+            if(hour >= 25){hour =0; day = day + 1;}
 
 if (day > daysInMonth[month - 1]) {
 day = 1;
@@ -115,30 +105,30 @@ if (hum>100) hum =89;
         setInterval(() => {  
            
             if (hour >9 && hour<14){  
-            temp +=0.1*tacc;
-            hum -= 0.1*tacc;}  
+            temp +=0.3*tacc;
+            hum -= 0.2*tacc;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.2*tacc;
-            hum += 0.2*tacc;}    
+            temp +=0.6*tacc;
+            hum += 0.3*tacc;}    
             if (hour >16 && hour<22){  
-            temp +=0.05*tacc;
+            temp +=0.25*tacc;
             hum -= 0.05*tacc;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=0.05*tacc;
-            hum += 0.05*tacc;}
+            temp -=0.45*tacc;
+            hum += 0.15*tacc;}
             
 			
-			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
-			if(trend ==1&&chd==0) temp+=0.2*tacc;
+			if(trend ==-1&&chd==0) temp-=0.6*tacc; 
+			if(trend ==1&&chd==0) temp+=0.6*tacc;
 			if(trend==0) temp +=0;
 			
-			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
-			if(trend ==1&&chd==1) hum+=0.2*tacc;
+			if(trend ==-1&&chd==1) hum-=0.6*tacc; 
+			if(trend ==1&&chd==1) hum+=0.6*tacc;
 			if(trend==0&&chd==1) hum +=0;
         }, 60000);  
            
     }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=7;
     let wspM =87; 
 let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
@@ -293,12 +283,10 @@ const plals= ["The pressure is too low, you should make it higher.","The pressur
 function wfoals(){
     let ran = (Math.random()*3).toFixed(0);
     setInterval(()=>{
-            if(temp>35) alert(thals[ran]);
-            if(temp<-30) alert(tlals[ran]);
-            if(wspd>135) alert(wals[ran]);
-            if(hum<15) alert(hlals[ran]);
-            if(pressure>1045) alert(phals[ran]);
-            if(pressure<950) alert(plals[ran]);
+            if(temp>25) alert(thals[ran]);
+            if(temp<-120) alert(tlals[ran]);
+            if(wspd>35) alert(wals[ran]);
+            
     }, 180000);
 }
 
@@ -310,44 +298,7 @@ const fmt = {
   pres: v => `${Math.round(Number(v))}`
 };
 
-// Updates the 4 “metric tiles” using existing IDs (tmp, hum, wind, pres)
-function updateCurrentConditions({ tempC, humidity, windKmh, pressure }) {
-  setMetric('tmp',  fmt.temp(tempC));
-  setMetric('hum',  fmt.hum(humidity));
-  setMetric('wind', fmt.wind(windKmh));
-  setMetric('pres', fmt.pres(pressure));
-  setThermalTheme(tempC); // flip colors for hot/cold
-}
 
-// minimal DOM writer that respects your existing IDs
-function setMetric(id, valueStr) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const valueNode = el.querySelector('.value');
-  if (valueNode) valueNode.textContent = valueStr;
-}
-
-// Flip the page theme depending on temperature (°C)
-function setThermalTheme(tempC) {
-  const hotThreshold = 28; // tweak to taste
-  const coldThreshold = 12;
-  const b = document.body;
-  b.classList.remove('theme-hot','theme-cold');
-  if (typeof tempC === 'number' && !Number.isNaN(tempC)) {
-    if (tempC >= hotThreshold) b.classList.add('theme-hot');
-    else if (tempC <= coldThreshold) b.classList.add('theme-cold');
-  }
-}
-
-// Optional: call this whenever your sim ticks or user hits "Set"/"Update"
-function syncFromInputs() {
-  const get = id => parseFloat((document.getElementById(id)?.value ?? ''));
-  updateCurrentConditions({
-    tempC:   get('tmpi'),
-    humidity:get('humi'),
-    windKmh: get('windi'),
-    pressure:get('presi'),
-  });
 
   // keep your header pills in sync too, if you like
   const setText = (id,val)=>{ const n=document.getElementById(id); if(n) n.textContent = val; };
@@ -357,9 +308,7 @@ function syncFromInputs() {
   setText('pillPres', fmt.pres(get('presi')) + ' hPa');
 }
 
-// Wire up to your existing buttons without changing their IDs
-document.getElementById('set')?.addEventListener('click', syncFromInputs);
-document.getElementById('update')?.addEventListener('click', syncFromInputs);
+// Wire up to your existing buttons without changing their IDsdocument.getElementById('update')?.addEventListener('click', syncFromInputs);
 
 // If your sim loop updates values programmatically, just call:
 // updateCurrentConditions({ tempC: t, humidity: h, windKmh: w, pressure: p });
