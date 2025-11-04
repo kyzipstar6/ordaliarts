@@ -56,7 +56,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
         let month = Math.ceil(ran4*12);  
-        let year = Math.ceil(ran5*4500);  let chd=0;
+        let year = Math.ceil(ran5*4500);  let chd=0;let tacc = 1;
     function main() {  
 		
         setInterval(() => {  
@@ -74,7 +74,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
              }, 1000);  
-	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
+	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
             minute = minute +3*tacc;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
