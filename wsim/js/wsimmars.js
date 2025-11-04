@@ -303,6 +303,7 @@ const fmt = {
 
 // If your sim loop updates values programmatically, just call:
 // updateCurrentConditions({ tempC: t, humidity: h, windKmh: w, pressure: p });
+main();
 tempM();  boundSetter();
 wind();  
 presssure();   
