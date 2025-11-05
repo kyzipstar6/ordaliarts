@@ -61,12 +61,12 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 		
         setInterval(() => {  
                
-            document.getElementById("val-temp").innerText = `Temperature: ${temp.toFixed(1)} °C`;  
-            document.getElementById("val-hum").innerText = `Humidity: ${hum.toFixed(1)} %`;  
-          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
-	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
-            document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
-            document.getElementById("val-wind").innerText = `Wind speed: ${wspd.toFixed(1)} m/s`;  
+            document.getElementById("val-temp").innerText = ` ${temp.toFixed(1)} °C`;  
+            document.getElementById("val-hum").innerText = `${hum.toFixed(1)} %`;  
+          if(minute<10)  document.getElementById("hour").innerText = `${hour}:0${minute}`;  
+	       if(minute>9)  document.getElementById("hour").innerText = `${hour}:${minute}`; 
+            //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
+            document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
             
             document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
