@@ -63,8 +63,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
                
             document.getElementById("val-temp").innerText = ` ${temp.toFixed(1)} °C`;  
             document.getElementById("val-hum").innerText = `${hum.toFixed(1)} %`;  
-          if(minute<10)  document.getElementById("hour").innerText = `${hour}:0${minute}`;  
-	       if(minute>9)  document.getElementById("hour").innerText = `${hour}:${minute}`; 
+       
             //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
             
@@ -121,9 +120,9 @@ if (hum>100) hum =89;
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=7;
     let wspM =87; 
-let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fiterrecord=0;  
-    let W_MAXmax= 122;let W_MAXmin= 4;let W_MINmax= 35;let W_MINmin= 0;  
-    let UPPER_BOUND = 37;let LOWER_BOUND = 13;  
+let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 32.4;let W_MAXmin= 4;let W_MINmax= 22;let W_MINmin= 0;  
+    let UPPER_BOUND = 19.4;let LOWER_BOUND = 8.8;  
     function wind(){  
         
         setInterval(() => {  
@@ -153,13 +152,13 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind =0; let filter=0; let fite
 		wspeed2  = (Math.random()*200);  
 			  
 		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && UPPER_BOUND/wspeed1 <= 1.3&& wspeed1 > LOWER_BOUND   
-				&& (wspeed1 - UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
+				&& (wspeed1 - UPPER_BOUND <= 2) ) { UPPER_BOUND = wspeed1; }  
 		if (wspeed1 < W_MAXmax && wspeed1 > W_MAXmin && wspeed1/UPPER_BOUND <= 1.3&& wspeed1 > LOWER_BOUND   
-				&& (wspeed1 + UPPER_BOUND <= 7) ) { UPPER_BOUND = wspeed1; }  
+				&& (wspeed1 + UPPER_BOUND <= 2) ) { UPPER_BOUND = wspeed1; }  
 		if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (LOWER_BOUND/wspeed2 <= 1.3)&& UPPER_BOUND > wspeed2   
-				&& (wspeed2 - LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2; }  
+				&& (wspeed2 - LOWER_BOUND <= 2)) {LOWER_BOUND = wspeed2; }  
 				if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (wspeed2/LOWER_BOUND <= 1.3)&& UPPER_BOUND > wspeed2   
-						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
+						&& (wspeed2 + LOWER_BOUND <= 2)) {LOWER_BOUND = wspeed2;   
            }}, 4200);   
     }  
     
@@ -293,11 +292,11 @@ const fmt = {
 
   // keep your header pills in sync too, if you like
   const setText = (id,val)=>{ const n=document.getElementById(id); if(n) n.textContent = val; };
-  setText('pillTmp',  fmt.temp(get('tmpi')) + ' °C');
-  setText('pillHum',  fmt.hum(get('humi')) + ' %');
-  setText('pillWspd', fmt.wind(get('windi')) + ' km/h');
-  setText('pillPres', fmt.pres(get('presi')) + ' hPa');
-}
+  setText('pillTmp',  fmt.temp(('tmpi')) + ' °C');
+  setText('pillHum',  fmt.hum(('humi')) + ' %');
+  setText('pillWspd', fmt.wind(('windi')) + ' km/h');
+  setText('pillPres', fmt.pres(('presi')) + ' hPa');
+
 
 // Wire up to your existing buttons without changing their IDsdocument.getElementById('update')?.addEventListener('click', syncFromInputs);
 
@@ -307,5 +306,3 @@ main();
 tempM();  boundSetter();
 wind();  
 presssure();   
-
-wfoals();
