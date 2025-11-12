@@ -67,7 +67,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
             
-            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} Pa`; 
+            document.getElementById("val-pres").innerText = `Pressure: ${pressure.toFixed(1)} Pa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
@@ -85,7 +85,7 @@ month++;
 }
 if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
-
+if(hum<0)hum=1.3;
 }, 20000);   
     
         
@@ -93,7 +93,7 @@ if (hum>100) hum =89;
     function tempM(){  
           
         setInterval(() => {  
-           
+           let tpm = 1 + (-0.5 + Math.random())/18;
             if (hour >9 && hour<14){  
             temp +=0.7*tacc;
             hum -= 0.1*tacc;}  
@@ -106,7 +106,7 @@ if (hum>100) hum =89;
             if (hour >0 && hour<7 || hour >22){  
             temp -=0.95*tacc;
             hum += 0.15*tacc;}
-            
+            temp*tpm;
 			
 			if(trend ==-1&&chd==0) temp-=0.6*tacc; 
 			if(trend ==1&&chd==0) temp+=0.6*tacc;
@@ -115,7 +115,7 @@ if (hum>100) hum =89;
 			if(trend ==-1&&chd==1) hum-=0.6*tacc; 
 			if(trend ==1&&chd==1) hum+=0.6*tacc;
 			if(trend==0&&chd==1) hum +=0;
-        }, 60000);  
+        }, 30000);  
            
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=7;
