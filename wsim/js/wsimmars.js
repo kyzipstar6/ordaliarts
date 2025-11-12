@@ -26,7 +26,7 @@ const varChart = new Chart(varCtx, {
     labels: [],
     datasets: [
       { label: 'Temperature', 
-        data: [22,22.3,21.5], 
+        data: [], 
         borderColor: 'rgba(2, 1, 186, 1)', 
         tension: 0.25 ,
         
@@ -67,7 +67,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
             
-            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} Pa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
@@ -164,11 +164,11 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fi
     
     let pressure = 8;  
     function presssure() {  
-	if (pressure<0){pressure = 8;}  
-	if (pressure>29){pressure = 29;}  
+	if (pressure<620){pressure = 608;}  
+	if (pressure>929){pressure = 927;}  
 	setInterval(() => {  
-		if (pressure<0){pressure = 8;}  
-	if (pressure>29){pressure = 29;}  
+		if (pressure<620){pressure = 608;}  
+	if (pressure>929){pressure = 927;}  
 		  
 		if (hour >9 && hour<14){  
             pressure = pressure +0.1*tacc;;  
