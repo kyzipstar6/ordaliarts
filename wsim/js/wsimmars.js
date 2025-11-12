@@ -95,16 +95,16 @@ if (hum>100) hum =89;
         setInterval(() => {  
            
             if (hour >9 && hour<14){  
-            temp +=0.3*tacc;
-            hum -= 0.2*tacc;}  
+            temp +=0.7*tacc;
+            hum -= 0.1*tacc;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.6*tacc;
+            temp +=1.2*tacc;
             hum += 0.3*tacc;}    
             if (hour >16 && hour<22){  
-            temp +=0.25*tacc;
+            temp +=0.7*tacc;
             hum -= 0.05*tacc;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=0.45*tacc;
+            temp -=0.95*tacc;
             hum += 0.15*tacc;}
             
 			
