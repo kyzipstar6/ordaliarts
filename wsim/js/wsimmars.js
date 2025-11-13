@@ -66,8 +66,9 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
        
             //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
-            document.getElementById("val-time").innerText = `${hour}:${minute}`;  
-            document.getElementById("val-pres").innerText = `Pressure: ${pressure.toFixed(1)} Pa`; 
+           if(minute<10) document.getElementById("val-time").innerText = `${hour}:1${minute}`;
+			if(minute>9) document.getElementById("val-time").innerText = `${hour}:${minute}`;
+            document.getElementById("val-pres").innerText = `${pressure.toFixed(1)} Pa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
@@ -109,8 +110,8 @@ if(hum<0)hum=1.3;
             hum += 0.15*tacc;}
             temp*tpm;
 			
-			if(trend ==-1&&chd==0) temp-=0.6*tacc; 
-			if(trend ==1&&chd==0) temp+=0.6*tacc;
+			if(trend ==-1&&chd==0) temp-=1.6*tacc; 
+			if(trend ==1&&chd==0) temp+=1.6*tacc;
 			if(trend==0) temp +=0;
 			
 			if(trend ==-1&&chd==1) hum-=0.6*tacc; 
@@ -119,7 +120,7 @@ if(hum<0)hum=1.3;
         }, 30000);  
            
     }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=7;
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=17;
     let wspM =87; 
 let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 32.4;let W_MAXmin= 4;let W_MINmax= 22;let W_MINmin= 0;  
