@@ -27,7 +27,7 @@ const varChart = new Chart(varCtx, {
     labels: [],
     datasets: [
       { label: 'Temperature', 
-        data: [22,22.3,21.5], 
+        data: [], 
         borderColor: 'rgba(2, 1, 186, 1)', 
         tension: 0.25 ,
         
@@ -78,7 +78,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
             document.getElementById("wind").innerText = `Wind speed: ${wspd.toFixed(1)} km/h`;  
             
-            document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+           if(minute>9)  document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
