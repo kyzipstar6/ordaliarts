@@ -66,12 +66,13 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
        
             //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
-            
+            document.getElementById("val-time").innerText = `${hour}:${minute}`;  
             document.getElementById("val-pres").innerText = `Pressure: ${pressure.toFixed(1)} Pa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
+			pillWspd.innerText = `${wspd.toFixed(1)} m/s`;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
