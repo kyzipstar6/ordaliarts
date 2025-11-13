@@ -27,7 +27,7 @@ const varChart = new Chart(varCtx, {
     datasets: [
       { label: 'Temperature', 
         data: [], 
-        borderColor: 'rgba(2, 1, 186, 1)', 
+        borderColor: 'rgba(97, 151, 18, 1)', 
         tension: 0.25 ,
         
       }
