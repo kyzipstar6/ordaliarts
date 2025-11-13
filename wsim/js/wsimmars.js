@@ -130,7 +130,7 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fi
         setInterval(() => {  
             wspeed1= (Math.random()*200);  
 			wspeed2= (Math.random()*200);  
-		  
+		  if(wspd<0.15)wspd=1.8;
 				wspm = 1 + (-0.5 + Math.random())/wspdd;
 			wspd*=wspm;
       UPPER_BOUND*=wspm;
