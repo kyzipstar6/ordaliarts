@@ -77,7 +77,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
-            minute = minute +3*tacc;  
+            minute = minute +6*tacc;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 25){hour =0; day = day + 1;}
 
@@ -89,7 +89,7 @@ if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
 if(hum<0)hum=1.3;
 }, 20000);   
-    
+
         
     }  
     function tempM(){  
@@ -205,7 +205,12 @@ if (document.getElementById("yei").value!=""){year = parseFloat(document.getElem
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
- 
+ const elId(id) = document.getElementById(id);
+ function changeEpochTemperature()  {
+	 elId("p-now").addEventListener('click', ()=>{temp= -29.6; pressure=751;});
+	 elId("p-4gyr").addEventListener('click', ()=>{temp= -8.5; pressure=751;});
+	 elId("p-2gyr").addEventListener('click', ()=>{temp= -55.1; pressure=751;});
+ }
   
 }
 function update(){let aci = acumulator/36000;
@@ -308,3 +313,4 @@ main();
 tempM();  boundSetter();
 wind();  
 presssure();   
+changeEpochTemperature();
