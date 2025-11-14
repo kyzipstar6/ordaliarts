@@ -70,12 +70,12 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
        setInterval(() => {  
                
-            document.getElementById("tmp").innerText = `${temp.toFixed(1)} °C`;  
-            document.getElementById("hum").innerText = `${hum.toFixed(1)} %`;  
+            document.getElementById("tmpv").innerText = `${temp.toFixed(1)}`;  
+            document.getElementById("humv").innerText = `${hum.toFixed(1)}`;  
           if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
-            document.getElementById("wind").innerText = `${wspd.toFixed(1)} km/h`;  
+            document.getElementById("windv").innerText = `${wspd.toFixed(1)}`;  
             
            if(minute>9)  document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
