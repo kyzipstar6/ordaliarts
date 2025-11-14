@@ -207,9 +207,9 @@ title = document.getElementById("titi").value;
 }
  const elId(id) = document.getElementById(id);
  function changeEpochTemperature()  {
-	 elId("p-now").addEventListener('click', ()=>{temp= -29.6; pressure=751;});
-	 elId("p-4gyr").addEventListener('click', ()=>{temp= -8.5; pressure=751;});
-	 elId("p-2gyr").addEventListener('click', ()=>{temp= -55.1; pressure=751;});
+	 elId('p-now').addEventListener('click', ()=>{temp= -29.6; pressure=751;});
+	 elId('p-4gyr').addEventListener('click', ()=>{temp= -8.5; pressure=751;});
+	 elId('p-2gyr').addEventListener('click', ()=>{temp= -55.1; pressure=751;});
  }
   
 }
