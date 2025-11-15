@@ -205,14 +205,21 @@ if (document.getElementById("yei").value!=""){year = parseFloat(document.getElem
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
+	function setvar(epoch){
+	  if(epoch.matches('p-now'){temp= -29.6; pressure=751;}
+	  	  if(epoch.matches('p-4gyr'){temp= -8.5; pressure=751;}
+
+	  	  if(epoch.matches('p-2gyr'){temp= -55.1; pressure=751;}
+
+  }
  const elId(id) = document.getElementById(id);
- function changeEpochTemperature()  {
-	 elId('p-now').addEventListener('click', ()=>{temp= -29.6; pressure=751;});
-	 elId('p-4gyr').addEventListener('click', ()=>{temp= -8.5; pressure=751;});
-	 elId('p-2gyr').addEventListener('click', ()=>{temp= -55.1; pressure=751;});
+ function epBtsEf()  {
+	 elId('p-now').addEventListener('click', ()=>setvar('p-now'));
+	 elId('p-4gyr').addEventListener('click', ()=>setvar('p-4gyr'));
+	 elId('p-2gyr').addEventListener('click', ()=>setvar('p-2gyr'));
  }
   
-}
+
 function update(){let aci = acumulator/36000;
     if(hour>19 || hour<7) {  
       temp-=1*aci; hum+=8*aci; pressure += 0.87*aci;}
@@ -313,4 +320,4 @@ main();
 tempM();  boundSetter();
 wind();  
 presssure();   
-changeEpochTemperature();
+epBtsEf();
