@@ -98,7 +98,21 @@
   <a href="#clim">Climate Description</a>
   <a href="#getapp">Get the App</a>
 </nav>
+<section id="auth-section">
+  <div id="auth-panel">
+    <input id="auth-username" type="text" placeholder="Username" />
+    <input id="auth-password" type="password" placeholder="Password" />
+    <button id="btn-register" type="button">Register</button>
+    <button id="btn-login" type="button">Login</button>
+    <span id="auth-status"></span>
+  </div>
 
+  <div id="user-panel" style="display:none;">
+    Logged in as <strong id="current-username"></strong>
+    <button id="btn-logout" type="button">Logout</button>
+    <button id="btn-save-session" type="button">Save weather + chart</button>
+  </div>
+</section>
 <section id="curc">
   <h1 id="cucnh">Weather Conditions at Pacific Island</h1>
  
