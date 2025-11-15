@@ -212,7 +212,7 @@ title = document.getElementById("titi").value;
 	  	  if(epoch.matches('p-2gyr')){temp= -55.1; pressure=751;}
 
   }
- const elId(id) = document.getElementById(id);
+ function elId(id) {document.getElementById(id);}
  function epBtsEf()  {
 	 elId('p-now').addEventListener('click', ()=>setvar('p-now'));
 	 elId('p-4gyr').addEventListener('click', ()=>setvar('p-4gyr'));
