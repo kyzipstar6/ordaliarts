@@ -206,10 +206,10 @@ if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
 	function setvar(epoch){
-	  if(epoch.matches('p-now'){temp= -29.6; pressure=751;}
-	  	  if(epoch.matches('p-4gyr'){temp= -8.5; pressure=751;}
+	  if(epoch.matches('p-now')){temp= -29.6; pressure=751;}
+	  	  if(epoch.matches('p-4gyr')){temp= -8.5; pressure=751;}
 
-	  	  if(epoch.matches('p-2gyr'){temp= -55.1; pressure=751;}
+	  	  if(epoch.matches('p-2gyr')){temp= -55.1; pressure=751;}
 
   }
  const elId(id) = document.getElementById(id);
