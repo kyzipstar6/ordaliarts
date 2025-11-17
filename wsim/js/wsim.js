@@ -27,7 +27,7 @@ const varChart = new Chart(varCtx, {
     datasets: [
       { label: 'Temperature', 
         data: [], 
-        borderColor: 'rgba(2, 1, 186, 1)', 
+        borderColor: 'rgba(2, 74, 123, 1)', 
         tension: 0.25 ,
         
       }
@@ -82,6 +82,27 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
+		   if (hour >9 && hour<14){  
+            temp +=0.1*tacc;
+            hum -= 0.1*tacc;}  
+            if (hour >7 && hour<9 || hour >14 && hour<16){  
+            temp +=0.2*tacc;
+            hum += 0.2*tacc;}    
+            if (hour >16 && hour<22){  
+            temp +=0.05*tacc;
+            hum -= 0.05*tacc;}    
+            if (hour >0 && hour<7 || hour >22){  
+            temp -=0.05*tacc;
+            hum += 0.05*tacc;}
+            
+			
+			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
+			if(trend ==1&&chd==0) temp+=0.2*tacc;
+			if(trend==0) temp +=0;
+			
+			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
+			if(trend ==1&&chd==1) hum+=0.2*tacc;
+			if(trend==0&&chd==1) hum +=0;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
@@ -113,27 +134,7 @@ if (hum>100) hum =89;
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
         setInterval(() => {  
            
-            if (hour >9 && hour<14){  
-            temp +=0.1*tacc;
-            hum -= 0.1*tacc;}  
-            if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.2*tacc;
-            hum += 0.2*tacc;}    
-            if (hour >16 && hour<22){  
-            temp +=0.05*tacc;
-            hum -= 0.05*tacc;}    
-            if (hour >0 && hour<7 || hour >22){  
-            temp -=0.05*tacc;
-            hum += 0.05*tacc;}
             
-			
-			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
-			if(trend ==1&&chd==0) temp+=0.2*tacc;
-			if(trend==0) temp +=0;
-			
-			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
-			if(trend ==1&&chd==1) hum+=0.2*tacc;
-			if(trend==0&&chd==1) hum +=0;
         }, 60000);  
            
     }  let acumulator =0;
