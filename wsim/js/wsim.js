@@ -83,10 +83,10 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
 		   if (hour >9 && hour<14){  
-            temp +=0.1*tacc;
+            temp +=0.04*tacc;
             hum -= 0.1*tacc;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.2*tacc;
+            temp +=0.02*tacc;
             hum += 0.2*tacc;}    
             if (hour >16 && hour<22){  
             temp +=0.05*tacc;
