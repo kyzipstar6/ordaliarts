@@ -77,7 +77,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
             document.getElementById("windv").innerText = `${wspd.toFixed(1)}`;  
             
-           if(minute>9)  document.getElementById("pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+           if(minute>9)  document.getElementById("presv").innerText = `${pressure.toFixed(1)}`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
