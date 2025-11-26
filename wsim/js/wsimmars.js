@@ -26,8 +26,8 @@ const varChart = new Chart(varCtx, {
     labels: [],
     datasets: [
       { label: 'Temperature', 
-        data: [], 
-        borderColor: 'rgba(97, 151, 18, 1)', 
+        data: [22,22.3,21.5], 
+        borderColor: 'rgba(2, 1, 186, 1)', 
         tension: 0.25 ,
         
       }
@@ -66,18 +66,16 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
        
             //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
-           if(minute<10) document.getElementById("val-time").innerText = `${hour}:1${minute}`;
-			if(minute>9) document.getElementById("val-time").innerText = `${hour}:${minute}`;
-            document.getElementById("val-pres").innerText = `${pressure.toFixed(1)} Pa`; 
+            
+            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
-			pillWspd.innerText = `${wspd.toFixed(1)} m/s`;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
         setInterval(() => {  
-            minute = minute +6*tacc;  
+            minute = minute +3*tacc;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
             if(hour >= 25){hour =0; day = day + 1;}
 
@@ -87,40 +85,40 @@ month++;
 }
 if(month >= 13){month = 1; year = year+1;}
 if (hum>100) hum =89;
-if(hum<0)hum=1.3;
-}, 20000);   
 
+}, 20000);   
+    
         
     }  
     function tempM(){  
           
         setInterval(() => {  
-           let tpm = 1 + (-0.5 + Math.random())/18;
+           
             if (hour >9 && hour<14){  
-            temp +=0.7*tacc;
-            hum -= 0.1*tacc;}  
+            temp +=0.3*tacc;
+            hum -= 0.2*tacc;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=1.2*tacc;
+            temp +=0.6*tacc;
             hum += 0.3*tacc;}    
             if (hour >16 && hour<22){  
-            temp +=0.7*tacc;
+            temp +=0.25*tacc;
             hum -= 0.05*tacc;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=0.95*tacc;
+            temp -=0.45*tacc;
             hum += 0.15*tacc;}
-            temp*tpm;
+            
 			
-			if(trend ==-1&&chd==0) temp-=1.6*tacc; 
-			if(trend ==1&&chd==0) temp+=1.6*tacc;
+			if(trend ==-1&&chd==0) temp-=0.6*tacc; 
+			if(trend ==1&&chd==0) temp+=0.6*tacc;
 			if(trend==0) temp +=0;
 			
 			if(trend ==-1&&chd==1) hum-=0.6*tacc; 
 			if(trend ==1&&chd==1) hum+=0.6*tacc;
 			if(trend==0&&chd==1) hum +=0;
-        }, 30000);  
+        }, 60000);  
            
     }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=17;
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=7;
     let wspM =87; 
 let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 32.4;let W_MAXmin= 4;let W_MINmax= 22;let W_MINmin= 0;  
@@ -130,7 +128,7 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fi
         setInterval(() => {  
             wspeed1= (Math.random()*200);  
 			wspeed2= (Math.random()*200);  
-		  if(wspd<0.15)wspd=1.8;
+		  
 				wspm = 1 + (-0.5 + Math.random())/wspdd;
 			wspd*=wspm;
       UPPER_BOUND*=wspm;
@@ -160,17 +158,17 @@ let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fi
 		if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (LOWER_BOUND/wspeed2 <= 1.3)&& UPPER_BOUND > wspeed2   
 				&& (wspeed2 - LOWER_BOUND <= 2)) {LOWER_BOUND = wspeed2; }  
 				if (wspeed2 < W_MINmax && wspeed2 > W_MINmin &&  (wspeed2/LOWER_BOUND <= 1.3)&& UPPER_BOUND > wspeed2   
-						&& (wspeed2 + LOWER_BOUND <= 2)) {LOWER_BOUND = wspeed2;   
+						&& (wspeed2 + LOWER_BOUND <= 7)) {LOWER_BOUND = wspeed2;   
            }}, 4200);   
     }  
     
     let pressure = 8;  
     function presssure() {  
-	if (pressure<620){pressure = 608;}  
-	if (pressure>929){pressure = 927;}  
+	if (pressure<0){pressure = 8;}  
+	if (pressure>29){pressure = 29;}  
 	setInterval(() => {  
-		if (pressure<620){pressure = 608;}  
-	if (pressure>929){pressure = 927;}  
+		if (pressure<0){pressure = 8;}  
+	if (pressure>29){pressure = 29;}  
 		  
 		if (hour >9 && hour<14){  
             pressure = pressure +0.1*tacc;;  
@@ -205,21 +203,9 @@ if (document.getElementById("yei").value!=""){year = parseFloat(document.getElem
 if (document.getElementById("titi").value!=""){
 title = document.getElementById("titi").value;
 }
-	function setvar(epoch){
-	  if(epoch.matches('p-now')){temp= -29.6; pressure=751;}
-	  	  if(epoch.matches('p-4gyr')){temp= -8.5; pressure=751;}
-
-	  	  if(epoch.matches('p-2gyr')){temp= -55.1; pressure=751;}
-
-  }
- function elId(id) {document.getElementById(id);}
- function epBtsEf()  {
-	 elId('p-now').addEventListener('click', ()=>setvar('p-now'));
-	 elId('p-4gyr').addEventListener('click', ()=>setvar('p-4gyr'));
-	 elId('p-2gyr').addEventListener('click', ()=>setvar('p-2gyr'));
- }
+ 
   
-
+}
 function update(){let aci = acumulator/36000;
     if(hour>19 || hour<7) {  
       temp-=1*aci; hum+=8*aci; pressure += 0.87*aci;}
@@ -310,7 +296,19 @@ const fmt = {
   setText('pillHum',  fmt.hum(('humi')) + ' %');
   setText('pillWspd', fmt.wind(('windi')) + ' km/h');
   setText('pillPres', fmt.pres(('presi')) + ' hPa');
+function setvar(epoch){
+	  if(epoch.matches('p-now')){temp= -29.6; pressure=751;}
+	  	  if(epoch.matches('p-4gyr')){temp= -8.5; pressure=751;}
 
+	  	  if(epoch.matches('p-2gyr')){temp= -55.1; pressure=751;}
+
+  }
+ function elId(id) {document.getElementById(id);}
+ function epBtsEf()  {
+	 elId('p-now').addEventListener('click', ()=>setvar('p-now'));
+	 elId('p-4gyr').addEventListener('click', ()=>setvar('p-4gyr'));
+	 elId('p-2gyr').addEventListener('click', ()=>setvar('p-2gyr'));
+ }
 
 // Wire up to your existing buttons without changing their IDsdocument.getElementById('update')?.addEventListener('click', syncFromInputs);
 
@@ -320,4 +318,6 @@ main();
 tempM();  boundSetter();
 wind();  
 presssure();   
+
+wfoals();
 epBtsEf();
