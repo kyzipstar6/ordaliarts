@@ -281,7 +281,7 @@ a.btn{ text-decoration:none }
 
   // --- State -----------------------------------------------------------------
   let current = 'now';
-  let trend = 'steady'; // steady | rise | fall
+  let trendw = 'steady'; // steady | rise | fall
   let chart;
   let tick = 0;
 
@@ -307,9 +307,9 @@ a.btn{ text-decoration:none }
     // Buttons
     q('#btn-random').addEventListener('click', randomize);
     q('#btn-reset').addEventListener('click', ()=> setEpoch(current));
-    q('#btn-steady').addEventListener('click', ()=> trend='steady');
-    q('#btn-rise').addEventListener('click', ()=> trend='rise');
-    q('#btn-fall').addEventListener('click', ()=> trend='fall');
+    q('#btn-steady').addEventListener('click', ()=> trendw='steady');
+    q('#btn-rise').addEventListener('click', ()=> trendw='rise');
+    q('#btn-fall').addEventListener('click', ()=> trendw='fall');
 
     // Tabs
     tabs.charts.addEventListener('click', ()=>openTab('charts'));
@@ -329,9 +329,7 @@ a.btn{ text-decoration:none }
     }, 900);
 
     // Start
-    buildTasks();
-    buildChart();
-    setEpoch('now');
+    
   }
 
   function setEpoch(key){
@@ -395,7 +393,7 @@ a.btn{ text-decoration:none }
 
   function drift(){
     // Apply gentle trend to temperature only for fun
-    const dv = trend==='rise'? 0.6 : trend==='fall'? -0.6 : 0;
+    const dv = trendw==='rise'? 0.6 : trendw==='fall'? -0.6 : 0;
     rng.temp.value = clamp(Number(rng.temp.value) + dv, Number(rng.temp.min), Number(rng.temp.max));
     out.temp.textContent = rng.temp.value; applyValues(); updateIcon(); updateTasks(); updateChartPoint();
   }
@@ -521,7 +519,9 @@ a.btn{ text-decoration:none }
     chart.update();
   }
   // ---------------------------------------------------------------------------
-
+  buildTasks();
+    buildChart();
+    setEpoch('now');
   // Render any existing leaderboard on load
   renderLeaderboard();
   </script></body>
