@@ -27,7 +27,7 @@ const varChart = new Chart(varCtx, {
     datasets: [
       { label: 'Temperature', 
         data: [], 
-        borderColor: 'rgba(87, 8, 12, 10)', 
+        borderColor: 'rgba(186, 115, 1, 1)', 
         tension: 0.25 ,
         
       }
@@ -229,7 +229,8 @@ function mkChart(){
  let chdmem= chd;
 function upChart(){
   if(varChart){
-  varChart.data.labels.push(counter);     
+  if(minute<10)varChart.data.labels.push(`${hour}:0${minute}`); 
+    if(minute>=10)varChart.data.labels.push(`${hour}:${minute}`);    
   
     if(chd==0)varChart.data.datasets[0].data.push(temp);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
