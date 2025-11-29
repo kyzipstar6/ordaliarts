@@ -27,7 +27,7 @@ const varChart = new Chart(varCtx, {
     datasets: [
       { label: 'Temperature', 
         data: [], 
-        borderColor: 'rgba(186, 115, 1, 1)', 
+        borderColor: 'rgba(6, 45, 161, 19)', 
         tension: 0.25 ,
         
       }
@@ -51,7 +51,7 @@ const windT = ['Do not let the wind blow over 50 km/h today'];
 let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 0; let temp = -30;  
+        let hum = 0; let temp = -141.4;  
         let hour = Math.ceil(ran*24);  
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
@@ -64,20 +64,22 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("val-temp").innerText = ` ${temp.toFixed(1)} °C`;  
             document.getElementById("val-hum").innerText = `${hum.toFixed(1)} %`;  
        
-            //document.getElementById("day").innerText = `${day}/${month}/${year} `;  
+           if(minute>9) document.getElementById("val-time").innerText = `${day}/${month}/${year} ${hour}: ${minute}`;  
+			if(minute<10) document.getElementById("val-time").innerText = `${day}/${month}/${year} ${hour}: 1${minute}`;  
+
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
             
-            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} hPa`; 
+            document.getElementById("out-pres").innerText = `Pressure: ${pressure.toFixed(1)} bar`; 
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
              }, 1000);  
-	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  
+	const daysInMonth = [361,362,361,360,361,360,361,362,362,363,360,362];  
         setInterval(() => {  
             minute = minute +3*tacc;  
             if(minute >= 60){minute = 0; hour = hour +1;}  
-            if(hour >= 25){hour =0; day = day + 1;}
+            if(hour >= 10){hour =0; day = day + 1;}
 
 if (day > daysInMonth[month - 1]) {
 day = 1;
@@ -94,16 +96,14 @@ if (hum>100) hum =89;
           
         setInterval(() => {  
            
-            if (hour >9 && hour<14){  
+            if (hour >3 && hour<9){  
             temp +=0.3*tacc;
             hum -= 0.2*tacc;}  
-            if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.6*tacc;
+            if (hour >3 && hour<5 || hour >14 && hour<16){  
+            temp +=0.5*tacc;
             hum += 0.3*tacc;}    
-            if (hour >16 && hour<22){  
-            temp +=0.25*tacc;
-            hum -= 0.05*tacc;}    
-            if (hour >0 && hour<7 || hour >22){  
+           
+            if (hour >0 && hour<3 || hour >8){  
             temp -=0.45*tacc;
             hum += 0.15*tacc;}
             
@@ -118,10 +118,10 @@ if (hum>100) hum =89;
         }, 60000);  
            
     }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 7; let wspdd=7;
-    let wspM =87; 
-let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 9.0; let filter=0; let fiterrecord=0;  
-    let W_MAXmax= 32.4;let W_MAXmin= 4;let W_MINmax= 22;let W_MINmin= 0;  
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 57; let wspdd=67;
+    let wspM =127; 
+let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 69.0; let filter=0; let fiterrecord=0;  
+    let W_MAXmax= 139.4;let W_MAXmin= 44;let W_MINmax= 82;let W_MINmin= 30;  
     let UPPER_BOUND = 19.4;let LOWER_BOUND = 8.8;  
     function wind(){  
         
