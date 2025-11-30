@@ -455,13 +455,7 @@ const pills2= {
     q('#btn-export').addEventListener('click', exportLeaderboard);
 
     // Time loop (Jovian "clock" – abstracted to 1440 ticks)
-    setInterval(()=>{
-      tick=(tick+1)%1440; // minutes
-      const hh = String(Math.floor(tick/60)).padStart(2,'0');
-      const mm = String(tick%60).padStart(2,'0');
-      val.time.textContent = `${hh}:${mm}`;
-      // drift();
-    }, 900);
+    
 
     buildTasks();
     buildChart();
@@ -739,3 +733,4 @@ const pills2= {
   </script>
 </body>
 </html>
+
