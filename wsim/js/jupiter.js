@@ -319,6 +319,4 @@ main();
 tempM();  boundSetter();
 wind();  
 presssure();   
-
-wfoals();
 epBtsEf();
