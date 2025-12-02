@@ -110,6 +110,86 @@
         background-position: top right;
       }
     }
+        /* --- My Content cards --- */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .content-card {
+      position: relative;
+      display: block;
+      height: 180px;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      color: white;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .content-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+    }
+
+    .content-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      filter: brightness(1.05);
+    }
+
+    .content-card-content {
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 1;
+    }
+
+    .content-card-title {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .content-card-subtitle {
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Example background images – change paths to your real images */
+    .card-wsim {
+      background-image: url("pc/wsim-preview.jpg");
+    }
+
+    .card-plotter {
+      background-image: url("pc/plotter-preview.jpg");
+    }
+
+    .card-codespace {
+      background-image: url("pc/codespace-preview.jpg");
+    }
+
+    .card-species {
+      background-image: url("pc/species-preview.jpg");
+    }
+
+    .card-adventures {
+      background-image: url("pc/adventures-preview.jpg");
+    }
+
+    .card-coding {
+      background-image: url("pc/coding-preview.jpg");
+    }
+
   </style>
 </head>
 <body>
@@ -150,16 +230,51 @@
 
   <section id="content">
     <h2>My Content</h2>
-    <p>Here are some Applications I created:</p>
-    <ul>
-      <li><a href="wsim/index.html" target="_blank">🌤 Weather Conditions Simulator</a></li>
-      <li> <a href="https://kyzipstar6.github.io/plotter.html" target="_blank">📈 Free online data plotter 📉</a></li>
-      <li> <a href="https://kyzipstar6.github.io/ordaliasources" target="_blank"> Free online codespace </a></li>
-      
-      <li><a href="https://kyzipstar6.github.io" target="_blank">🦗 Repertory of life forms in differents eons of Earth's history, with population evolution simulations. 🦒</a></li>
-      <li><a href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5"  target="_blank">🎥 Real-life Adventures (YouTube)</a></li>
-      <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/"target="_blank">🎮 Videogames and 💿 Coding Channel (YouTube)</a></li>
-    </ul>
+    <p>Click on a preview card to open the app or channel:</p>
+
+    <div class="content-grid">
+      <a class="content-card card-wsim" href="wsim/index.html" target="_blank">
+        <div class="content-card-content">
+          <h3 class="content-card-title">🌤 Weather Conditions Simulator</h3>
+          <p class="content-card-subtitle">Simulate weather conditions and explore different scenarios.</p>
+        </div>
+      </a>
+
+      <a class="content-card card-plotter" href="https://kyzipstar6.github.io/plotter.html" target="_blank">
+        <div class="content-card-content">
+          <h3 class="content-card-title">📈 Free Online Data Plotter 📉</h3>
+          <p class="content-card-subtitle">Plot your data quickly right in the browser.</p>
+        </div>
+      </a>
+
+      <a class="content-card card-codespace" href="https://kyzipstar6.github.io/ordaliasources" target="_blank">
+        <div class="content-card-content">
+          <h3 class="content-card-title">💻 Free Online Codespace</h3>
+          <p class="content-card-subtitle">Access my public code resources and experiments.</p>
+        </div>
+      </a>
+
+      <a class="content-card card-species" href="https://kyzipstar6.github.io" target="_blank">
+        <div class="content-card-content">
+          <h3 class="content-card-title">🦗 Species & Eons Simulator</h3>
+          <p class="content-card-subtitle">Life forms across Earth’s history, with population evolution.</p>
+        </div>
+      </a>
+
+      <a class="content-card card-adventures" href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5" target="_blank">
+        <div class="content-card-content">
+          <h3 class="content-card-title">🎥 Real-life Adventures</h3>
+          <p class="content-card-subtitle">Travel, experiences and outdoor stories.</p>
+        </div>
+      </a>
+
+      <a class="content-card card-coding" href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">
+        <div class="content-card-content">
+          <h3 class="content-card-title">🎮 Videogames & 💿 Coding Channel</h3>
+          <p class="content-card-subtitle">Games, programming and technical content.</p>
+        </div>
+      </a>
+    </div>
   </section>
 
   <section id="contact">
