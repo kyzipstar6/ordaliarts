@@ -6,7 +6,7 @@
   <title>César Gómez Torres - Webseite</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
-    <style>
+    
     body {
       font-family: 'Roboto', sans-serif;
       line-height: 1.6;
@@ -18,7 +18,7 @@
     }
 
     header {
-      background-color: #4CAF50;
+      background: linear-gradient(  #000000,#a08b45, #af544c);
       color: white;
       padding: 1rem 0;
       text-align: center;
@@ -219,6 +219,84 @@
         background-position: top right;
       }
     }
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .content-card {
+      position: relative;
+      display: block;
+      height: 180px;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      color: white;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .content-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+    }
+
+    .content-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      filter: brightness(1.05);
+    }
+
+    .content-card-content {
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 1;
+    }
+
+    .content-card-title {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .content-card-subtitle {
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Example background images – change paths to your real images */
+    .card-wsim {
+      background-image: url("pc/wsim-preview.jpg");
+    }
+
+    .card-plotter {
+      background-image: url("pc/plotter-preview.jpg");
+    }
+
+    .card-codespace {
+      background-image: url("pc/codespace-preview.jpg");
+    }
+
+    .card-species {
+      background-image: url("pc/species-preview.jpg");
+    }
+
+    .card-adventures {
+      background-image: url("pc/adventures-preview.jpg");
+    }
+
+    .card-coding {
+      background-image: url("pc/coding-preview.jpg");
+    }
   </style>
 <body>
 
@@ -255,21 +333,57 @@
     <p>Ich spreche vier Sprachen: Spanisch, Deutsch, Englisch und Katalanisch. Ich habe in Deutschland (2 Jahre) und Spanien gelebt.</p>
     <p>Schau dir gerne meine Projekte unten an – ich hoffe, sie begeistern dich genauso wie mich!</p>
   </section>
+    <section id="content">
+  <h2>Meine Inhalte</h2>
+  <p>Klicken Sie auf eine Vorschau-Karte, um die Anwendung oder den Kanal zu öffnen:</p>
 
-  <section id="content">
-    <h2>Meine Inhalte</h2>
-    <p>Hier sind einige Anwendungen, die ich erstellt habe:</p>
-    <ul>
-      <li><a href="wsim/index.html" target="_blank">🌤 Wettersimulator</a></li>
-      Jetzt
-      <li><a href="media-player.html" target="_blank">🎵 Leichter Mediaplayer</a></li>
-      <li><a href="https/www.kyzipstar6.github.io/dataplotter.html" target="_blank"> Kostenlosen Graphen</a></li>
-      
-      <li><a href="https/www.kyzipstar6.github.io/ordaliasources" target="_blank"> Online codespace</a></li>
-      <li><a href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5" target="_blank">🎥 Abenteuer im echten Leben (YouTube)</a></li>
-      <li><a href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">🎮 Videospiele und 💿 Programmierkanal (YouTube)</a></li>
-    </ul>
-  </section>
+  <div class="content-grid">
+
+    <a class="content-card card-wsim" href="wsim/index.html" target="_blank">
+      <div class="content-card-content">
+        <h3 class="content-card-title">🌤 Wetter­bedingungen-Simulator</h3>
+        <p class="content-card-subtitle">Simulieren Sie Wetterlagen und erkunden Sie verschiedene Szenarien.</p>
+      </div>
+    </a>
+
+    <a class="content-card card-plotter" href="https://kyzipstar6.github.io/plotter.html" target="_blank">
+      <div class="content-card-content">
+        <h3 class="content-card-title">📈 Kostenloser Online-Datenplotter 📉</h3>
+        <p class="content-card-subtitle">Plotten Sie Ihre Daten direkt im Browser.</p>
+      </div>
+    </a>
+
+    <a class="content-card card-codespace" href="https://kyzipstar6.github.io/ordaliasources" target="_blank">
+      <div class="content-card-content">
+        <h3 class="content-card-title">💻 Kostenloser Online-Codespace</h3>
+        <p class="content-card-subtitle">Zugang zu meinen öffentlichen Code-Ressourcen und Projekten.</p>
+      </div>
+    </a>
+
+    <a class="content-card card-species" href="https://kyzipstar6.github.io" target="_blank">
+      <div class="content-card-content">
+        <h3 class="content-card-title">🦗 Arten- & Erdzeitalter-Simulator</h3>
+        <p class="content-card-subtitle">Lebensformen aus der Erdgeschichte mit Populationsentwicklung.</p>
+      </div>
+    </a>
+
+    <a class="content-card card-adventures" href="https://youtube.com/@cesargomez7198?si=1SJAhqAQ-QjGNeY5" target="_blank">
+      <div class="content-card-content">
+        <h3 class="content-card-title">🎥 Abenteuer im echten Leben</h3>
+        <p class="content-card-subtitle">Reisen, Erlebnisse und Outdoor-Geschichten.</p>
+      </div>
+    </a>
+
+    <a class="content-card card-coding" href="https://www.youtube.com/channel/UCcs7sJ8y_iOFzuzKueDEbkw/" target="_blank">
+      <div class="content-card-content">
+        <h3 class="content-card-title">🎮 Videospiele & 💿 Coding-Kanal</h3>
+        <p class="content-card-subtitle">Games, Programmierung und technische Inhalte.</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
 
   <section id="contact">
     <h2>Kontaktiere mich</h2>
