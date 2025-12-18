@@ -105,6 +105,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
 			if(trend ==1&&chd==1) hum+=0.2*tacc;
 			if(trend==0&&chd==1) hum +=0;
+		   document.getElementById("pressv").innerText= `${pressure.toFixed(1)}`;
+		   document.getElementById("rainv").innerText = `${rain.toFixed(1)}`;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
