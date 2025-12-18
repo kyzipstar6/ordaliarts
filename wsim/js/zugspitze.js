@@ -51,7 +51,7 @@ const windT = ['Do not let the wind bniedrig over 50 km/h today'];
 let inc1 =0.04; let inc2=0.02; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
+        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 5;  
         let hour = Math.ceil(ran*24);  
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
@@ -59,10 +59,10 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let year = Math.ceil(ran5*4500);  let chd=0;
     function main() {  
 		
-        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=26;} if(month ==5 || month==8){ temp=24;}if(month ==4 || month==9){ temp=21;}  
-        if(month ==3 || month==10){ temp=14.5;}if(month ==2 || month==11){ temp=9.5;}if(month ==1 || month==12){ temp=7;}}  
-        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=19;}if(month ==5 || month==8){ temp=15;} if(month ==4 || month==9){ temp=12.4;}  
-        if(month ==3 || month==10){ temp=8.2;}if(month ==2 || month==11){ temp=2.3;}if(month ==1 || month==12){ temp=-0.1;}}  
+        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=16.6;} if(month ==5 || month==8){ temp=14;}if(month ==4 || month==9){ temp=12.1;}  
+        if(month ==3 || month==10){ temp=4.5;}if(month ==2 || month==11){ temp=-0.8;}if(month ==1 || month==12){ temp=-2.1;}}  
+        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=11.1;}if(month ==5 || month==8){ temp=9.6;} if(month ==4 || month==9){ temp=4.4;}  
+        if(month ==3 || month==10){ temp=1.2;}if(month ==2 || month==11){ temp=-6.3;}if(month ==1 || month==12){ temp=-8.1;}}  
         if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
         if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
@@ -157,7 +157,7 @@ let vbl= 0;
           if (wspd<0.1) wspd = 5;
 			if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
           wspd*=wspm;
-          if(wspd < 40 && wspd>10 && temp<24 && pressure<1010 && hum>85)  rain+=0.1;
+          if(wspd < 40 && wspd>10 && temp<24 && pressure<1010 && hum>85)  rain+=0.22;
           if(hour>22&& minute>50) rain =0;
           if (hour >0 && hour<7 || hour >22) wspM =65;
           if (hour >7 && hour<12) wspM= 60;
