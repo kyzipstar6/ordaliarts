@@ -48,7 +48,7 @@ const humT = ['Keep the humidity within 60% and 80% for 6 hours'];
 const windT = ['Do not let the wind bniedrig over 50 km/h today'];
 
 
-let inc1 =0.1; let inc2=0.005; let inc3= inc1*50; let inc4 =inc2*50;   
+let inc1 =0.04; let inc2=0.02; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
         let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 20;  
@@ -83,16 +83,16 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
 		   if (hour >9 && hour<14){  
-            temp +=0.04*tacc;
+            temp +=inc1*tacc;
             hum -= 0.1*tacc;}  
             if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=0.02*tacc;
+            temp +=inc2*tacc;
             hum += 0.2*tacc;}    
             if (hour >16 && hour<22){  
-            temp +=0.05*tacc;
+            temp +=inc*tacc;
             hum -= 0.05*tacc;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=0.05*tacc;
+            temp -=inc*tacc;
             hum += 0.05*tacc;}
             
 			
@@ -138,7 +138,7 @@ if (hum>100) hum =89;
         }, 60000);  
            
     }  let acumulator =0;
-    let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
+    let wspm = 1 + (-0.5 + Math.random()); let wspd = 45; let wspdd=9;
     let wspM =87; 
 let vbl= 0;
     let pressure = 1023 *(1+ (-0.5+ Math.random()));  
