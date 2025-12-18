@@ -621,7 +621,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial UI state
   updateAuthUI();
 });
-tempM();  boundSetter();
+tempM();  
 windrain();  
 presssure();   
 
