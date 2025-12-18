@@ -68,6 +68,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
+		inc1=(month<4 ||month>10) ? 0.02 : 0.04;
+		inc2= inc1/2;
        setInterval(() => {  
                
             document.getElementById("tmpv").innerText = `${temp.toFixed(1)}`;  
