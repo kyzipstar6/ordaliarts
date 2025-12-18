@@ -1,4 +1,4 @@
-let trend =0; let rain = 0;
+let trend =0; let rain = 0;let pressure = 1023 *(1+ (-0.5+ Math.random()));  
 
 const canvas = document.getElementById('varChart');
 if (!canvas) {
@@ -103,6 +103,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
 			if(trend ==1&&chd==1) hum+=0.2*tacc;
 			if(trend==0&&chd==1) hum +=0;
+		   document.getElementById("pressv").innerText= `${pressure.toFixed(1)} hPa`;
+		   document.getElementById("rainv").innerText = `${rain.toFixed(1)} mm`;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
@@ -122,7 +124,8 @@ if (hum>100) hum =89;
         
     }  
     function tempM(){  
-          
+          inc1=(month<4 ||month>10) ? 0.03 : 0.06;
+		inc2= inc1/2;
         if (hour > 10 && hour<18){ if(month ==1 || month==2){ temp=25;} if(month ==5 || month==8){ temp=34;}if(month ==4 || month==9){ temp=33;}  
         if(month ==3 || month==10){ temp=29.7;}if(month ==2 || month==11){ temp=27.5;}if(month ==1 || month==12){ temp=26.2;}}  
         if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=29.4;}if(month ==5 || month==8){ temp=28.5;} if(month ==4 || month==9){ temp=24.3;}  
@@ -141,7 +144,7 @@ if (hum>100) hum =89;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 34; let wspdd=7;
     let wspM =87; 
 let vbl= 0;
-    let pressure = 1023 *(1+ (-0.5+ Math.random()));  
+    
 
     function windrain(){  
 
