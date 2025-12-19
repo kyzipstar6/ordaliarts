@@ -145,7 +145,7 @@ if (hum>100) hum =89;
            
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 45; let wspdd=9;
-    let wspM =87; 
+    let wspM =107; 
 let vbl= 0;
     
 
