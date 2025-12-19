@@ -1,5 +1,5 @@
 let trend =0; let rain = 0;let pressure = 1023 *(1+ (-0.5+ Math.random()));  
-
+let tacc=1;
 const canvas = document.getElementById('varChart');
 if (!canvas) {
   console.warn('varChart canvas not found');
@@ -70,6 +70,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
 		inc1=(month<4 ||month>10) ? 0.02 : 0.04;
 		inc2= inc1/2;
+		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
+		hum =(month>5&&month<9) ? 45 : hum;
        setInterval(() => {  
                
             document.getElementById("tmpv").innerText = `${temp.toFixed(1)}`;  
@@ -148,7 +150,9 @@ let vbl= 0;
     
 
     function windrain(){  
-
+      if (hour<7||hour >19){
+		  wspd= (month==1 || month==12)? 54 : (month==2) ? 61 : (month ==3) ? 64 : (month==4) ? 40 : 25;
+	  }
         setInterval(() => {  
       wspm = 1 + (-0.5 + Math.random())/wspdd;
           
