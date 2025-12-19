@@ -98,7 +98,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             if (hour >0 && hour<7 || hour >22){  
             temp -=inc*tacc;
             hum += 0.05*tacc;}
-            temp*=1 + (-0.5 + Math.random())/10;
+            temp*=1 + (-0.5 + Math.random())/20;
 			
 			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
 			if(trend ==1&&chd==0) temp+=0.2*tacc;
