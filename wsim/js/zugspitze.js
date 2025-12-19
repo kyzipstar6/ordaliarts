@@ -161,7 +161,7 @@ let vbl= 0;
           if (trend == -1&&chd==2) wspm = 1 + (-0.35 + Math.random())/wspdd;
           if (trend == 0) wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (wspd<0.1) wspd = 5;
-			if (wspd>wspM)wspm = 1 + (-0.4 + Math.random())/wspdd;
+			if (wspd>wspM)wspm = 1 + (-0.7 + Math.random())/wspdd;
           wspd*=wspm;
           if(wspd < 40 && wspd>10 && temp<24 && pressure<1010 && hum>85)  rain+=0.22;
           if(hour>22&& minute>50) rain =0;
