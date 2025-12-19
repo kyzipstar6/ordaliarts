@@ -481,8 +481,6 @@ function wsimBuildCurrentSnapshot() {
         : chartObj.data.labels,
       datasets: chartObj.data.datasets.map(ds => ({
         label: ds.label,
-        data: Array.isArray(ds.data) ? ds.data.slice() : ds
-label: ds.label,
         data: Array.isArray(ds.data) ? ds.data.slice() : ds.data,
         borderWidth: ds.borderWidth,
         borderColor: ds.borderColor,
