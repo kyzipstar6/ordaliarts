@@ -106,8 +106,9 @@ if (hum>100) hum =89;
             if (hour >0 && hour<3 || hour >8){  
             temp -=0.45*tacc;
             hum += 0.15*tacc;}
-            
-			
+
+			let tspm = 1 + (-0.5 + Math.random())/20;
+			temp*=tspm;
 			if(trend ==-1&&chd==0) temp-=0.6*tacc; 
 			if(trend ==1&&chd==0) temp+=0.6*tacc;
 			if(trend==0) temp +=0;
