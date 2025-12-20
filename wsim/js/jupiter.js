@@ -64,8 +64,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("val-temp").innerText = ` ${temp.toFixed(1)} °C`;  
             document.getElementById("val-hum").innerText = `${hum.toFixed(1)} %`;  
        
-           if(minute>9) document.getElementById("val-time").innerText = `${day}/${month}/${year} ${hour}: ${minute}`;  
-			if(minute<10) document.getElementById("val-time").innerText = `${day}/${month}/${year} ${hour}: 1${minute}`;  
+           if(minute>9) document.getElementById("val-time").innerText = `${day}/${month}/${year} ${hour}:${minute}`;  
+			if(minute<10) document.getElementById("val-time").innerText = `${day}/${month}/${year} ${hour}:1${minute}`;  
 
             document.getElementById("val-wind").innerText = `${wspd.toFixed(1)} m/s`;  
             
@@ -73,7 +73,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
-            pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
+            pillPres.innerText = `${pressure.toFixed(1)} bar`; let tspm = 1 + (-0.5 + Math.random())/20;
+			temp*=tspm
              }, 1000);  
 	const daysInMonth = [361,362,361,360,361,360,361,362,362,363,360,362];  
         setInterval(() => {  
@@ -107,8 +108,7 @@ if (hum>100) hum =89;
             temp -=0.45*tacc;
             hum += 0.15*tacc;}
 
-			let tspm = 1 + (-0.5 + Math.random())/20;
-			temp*=tspm;
+			;
 			if(trend ==-1&&chd==0) temp-=0.6*tacc; 
 			if(trend ==1&&chd==0) temp+=0.6*tacc;
 			if(trend==0) temp +=0;
@@ -123,7 +123,7 @@ if (hum>100) hum =89;
     let wspM =127; 
 let vbl= 0;let wspeed1=0;let wspeed2=0; let quickwind= 69.0; let filter=0; let fiterrecord=0;  
     let W_MAXmax= 139.4;let W_MAXmin= 44;let W_MINmax= 82;let W_MINmin= 30;  
-    let UPPER_BOUND = 19.4;let LOWER_BOUND = 8.8;  
+    let UPPER_BOUND = 53.4;let LOWER_BOUND = 38.8;  
     function wind(){  
         
         setInterval(() => {  
