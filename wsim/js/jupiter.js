@@ -73,8 +73,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
-            pillPres.innerText = `${pressure.toFixed(1)} bar`; let tspm = 1 + (-0.5 + Math.random())/20;
-			temp*=tspm
+            pillPres.innerText = `${pressure.toFixed(1)} bar`; let tspm = 1 + (-0.5 + Math.random())/100;
+			temp*=tspm;
              }, 1000);  
 	const daysInMonth = [361,362,361,360,361,360,361,362,362,363,360,362];  
         setInterval(() => {  
