@@ -472,4 +472,163 @@ function wsimBuildCurrentSnapshot() {
   const pillPres = document.getElementById("pillPres");
   const pillWspd = document.getElementById("pillWspd");
   const pillRain = document.getElementById("pillRain");
-  const pillTrend = document.getElementById("
+  const pillTrend = document.getElementById("pillTrend");
+
+  // Decide which chart to capture: prefer explicit ref, fallback to window.varChart
+  const chartObj = wsimChartRef || window.varChart || null;
+
+  let chartSnapshot = null;
+  if (chartObj && chartObj.data) {
+    chartSnapshot = {
+      labels: Array.isArray(chartObj.data.labels)
+        ? chartObj.data.labels.slice()
+        : chartObj.data.labels,
+      datasets: chartObj.data.datasets.map(ds => ({
+        label: ds.label,
+        data: Array.isArray(ds.data) ? ds.data.slice() : ds.data,
+        borderWidth: ds.borderWidth,
+        borderColor: ds.borderColor,
+        backgroundColor: ds.backgroundColor,
+        tension: ds.tension,
+        fill: ds.fill
+      }))
+    };
+  }
+
+  return {
+    savedAt: new Date().toISOString(),
+
+    display: {
+      Temperatur: tempSpan ? tempSpan.textContent : null,
+      humidity: humSpan ? humSpan.textContent : null,
+      wind: windSpan ? windSpan.textContent : null,
+      pressure: presSpan ? presSpan.textContent : null
+    },
+
+    time: {
+      hourText: hourP ? hourP.textContent : null,
+      dateText: dayP ? dayP.textContent : null
+    },
+
+    inputs: {
+      tmpi: tmpInput ? tmpInput.value : null,
+      humi: humInput ? humInput.value : null,
+      presi: presInput ? presInput.value : null,
+      windi: windInput ? windInput.value : null,
+      houri: hourInput ? hourInput.value : null,
+      moni: monInput ? monInput.value : null,
+      yei: yeInput ? yeInput.value : null,
+      title: titleInput ? titleInput.value : null
+    },
+
+    pills: {
+      temp: pillTmp ? pillTmp.textContent : null,
+      hum: pillHum ? pillHum.textContent : null,
+      pres: pillPres ? pillPres.textContent : null,
+      wind: pillWspd ? pillWspd.textContent : null,
+      rain: pillRain ? pillRain.textContent : null,
+      trend: pillTrend ? pillTrend.textContent : null
+    },
+
+    chart: chartSnapshot
+  };
+}
+
+// Save one snapshot for the current user
+function wsimSaveCurrentUserSnapshot() {
+  const current = wsimGetCurrentUser();
+  if (!current || !current.username) {
+    return { ok: false, message: "You need to be logged in to save." };
+  }
+
+  const username = current.username;
+  const allSnapshots = wsimLoadUserSnapshots();
+  if (!allSnapshots[username]) {
+    allSnapshots[username] = [];
+  }
+
+  const snapshot = wsimBuildCurrentSnapshot();
+  allSnapshots[username].push(snapshot);
+
+  wsimSaveUserSnapshots(allSnapshots);
+  return { ok: true, message: "Weather + chart data saved for user." };
+}
+
+// Optional helper: get all snapshots for current user
+function wsimGetCurrentUserSnapshots() {
+  const current = wsimGetCurrentUser();
+  if (!current || !current.username) return [];
+  const allSnapshots = wsimLoadUserSnapshots();
+  return allSnapshots[current.username] || [];
+}
+
+// ======================================
+// WIRE EVERYTHING TO THE NEW HTML BUTTONS
+// ======================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  const usernameInput = document.getElementById("auth-username");
+  const passwordInput = document.getElementById("auth-password");
+  const btnRegister = document.getElementById("btn-register");
+  const btnLogin = document.getElementById("btn-login");
+  const btnLogout = document.getElementById("btn-logout");
+  const btnSaveSession = document.getElementById("btn-save-session");
+  const statusSpan = document.getElementById("auth-status");
+  const userPanel = document.getElementById("user-panel");
+  const currentUserSpan = document.getElementById("current-username");
+
+  function updateAuthUI() {
+    const current = wsimGetCurrentUser();
+    if (current && current.username) {
+      if (userPanel) userPanel.style.display = "flex";
+      if (currentUserSpan) currentUserSpan.textContent = current.username;
+    } else {
+      if (userPanel) userPanel.style.display = "none";
+      if (currentUserSpan) currentUserSpan.textContent = "";
+    }
+  }
+
+  function setStatus(msg) {
+    if (statusSpan) statusSpan.textContent = msg || "";
+  }
+
+  if (btnRegister) {
+    btnRegister.addEventListener("click", function () {
+      const u = (usernameInput && usernameInput.value.trim()) || "";
+      const p = (passwordInput && passwordInput.value) || "";
+      const res = wsimRegisterUser(u, p);
+      setStatus(res.message);
+    });
+  }
+
+  if (btnLogin) {
+    btnLogin.addEventListener("click", function () {
+      const u = (usernameInput && usernameInput.value.trim()) || "";
+      const p = (passwordInput && passwordInput.value) || "";
+      const res = wsimLoginUser(u, p);
+      setStatus(res.message);
+      updateAuthUI();
+    });
+  }
+
+  if (btnLogout) {
+    btnLogout.addEventListener("click", function () {
+      const res = wsimLogoutUser();
+      setStatus(res.message);
+      updateAuthUI();
+    });
+  }
+
+  if (btnSaveSession) {
+    btnSaveSession.addEventListener("click", function () {
+      const res = wsimSaveCurrentUserSnapshot();
+      setStatus(res.message);
+    });
+  }
+
+  // Initial UI state
+  updateAuthUI();
+});
+tempM();  
+windrain();  
+presssure();   
