@@ -82,10 +82,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             document.getElementById("windv").innerText = `${wspd.toFixed(1)}`;  
             
            if(minute>9)  document.getElementById("presv").innerText = `${pressure.toFixed(1)}`; 
-            pillTmp.innerText = `${temp.toFixed(1)} °C`;  
-            pillHum.innerText = `${hum.toFixed(1)} %`;
-             try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
-            pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
+           
 		   if (hour >9 && hour<14){  
             temp +=inc1*tacc;
             hum -= 0.1*tacc;}  
@@ -109,6 +106,10 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 			if(trend==0&&chd==1) hum +=0;
 		   document.getElementById("presv").innerText= `${pressure.toFixed(1)}`;
 		   document.getElementById("rainv").innerText = `${rain.toFixed(1)}`;
+		    pillTmp.innerText = `${temp.toFixed(1)} °C`;  
+            pillHum.innerText = `${hum.toFixed(1)} %`;
+             try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
+            pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
