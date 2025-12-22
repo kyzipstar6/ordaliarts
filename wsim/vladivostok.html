@@ -196,6 +196,25 @@
 <section>
   <h2>📈 График погоды</h2>
   <div class="chart-container">
+    <div class="pills" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          <span class="pill">Температура: <strong id="pillTmp">—</strong></span>
+          <span class="pill">Влажность воздуха: <strong id="pillHum">—</strong></span>
+          <span class="pill">Атмосферное давление: <strong id="pillPres">—</strong></span>
+          <span class="pill">Скорость ветра: <strong id="pillWspd">—</strong></span>
+          <span class="pill">Осадки: <strong id="pillRain">-</strong></span>
+          <span class="pill">Тренд: <strong id="pillTrend">stabil</strong></span>
+        </div>
+    <div class="field" style="display:grid;gap:.25rem;">
+          <label for="varSelect" style="font-size:12px;">Trend</label>
+          <select id="varSelect" aria-label="Trend"
+                  style="padding:.55rem .7rem;border:1px solid #cdb8b8;border-radius:10px;font-size:14px;"
+                  onchange="this.value==='temp'?stmp():this.value=='wspd'?swspd():this.value==='hum'?shum():spres();">
+            <option value="temp" selected>Температура</option>
+            <option value="hum">Влажность воздуха</option>
+            <option value="pres">Атмосферное давление</option>
+            <option value="wspd">Скорость ветра</option>
+          </select>
+        </div>
     <canvas id="varChart"></canvas>
     <div style="margin-top:8px;">
       <button onclick="resetChart()">Сбросить график</button>
@@ -212,7 +231,11 @@
     Часты сильные ветры и резкие изменения погоды.
   </p>
 </section>
-
+<section id="getapp">
+  <h1>📦 Скачайте приложение</h1>
+  <p>Для расширенных симуляций, дополнительных сценариев, анимации, графиков и многих других функций скачайте приложение:</p>
+  <a href="https://kyzipstar6.github.io/ordaliarts/wsim/download-wsim.html" target="_blank"><button>Desktop Version</button></a>
+</section>
 <!-- SCRIPT -->
 <script src="js/vladivostok.js"></script>
 
