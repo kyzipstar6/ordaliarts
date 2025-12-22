@@ -76,9 +76,9 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
                
             document.getElementById("tmpv").innerText = `${temp.toFixed(1)}`;  
             document.getElementById("humv").innerText = `${hum.toFixed(1)}`;  
-          if(minute<10)  document.getElementById("hour").innerText = `Hour: ${hour}:0${minute}`;  
-	       if(minute>9)  document.getElementById("hour").innerText = `Hour: ${hour}:${minute}`; 
-            document.getElementById("day").innerText = `Date: ${day}/${month}/${year} `;  
+          if(minute<10)  document.getElementById("hour").innerText = `Часы: ${hour}:0${minute}`;  
+	       if(minute>9)  document.getElementById("hour").innerText = `Часы: ${hour}:${minute}`; 
+            document.getElementById("day").innerText = `Дата: ${day}/${month}/${year} `;  
             document.getElementById("windv").innerText = `${wspd.toFixed(1)}`;  
             
            if(minute>9)  document.getElementById("presv").innerText = `${pressure.toFixed(1)}`; 
