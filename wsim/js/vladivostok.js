@@ -69,7 +69,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
         mintemp = temp; maxtemp = temp;
-		inc1=(month<4 ||month>10) ? 0.02 : 0.04;
+		inc1=(month<4 ||month>10) ? 0.012 : 0.029;
 		inc2= inc1/2;
 		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
 		hum =(month>5&&month<9) ? 45 : hum;
