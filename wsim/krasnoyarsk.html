@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Симуляция погоды — Красноярск</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="js/chart.js"></script>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(180deg, #2f3e46, #52796f);
+      margin: 0;
+      color: #1b2a41;
+      text-align: center;
+    }
+
+    nav {
+      padding: 1rem;
+      background-color: #1b2a41;
+    }
+
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    section {
+      margin: 2rem auto;
+      padding: 1.4rem;
+      max-width: 1000px;
+      background-color: rgba(255,255,255,0.96);
+      border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+    }
+
+    h1, h2, h3 { color: #1b2a41; }
+
+    button {
+      background: #3a5a40;
+      color: #fff;
+      padding: 0.6rem 1.4rem;
+      border: none;
+      border-radius: 10px;
+      margin: 0.4rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    button:hover { background: #2d4633; }
+
+    input, select {
+      padding: 0.5rem;
+      width: 85%;
+      max-width: 300px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ===== METRICS ===== */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-top: 1rem;
+    }
+
+    .metric {
+      background: #f6f9fc;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05), 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .metric .label {
+      font-size: 13px;
+      opacity: 0.75;
+      margin-bottom: 4px;
+    }
+
+    .metric .main {
+      font-size: 44px;
+      font-weight: 700;
+    }
+
+    .metric .unit {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .minmax {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .min { color: #1d3557; }
+    .max { color: #9d0208; }
+
+    /* ===== CHART ===== */
+    .chart-container {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .pill {
+      background: #e9ecef;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <a href="#current">Текущая погода</a>
+  <a href="#settings">Настройки</a>
+  <a href="#climate">Климат</a>
+</nav>
+
+<section id="current">
+  <h1>Текущая погода в Красноярске</h1>
+
+  <div class="metrics">
+
+    <div class="metric">
+      <div class="label">Температура воздуха</div>
+      <span class="main" id="tmpv">—</span><span class="unit"> °C</span>
+      <div class="minmax">
+        <span class="max">▲ <span id="h-tmpv">—</span> °C</span>
+        <span class="min">▼ <span id="l-tmpv">—</span> °C</span>
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="label">Влажность</div>
+      <span class="main" id="humv">—</span><span class="unit"> %</span>
+    </div>
+
+    <div class="metric">
+      <div class="label">Скорость ветра</div>
+      <span class="main" id="windv">—</span><span class="unit"> км/ч</span>
+      <div class="minmax">
+        <span class="max">▲ <span id="h-wspdv">—</span> км/ч</span>
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="label">Давление</div>
+      <span class="main" id="presv">—</span><span class="unit"> гПа</span>
+    </div>
+
+    <div class="metric">
+      <div class="label">Осадки</div>
+      <span class="main" id="rainv">—</span><span class="unit"> мм</span>
+    </div>
+
+  </div>
+</section>
+
+<section id="time">
+  <h2>⏰ Время</h2>
+  <p id="hour">Часы: —</p>
+  <p id="day">Дата: —</p>
+</section>
+
+<section>
+  <button onclick="main()">Запуск</button>
+  <button onclick="tempM()">Обновить</button>
+  <button onclick="accTime()">Ускорить время</button>
+  <button onclick="decTime()">Замедлить время</button>
+</section>
+
+<section id="settings">
+  <h2>⚙️ Настройки симуляции</h2>
+
+  <label>Температура (°C)</label><br>
+  <input id="tmpi" type="number" step="0.1"><br>
+
+  <label>Влажность (%)</label><br>
+  <input id="humi" type="number" step="0.1"><br>
+
+  <label>Давление (гПа)</label><br>
+  <input id="presi" type="number" step="0.1"><br>
+
+  <label>Ветер (км/ч)</label><br>
+  <input id="windi" type="number" step="0.1"><br>
+
+  <label>Час (0–23)</label><br>
+  <input id="houri" type="number" min="0" max="23"><br>
+
+  <label>Месяц (1–12)</label><br>
+  <input id="moni" type="number" min="1" max="12"><br>
+
+  <label>Год</label><br>
+  <input id="yei" type="number"><br>
+
+  <div style="margin-top:10px;">
+    <button onclick="getText()">Применить</button>
+  </div>
+</section>
+
+<section>
+  <h2>📈 График погоды</h2>
+  <div class="chart-container">
+    <div style="display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;">
+      <span class="pill">Температура: <strong id="pillTmp">—</strong></span>
+      <span class="pill">Влажность: <strong id="pillHum">—</strong></span>
+      <span class="pill">Давление: <strong id="pillPres">—</strong></span>
+      <span class="pill">Ветер: <strong id="pillWspd">—</strong></span>
+      <span class="pill">Осадки: <strong id="pillRain">—</strong></span>
+    </div>
+
+    <select id="varSelect" onchange="this.value==='temp'?stmp():this.value==='wspd'?swspd():this.value==='hum'?shum():spres();">
+      <option value="temp">Температура</option>
+      <option value="hum">Влажность</option>
+      <option value="pres">Давление</option>
+      <option value="wspd">Ветер</option>
+    </select>
+
+    <canvas id="varChart"></canvas>
+    <button onclick="resetChart()">Сбросить график</button>
+  </div>
+</section>
+
+<section id="climate">
+  <h2>❄️ Климат Красноярска</h2>
+  <p>
+    Красноярск расположен в Восточной Сибири и характеризуется резко континентальным климатом.
+    Зимы продолжительные, очень холодные и сухие, а лето короткое, но тёплое.
+    Суточные и сезонные колебания температуры выражены особенно сильно.
+  </p>
+</section>
+
+<script src="js/krasnoyarsk.js"></script>
+</body>
+</html>
