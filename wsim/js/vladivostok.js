@@ -92,9 +92,12 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             hum += 0.2*tacc;}    
             if (hour >16 && hour<22){  
             temp +=inc1*tacc;
-            hum -= 0.05*tacc;}    
-            if (hour >0 && hour<7 || hour >22){  
+            hum -= 0.05*tacc;}  
+            if (hour >22){  
             temp -=inc2*tacc;
+            hum += 0.05*tacc;}  
+            if (hour >0 && hour<7 || hour >22){  
+            temp -=inc1*tacc;
             hum += 0.05*tacc;}
             temp*=1 + (-0.5 + Math.random())/20;
 			
