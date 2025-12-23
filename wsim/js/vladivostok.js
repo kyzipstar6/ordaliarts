@@ -37,7 +37,7 @@ const varChart = new Chart(varCtx, {
   options: {
     scales: {
       x: { title: { display: true, text: 'Time' } },
-      y: { title: { display: true, text: 'Temperatur' }}
+      y: { title: { display: true, text: 'Температура' }}
     },
     plugins: { legend: { position: 'bottom' } }
   }
@@ -87,13 +87,13 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 		   if (hour >9 && hour<14){  
             temp +=inc1*tacc;
             hum -= 0.1*tacc;}  
-            if (hour >7 && hour<9 || hour >14 && hour<16){  
-            temp +=inc2*tacc;
-            hum += 0.2*tacc;}    
-            if (hour >16 && hour<22){  
+            if (hour >7 && hour<9 || hour >11 && hour<16){  
             temp +=inc1*tacc;
+            hum += 0.2*tacc;}    
+            if (hour >16 && hour<20){  
+            temp +=inc2*tacc;
             hum -= 0.05*tacc;}  
-            if (hour >22){  
+            if (hour >18){  
             temp -=inc2*tacc;
             hum += 0.05*tacc;}  
             if (hour >0 && hour<7 || hour >22){  
