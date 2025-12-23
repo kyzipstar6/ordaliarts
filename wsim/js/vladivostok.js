@@ -89,18 +89,18 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             hum -= 0.1*tacc;}  
             if (hour >7 && hour<9 || hour >11 && hour<16){  
             temp +=inc1*tacc;
-            hum += 0.2*tacc;}    
+            hum -= 0.2*tacc;}    
             if (hour >16 && hour<20){  
             temp +=inc2*tacc;
             hum -= 0.05*tacc;}  
             if (hour >18){  
             temp -=inc2*tacc;
-            hum += 0.05*tacc;}  
+            hum += 0.1*tacc;}  
             if (hour >0 && hour<7 || hour >22){  
             temp -=inc1*tacc;
-            hum += 0.05*tacc;}
+            hum += 0.2*tacc;}
             temp*=1 + (-0.5 + Math.random())/20;
-			
+			 hum*=1 + (-0.5 + Math.random())/40
 			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
 			if(trend ==1&&chd==0) temp+=0.2*tacc;
 			if(trend==0) temp +=0;
