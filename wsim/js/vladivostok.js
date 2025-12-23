@@ -1,5 +1,5 @@
-let trend =0; let rain = 0;let pressure = 1023 *(1+ (-0.5+ Math.random()));  
-let tacc=1;
+let trend =0; let rain = 0;let pressure = 1023 *(1+ (-0.5+ Math.random()));   let temp = 5;  
+let tacc=1; let mintemp= temp; let maxtemp= temp; let maxspd=0;
 const canvas = document.getElementById('varChart');
 if (!canvas) {
   console.warn('varChart canvas not found');
@@ -25,7 +25,7 @@ const varChart = new Chart(varCtx, {
   data: {
     labels: [],
     datasets: [
-      { label: 'Temperatur', 
+      { label: 'Температура (°C)', 
         data: [], 
         borderColor: 'rgba(123, 38, 2, 1)', 
         tension: 0.25 ,
@@ -51,7 +51,7 @@ const windT = ['Do not let the wind bniedrig over 50 km/h today'];
 let inc1 =0.04; let inc2=0.02; let inc3= inc1*50; let inc4 =inc2*50;   
     inc1 = inc1*2; inc2 = inc2*2;  
 let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ran4 = Math.random();let ran5 = Math.random();  
-        let hum = 77*(0.5+ (Math.random()-0.5)); let temp = 5;  
+        let hum = 77*(0.5+ (Math.random()-0.5));
         let hour = Math.ceil(ran*24);  
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
@@ -68,6 +68,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
+        mintemp = temp; maxtemp = temp;
 		inc1=(month<4 ||month>10) ? 0.02 : 0.04;
 		inc2= inc1/2;
 		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
@@ -90,10 +91,10 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             temp +=inc2*tacc;
             hum += 0.2*tacc;}    
             if (hour >16 && hour<22){  
-            temp +=inc*tacc;
+            temp +=inc1*tacc;
             hum -= 0.05*tacc;}    
             if (hour >0 && hour<7 || hour >22){  
-            temp -=inc*tacc;
+            temp -=inc2*tacc;
             hum += 0.05*tacc;}
             temp*=1 + (-0.5 + Math.random())/20;
 			
@@ -104,8 +105,13 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 			if(trend ==-1&&chd==1) hum-=0.2*tacc; 
 			if(trend ==1&&chd==1) hum+=0.2*tacc;
 			if(trend==0&&chd==1) hum +=0;
+      mintemp = (temp<mintemp) ? temp : (hour==23 && minute>45) ? temp : mintemp;
+      maxtemp = (temp>maxtemp) ? temp : (hour==23 && minute>45) ? temp : maxtemp;
 		   document.getElementById("presv").innerText= `${pressure.toFixed(1)}`;
 		   document.getElementById("rainv").innerText = `${rain.toFixed(1)}`;
+       document.getElementById("h-tmpv").innerText = `${maxtemp.toFixed(1)}`;
+       document.getElementById("l-tmpv").innerText = `${mintemp.toFixed(1)}`;
+        document.getElementById("h-wspdv").innerText = `${maxspd.toFixed(1)}`;
 		    pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
              try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
@@ -149,8 +155,8 @@ if (hum>100) hum =89;
     let wspM =107; 
 let vbl= 0;
     
-
     function windrain(){  
+      maxspd = wspd;
       if (hour<7||hour >19){
 		  wspd= (month==1 || month==12)? 54 : (month==2) ? 61 : (month ==3) ? 64 : (month==4) ? 40 : 25;
 	  }
@@ -170,6 +176,7 @@ let vbl= 0;
           if (hour >7 && hour<12) wspM= 60;
           if (hour >12 && hour<18) wspM =57;
           if (hour >18 && hour<22) wspM =52;
+          maxspd = (wspd>maxspd) ? wspd : (hour==23 && minute>45) ? wspd : maxspd;
            }, 1000);   
     }  
     
@@ -223,14 +230,14 @@ function update(){let aci = acumulator/36000;
       temp+=1*aci; hum-=8*aci; pressure -= 0.87*aci;}
     
   }
-function rise(){ trend = 1;  updatePills('rise'); }
-function steady(){ trend = 0;  updatePills('steady'); }
-function fall(){ trend=-1; updatePills('fall');} 
+function rise(){ trend = 1;  updatePills('рост'); }
+function steady(){ trend = 0;  updatePills('устойчивый'); }
+function fall(){ trend=-1; updatePills('падать');} 
 
 let counter = 1;
 function mkChart(){
   if(!varChart){
-    varChart.data.labels.length = 0;                 // clear safely
+    varChart.data.labels.length = 0;                 
     varChart.data.datasets[0].data.push(temp);
     varChart.update();
   }
@@ -239,7 +246,9 @@ function mkChart(){
  let chdmem= chd;
 function upChart(){
   if(varChart){
-  varChart.data.labels.push(counter);     
+        if(minute<10)  varChart.data.labels.push(`${hour}:0${minute}`);  
+         if(minute>9)  varChart.data.labels.push(`${hour}:${minute}`);  
+     
   
     if(chd==0)varChart.data.datasets[0].data.push(temp);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
