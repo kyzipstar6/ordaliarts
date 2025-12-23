@@ -149,10 +149,6 @@ if (hum>100) hum =89
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
-        setInterval(() => {  
-           
-            
-        }, 60000);  
            
     }  let acumulator =0;
     let wspm = 1 + (-0.5 + Math.random()); let wspd = 25; let wspdd=8;
@@ -182,7 +178,9 @@ let vbl= 0;
           if (wspd<0.1) wspd = 5;
 			if (wspd>wspM)wspm = 1 + (-0.7 + Math.random())/wspdd;
           wspd*=wspm;
-          if(wspd < 20 && wspd>10 && temp<24 && pressure<1010 && hum>85)  rain+=0.12;
+          rain= (wspd < 20 && wspd>10 && temp<24 && temp>-2 &&month>4 &&month<11 &&pressure<1010 && hum>85)?  rain+=0.03*tacc
+          : (wspd < 20 && wspd>10 && temp<12 && temp>-5 &&(month<5 ||month>10) &&pressure<1005 && hum>90) ? rain+=0.015*tacc:
+          rain;
           if(hour>22&& minute>50) rain =0;
           if (hour >0 && hour<7 || hour >22) wspM =15;
           if (hour >7 && hour<12) wspM= 40;
