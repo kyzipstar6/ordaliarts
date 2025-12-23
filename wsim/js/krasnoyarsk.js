@@ -1,5 +1,5 @@
 let trend =0; let rain = 0;let pressure = 1023 *(1+ (-0.5+ Math.random()));   let temp = 5;  
-let tacc=1; let mintemp= temp; let maxtemp= temp; let maxspd=0;
+let tacc=1; let mintemp= temp; let maxtemp= temp; let maxspd=0; let dir=180; let dirl ="N";
 const canvas = document.getElementById('varChart');
 if (!canvas) {
   console.warn('varChart canvas not found');
@@ -56,7 +56,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let minute = Math.ceil(ran2*60);  
         let day = Math.ceil(ran3*31);  
         let month = Math.ceil(ran4*12);  
-        let year = Math.ceil(ran5*4500);  let chd=0;
+        let year = Math.ceil(ran5*4500);  let chd=0; let srise =7; let sset=19;
     function main() {  
 		
         if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=16.6;} if(month ==5 || month==8){ temp=14;}if(month ==4 || month==9){ temp=12.1;}  
@@ -74,29 +74,29 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
 		hum =(month>5&&month<9) ? 45 : hum;
        setInterval(() => {  
-               
+               srise = 7 - (month-6)/6*2; sset = 19 + (month-6)/6*2;
             document.getElementById("tmpv").innerText = `${temp.toFixed(1)}`;  
             document.getElementById("humv").innerText = `${hum.toFixed(1)}`;  
           if(minute<10)  document.getElementById("hour").innerText = `Часы: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Часы: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Дата: ${day}/${month}/${year} `;  
-            document.getElementById("windv").innerText = `${wspd.toFixed(1)}`;  
+            document.getElementById("windv").innerText = `${dirl}  ${wspd.toFixed(1)}`;  
             
            if(minute>9)  document.getElementById("presv").innerText = `${pressure.toFixed(1)}`; 
            
 		   if (hour >9 && hour<14){  
             temp +=inc1*tacc;
             hum -= 0.1*tacc;}  
-            if (hour >7 && hour<9 || hour >11 && hour<16){  
+            if (hour >srise && hour<9 || hour >11 && hour<16){  
             temp +=inc1*tacc;
             hum -= 0.2*tacc;}    
-            if (hour >16 && hour<20){  
+            if (hour >16 && hour<sset){  
             temp +=inc2*tacc;
             hum -= 0.05*tacc;}  
-            if (hour >18){  
+            if (hour >sset-2 && hour<22){  
             temp -=inc2*tacc;
             hum += 0.1*tacc;}  
-            if (hour >0 && hour<7 || hour >22){  
+            if (hour >0 && hour<srise || hour >22){  
             temp -=inc1*tacc;
             hum += 0.2*tacc;}
             temp*=1 + (-0.5 + Math.random())/20;
@@ -117,8 +117,9 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         document.getElementById("h-wspdv").innerText = `${maxspd.toFixed(1)}`;
 		    pillTmp.innerText = `${temp.toFixed(1)} °C`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
-             try{ pillWspd.innerText = `${dirInput.innerText} ° ${wspd.toFixed(1)} km/h`;} catch{}
+             try{ pillWspd.innerText = `${dir.toFixed(0)} ° ${wspd.toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
+            pillRain.innerText = `${rain.toFixed(1)} mm`;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
@@ -165,7 +166,15 @@ let vbl= 0;
 	  }
         setInterval(() => {  
       wspm = 1 + (-0.5 + Math.random())/wspdd;
-          
+                dir*= 1 + (-0.5 + Math.random())/30;
+                dir = (dir<0.6) ? 359  : dir>359.6 ? 1 : dir;
+                dir = (dir<360 && dir>269 && month<10 && month>4) ? dir*( 1 + (-0.6 + Math.random())/30) : 
+                (dir<112 && dir>0 && month<10 && month>4) ? dir*( 1 + (-0.4 + Math.random())/40) 
+                :(dir<269 && dir>190 && (month>9 || month<5)) ? dir*( 1 + (-0.4 + Math.random())/30): 
+                (dir<190 && dir>105 && (month>9 || month<5)) ? dir*( 1 + (-0.6 + Math.random())/30):dir;
+
+               dirl = (dir>337.5 || dir<22.5) ? "N" : (dir>22.5 && dir<67.5) ? "NE" : (dir>67.5 && dir<112.5) ? "E" : (dir>112.5 && dir<157.5) ? "SE" : 
+                (dir>157.5 && dir<202.5) ? "S" : (dir>202.5 && dir<247.5) ? "SW" : (dir>247.5 && dir<292.5) ? "W" : "NW";
 		 wspm = 1 + (-0.5 + Math.random())/wspdd;
           if (trend == 1&&chd==2) wspm = 1 + (-0.65 + Math.random())/wspdd;
           if (trend == -1&&chd==2) wspm = 1 + (-0.35 + Math.random())/wspdd;
