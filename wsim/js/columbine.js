@@ -75,14 +75,14 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 		inc2= inc1/2;
 		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
 		hum =(month>5&&month<9) ? 45 : hum;
-       setInterval(() => {  
+       setInterval(() => {  const fspd = wspd/1.609; const ftemp =5/8 * (temp +32);
                srise = 7 - (month-6)/6*2; sset = 19 + (month-6)/6*2;
-            document.getElementById("tmpv").innerText = `${temp.toFixed(1)}`;  
+            document.getElementById("tmpv").innerText = `${ftemp.toFixed(1)}`;  
             document.getElementById("humv").innerText = `${hum.toFixed(1)}`;  
           if(minute<10)  document.getElementById("hour").innerText = `Часы: ${hour}:0${minute}`;  
 	       if(minute>9)  document.getElementById("hour").innerText = `Часы: ${hour}:${minute}`; 
             document.getElementById("day").innerText = `Дата: ${day}/${month}/${year} `;  
-            document.getElementById("windv").innerText = `${dirl}  ${wspd.toFixed(1)}`;  
+            document.getElementById("windv").innerText = `${dirl}  ${fspd.toFixed(1)}`;  
             
            if(minute>9)  document.getElementById("presv").innerText = `${pressure.toFixed(1)}`; 
            
