@@ -25,9 +25,9 @@ const varChart = new Chart(varCtx, {
   data: {
     labels: [],
     datasets: [
-      { label: 'Температура (°C)', 
+      { label: 'Temperature (°C)', 
         data: [], 
-        borderColor: 'rgba(123, 38, 2, 1)', 
+        borderColor: 'rgba(3, 140, 208, 1)', 
         tension: 0.25 ,
         
       }
@@ -37,7 +37,7 @@ const varChart = new Chart(varCtx, {
   options: {
     scales: {
       x: { title: { display: true, text: 'Time' } },
-      y: { title: { display: true, text: 'Температура' }}
+      y: { title: { display: true, text: 'Тemperature' }}
     },
     plugins: { legend: { position: 'bottom' } }
   }
@@ -59,17 +59,19 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
         let year = Math.ceil(ran5*4500);  let chd=0; let srise =7; let sset=19;
     function main() {  
 		
-        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=16.6;} if(month ==5 || month==8){ temp=14;}if(month ==4 || month==9){ temp=12.1;}  
-        if(month ==3 || month==10){ temp=4.5;}if(month ==2 || month==11){ temp=-0.8;}if(month ==1 || month==12){ temp=-2.1;}}  
-        if (hour < 10 || hour>18){  if(month ==6 || month==7 ){temp=11.1;}if(month ==5 || month==8){ temp=9.6;} if(month ==4 || month==9){ temp=4.4;}  
-        if(month ==3 || month==10){ temp=1.2;}if(month ==2 || month==11){ temp=-6.3;}if(month ==1 || month==12){ temp=-8.1;}}  
+        if (hour > 10 && hour<18){ if(month ==6 || month==7 ){ temp=29.6;} if(month==8){ temp=28.2;}if( month==9){ temp=24,1;}  if(month ==4 ){temp=19,6}
+        if(month ==5 ){temp=23,6}if(month ==3 ){temp=11,9}
+        if(month==10){ temp=18.5;}if(month ==2 || month==11){ temp=6.8;}if(month ==1 || month==12){ temp=3.1;}}  
+        if (hour < 10 || hour>18){ if(month ==6 || month==7 ){ temp=15.6;} if(month==8){ temp=13.2;}if( month==9){ temp=9,5;}  if(month ==4 ){temp=4,6}
+        if(month ==5 ){temp=4,6}if(month ==3 ){temp=-0,2}
+        if(month==10){ temp=4.2;}if(month ==2 || month==11){ temp=-2.8;}if(month ==1 || month==12){ temp=-6.1;}}  
         if (year > -1 && year <1000){temp = temp-2;}if (year > 1000 && year <1300){temp = temp-4;} if (year > 1300 && year <1700) { temp = temp - 2; }  if (year > 1600 && year <1700){temp = temp-3;}  
         if (year > 1700 && year <1750){temp = temp-6;}if (year > 1750 && year <1920){temp = temp-5;}if (year > 1920 && year <1950){temp = temp-4;}if (year > 1950 && year <1980){temp = temp-3;}  
         if (year > 1980 && year <2000){temp = temp-2;}if (year > 2040 && year <2100){temp = temp+2;}if (year > 2100 && year <2200){temp = temp+4;}if (year > 2200 && year <2300){temp = temp+6;}  
         if (year > 2300 && year <2400){temp = temp+7;}if (year > 2400 && year <2600){temp = temp+6;}if (year > 2600 && year <3100){temp = temp+5;}  
         if (year > 3100 && year <4000){temp = temp+3;}if (year > 4000 && year <4500){temp = temp-1;}  
         mintemp = temp; maxtemp = temp;
-		inc1=(month<4 ||month>10) ? 0.02 : 0.04;
+		inc1=(month<4 ||month>10) ? 0.03 : 0.06;
 		inc2= inc1/2;
 		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
 		hum =(month>5&&month<9) ? 45 : hum;
@@ -99,7 +101,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
             if (hour >0 && hour<srise || hour >22){  
             temp -=inc1*tacc;
             hum += 0.2*tacc;}
-            temp*=1 + (-0.5 + Math.random())/20;
+            temp*=1 + (-0.5 + Math.random())/50;
 			 hum*=1 + (-0.5 + Math.random())/40
 			if(trend ==-1&&chd==0) temp-=0.2*tacc; 
 			if(trend ==1&&chd==0) temp+=0.2*tacc;
@@ -649,6 +651,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial UI state
   updateAuthUI();
 });
+
 tempM();  
 windrain();  
 presssure();   
