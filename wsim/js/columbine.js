@@ -112,16 +112,16 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 			if(trend==0&&chd==1) hum +=0;
       mintemp = (temp<mintemp) ? temp : (hour==23 && minute>45) ? temp : mintemp;
       maxtemp = (temp>maxtemp) ? temp : (hour==23 && minute>45) ? temp : maxtemp;
-						
-      
+						const fmaxtemp =((9/5) * maxtemp) +32;
+        const fmintemp =((9/5) * mintemp) +32;
 		   document.getElementById("presv").innerText= `${pressure.toFixed(1)}`;
 		   document.getElementById("rainv").innerText = `${rain.toFixed(1)}`;
-       document.getElementById("h-tmpv").innerText = `${maxtemp.toFixed(1)}`;
-       document.getElementById("l-tmpv").innerText = `${mintemp.toFixed(1)}`;
-        document.getElementById("h-wspdv").innerText = `${maxspd.toFixed(1)}`;
-		    pillTmp.innerText = `${temp.toFixed(1)} °C`;  
+       document.getElementById("h-tmpv").innerText = `${fmaxtemp.toFixed(1)}`;
+       document.getElementById("l-tmpv").innerText = `${fmintemp.toFixed(1)}`;
+        document.getElementById("h-wspdv").innerText = `${(maxspd/1.609).toFixed(1)}`;
+		    pillTmp.innerText = `${ftemp.toFixed(1)} °F`;  
             pillHum.innerText = `${hum.toFixed(1)} %`;
-             try{ pillWspd.innerText = `${dir.toFixed(0)} ° ${wspd.toFixed(1)} km/h`;} catch{}
+             try{ pillWspd.innerText = `${dir.toFixed(0)} ° ${(wspd/1.609).toFixed(1)} mph`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
             pillRain.innerText = `${rain.toFixed(1)} mm`;
              }, 1000);  
@@ -264,9 +264,9 @@ function upChart(){
          if(minute>9)  varChart.data.labels.push(`${hour}:${minute}`);  
      
   
-    if(chd==0)varChart.data.datasets[0].data.push(temp);
+    if(chd==0)varChart.data.datasets[0].data.push((temp+32)*9/5);
     if(chd==1)varChart.data.datasets[0].data.push(hum);
-    if(chd==2)varChart.data.datasets[0].data.push(wspd);
+    if(chd==2)varChart.data.datasets[0].data.push(wspd/1.609);
     if(chd==3)varChart.data.datasets[0].data.push(pressure);
     
    varChart.update('none');
