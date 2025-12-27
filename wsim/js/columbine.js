@@ -25,7 +25,7 @@ const varChart = new Chart(varCtx, {
   data: {
     labels: [],
     datasets: [
-      { label: 'Temperature (°C)', 
+      { label: 'Temperature (°F)', 
         data: [], 
         borderColor: 'rgba(3, 140, 208, 1)', 
         tension: 0.25 ,
@@ -75,7 +75,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 		inc2= inc1/2;
 		hum = (hour>20)?70:50; hum = (hour<9)?84:(hour>9&&hour<14)?72: hum;
 		hum =(month>5&&month<9) ? 45 : hum;
-       setInterval(() => {  const fspd = wspd/1.609; const ftemp =((9/5) * temp) +32;
+       setInterval(() => {  const fspd = wspd/1.609; const ftemp =(9/5) *( temp +32);
                srise = 7 - (month-6)/6*2; sset = 19 + (month-6)/6*2;
             document.getElementById("tmpv").innerText = `${ftemp.toFixed(1)}`;  
             document.getElementById("humv").innerText = `${hum.toFixed(1)}`;  
@@ -112,8 +112,8 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
 			if(trend==0&&chd==1) hum +=0;
       mintemp = (temp<mintemp) ? temp : (hour==23 && minute>45) ? temp : mintemp;
       maxtemp = (temp>maxtemp) ? temp : (hour==23 && minute>45) ? temp : maxtemp;
-						const fmaxtemp =((9/5) * maxtemp) +32;
-        const fmintemp =((9/5) * mintemp) +32;
+						const fmaxtemp =(9/5) *( maxtemp +32);
+        const fmintemp =(9/5) *( mintemp+32);
 		   document.getElementById("presv").innerText= `${pressure.toFixed(1)}`;
 		   document.getElementById("rainv").innerText = `${rain.toFixed(1)}`;
        document.getElementById("h-tmpv").innerText = `${fmaxtemp.toFixed(1)}`;
