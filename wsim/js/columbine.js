@@ -599,15 +599,6 @@ function wsimLoadLastSnapshot() {
     if (el && v !== null && v !== undefined) el.value = v;
   };
 
-  setVal("tmpi", snap.inputs.tmpi);
-  setVal("humi", snap.inputs.humi);
-  setVal("presi", snap.inputs.presi);
-  setVal("windi", snap.inputs.windi);
-  setVal("houri", snap.inputs.houri);
-  setVal("moni", snap.inputs.moni);
-  setVal("yei", snap.inputs.yei);
-  setVal("titi", snap.inputs.title);
-
   // ---- sync simulator variables ----
   if (snap.inputs.tmpi) temp = parseFloat(snap.inputs.tmpi);
   if (snap.inputs.humi) hum = parseFloat(snap.inputs.humi);
@@ -616,6 +607,16 @@ function wsimLoadLastSnapshot() {
   if (snap.inputs.houri) hour = parseInt(snap.inputs.houri);
   if (snap.inputs.moni) month = parseInt(snap.inputs.moni);
   if (snap.inputs.yei) year = parseInt(snap.inputs.yei);
+	
+
+  setVal("tmpi", snap.inputs.tmpi);
+  setVal("humi", snap.inputs.humi);
+  setVal("presi", snap.inputs.presi);
+  setVal("windi", snap.inputs.windi);
+  setVal("houri", snap.inputs.houri);
+  setVal("moni", snap.inputs.moni);
+  setVal("yei", snap.inputs.yei);
+  setVal("titi", snap.inputs.title);
 
   // ---- restore pills ----
   const setText = (id, v) => {
