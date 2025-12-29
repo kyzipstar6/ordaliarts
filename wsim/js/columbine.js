@@ -585,7 +585,73 @@ function wsimGetCurrentUserSnapshots() {
   const allSnapshots = wsimLoadUserSnapshots();
   return allSnapshots[current.username] || [];
 }
+function wsimLoadLastSnapshot() {
+  const snaps = wsimGetCurrentUserSnapshots();
+  if (!snaps.length) {
+    return { ok: false, message: "No saved session found." };
+  }
 
+  const snap = snaps[snaps.length - 1];
+
+  // ---- restore inputs (source of truth) ----
+  const setVal = (id, v) => {
+    const el = document.getElementById(id);
+    if (el && v !== null && v !== undefined) el.value = v;
+  };
+
+  setVal("tmpi", snap.inputs.tmpi);
+  setVal("humi", snap.inputs.humi);
+  setVal("presi", snap.inputs.presi);
+  setVal("windi", snap.inputs.windi);
+  setVal("houri", snap.inputs.houri);
+  setVal("moni", snap.inputs.moni);
+  setVal("yei", snap.inputs.yei);
+  setVal("titi", snap.inputs.title);
+
+  // ---- sync simulator variables ----
+  if (snap.inputs.tmpi) temp = parseFloat(snap.inputs.tmpi);
+  if (snap.inputs.humi) hum = parseFloat(snap.inputs.humi);
+  if (snap.inputs.presi) pressure = parseFloat(snap.inputs.presi);
+  if (snap.inputs.windi) wspd = parseFloat(snap.inputs.windi);
+  if (snap.inputs.houri) hour = parseInt(snap.inputs.houri);
+  if (snap.inputs.moni) month = parseInt(snap.inputs.moni);
+  if (snap.inputs.yei) year = parseInt(snap.inputs.yei);
+
+  // ---- restore pills ----
+  const setText = (id, v) => {
+    const el = document.getElementById(id);
+    if (el && v != null) el.textContent = v;
+  };
+
+  setText("pillTmp", snap.pills.temp);
+  setText("pillHum", snap.pills.hum);
+  setText("pillPres", snap.pills.pres);
+  setText("pillWspd", snap.pills.wind);
+  setText("pillRain", snap.pills.rain);
+  setText("pillTrend", snap.pills.trend);
+
+  // ---- restore main displays ----
+  setText("tmpv", snap.display.Temperatur);
+  setText("humv", snap.display.humidity);
+  setText("windv", snap.display.wind);
+  setText("presv", snap.display.pressure);
+
+  setText("hour", snap.time.hourText);
+  setText("day", snap.time.dateText);
+
+  // ---- restore chart ----
+  const chartObj = wsimChartRef || window.varChart;
+  if (chartObj && snap.chart) {
+    chartObj.data.labels = snap.chart.labels.slice();
+    chartObj.data.datasets = snap.chart.datasets.map(ds => ({
+      ...ds,
+      data: ds.data.slice()
+    }));
+    chartObj.update();
+  }
+
+  return { ok: true, message: "Last session restored." };
+}
 // ======================================
 // WIRE EVERYTHING TO THE NEW HTML BUTTONS
 // ======================================
@@ -600,7 +666,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const statusSpan = document.getElementById("auth-status");
   const userPanel = document.getElementById("user-panel");
   const currentUserSpan = document.getElementById("current-username");
+ const btnLoadLast = document.getElementById("btn-load-last");
 
+if (btnLoadLast) {
+  btnLoadLast.addEventListener("click", function () {
+    const res = wsimLoadLastSnapshot();
+    if (res.message) {
+      document.getElementById("auth-status").textContent = res.message;
+    }
+  });
+}
   function updateAuthUI() {
     const current = wsimGetCurrentUser();
     if (current && current.username) {
