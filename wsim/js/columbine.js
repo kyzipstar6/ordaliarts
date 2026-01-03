@@ -600,7 +600,7 @@ function wsimLoadLastSnapshot() {
   };
 
   // ---- sync simulator variables ----
-  if (snap.inputs.tmpi) temp = parseFloat(snap.display.Temperatur);
+  temp = parseFloat(snap.display.Temperatur);
   if (snap.inputs.humi) hum = parseFloat(snap.inputs.humi);
   if (snap.inputs.presi) pressure = parseFloat(snap.inputs.presi);
   if (snap.inputs.windi) wspd = parseFloat(snap.inputs.windi);
