@@ -324,15 +324,7 @@ const fmt = {
 };
 
 // Updates the 4 “metric tiles” using existing IDs (tmp, hum, wind, pres)
-function updateCurrentConditions({ tempC, humidity, windKmh, pressure }) {
-  setMetric('tmp',  fmt.temp(tempC));
-  setMetric('hum',  fmt.hum(humidity));
-  setMetric('wind', fmt.wind(windKmh));
-  setMetric('pres', fmt.pres(pressure));
-  setThermalTheme(tempC); // flip colors for hot/cold
-}
 
-// minimal DOM writer that respects your existing IDs
 function setMetric(id, valueStr) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -351,6 +343,17 @@ function setThermalTheme(tempC) {
     else if (tempC <= coldThreshold) b.classList.add('theme-cold');
   }
 }
+
+function updateCurrentConditions({ tempC, humidity, windKmh, pressure }) {
+  setMetric('tmp',  fmt.temp(tempC));
+  setMetric('hum',  fmt.hum(humidity));
+  setMetric('wind', fmt.wind(windKmh));
+  setMetric('pres', fmt.pres(pressure));
+  setThermalTheme(tempC); // flip colors for hot/cold
+}
+
+// minimal DOM writer that respects your existing IDs
+
 
 // Optional: call this whenever your sim ticks or user hits "Set"/"Update"
 function syncFromInputs() {
@@ -523,10 +526,16 @@ function wsimBuildCurrentSnapshot() {
     savedAt: new Date().toISOString(),
 
     display: {
-      Temperatur: tempSpan ? tempSpan.textContent : null,
-      humidity: humSpan ? humSpan.textContent : null,
-      wind: windSpan ? windSpan.textContent : null,
-      pressure: presSpan ? presSpan.textContent : null
+      temp: temp,
+      hum: hum,
+      windspeed: wspd,
+      pressure: pressure,
+      hour: hour,
+      minute: minute,
+      day: day,
+      month: month,
+      year: year
+
     },
 
     time: {
@@ -600,13 +609,16 @@ function wsimLoadLastSnapshot() {
   };
 
   // ---- sync simulator variables ----
-  temp = parseFloat(snap.display.Temperatur);
-  if (snap.inputs.humi) hum = parseFloat(snap.inputs.humi);
-  if (snap.inputs.presi) pressure = parseFloat(snap.inputs.presi);
-  if (snap.inputs.windi) wspd = parseFloat(snap.inputs.windi);
-  if (snap.inputs.houri) hour = parseInt(snap.inputs.houri);
-  if (snap.inputs.moni) month = parseInt(snap.inputs.moni);
-  if (snap.inputs.yei) year = parseInt(snap.inputs.yei);
+  temp = parseFloat(snap.display.temp);
+  hum = parseFloat(snap.display.hum);
+  pressure = parseFloat(snap.display.pressure);
+  wspd = parseFloat(snap.display.windspeed);
+  hour = parseInt(snap.display.hour);
+  minute = parseInt(snap.display.minute);
+  day = parseInt(snap.display.day);
+  month = parseInt(snap.display.month);
+  year = parseInt(snap.display.year);
+
 	
 
   setVal("tmpi", snap.inputs.tmpi);
