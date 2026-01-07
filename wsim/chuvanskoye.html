@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>安德斯基模拟天气</title>
+  <title id ="header">安德斯基模拟天气</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
   <script src="js/chart.js"></script>
   <style>
@@ -40,7 +40,7 @@
 .pill[aria-pressed="true"]{outline:var(--ring);border-color:var(--accent)}
 
 /* Layout */
-.grid{display:grid;gap:20px;grid-template-columns:1.2fr 1fr}
+.grid{display:grid;gap:20px;grid-template-columns:1.2fr 1fr;background-color: #f6f9fc1b}
 @media (max-width:920px){.grid{grid-template-columns:1fr}}
 
 .panel{background:linear-gradient(180deg, rgba(10,14,22,.75), rgba(10,14,22,.55));border:1px solid rgba(139,243,255,.12);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -93,16 +93,17 @@
 /* --- Wunderground-ish metric tiles --- */
 /* --- Wunderground-ish metric tiles --- */
 .metrics {
-      display: grid;
+    background-color: #f6f9fc1b;
+      display: flex;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px;
+      gap: 2px;
       margin-top: 1rem;
     }
 
     .metric {
-      background: #f6f9fc;
+      background: #f6f9fc1b;
       border-radius: 16px;
-      padding: 14px;
+      padding: 2px;
       box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05), 0 6px 16px rgba(0,0,0,0.08);
     }
 
@@ -184,7 +185,7 @@ a.btn{ text-decoration:none }
 <body>
   <div class="wrap">
     <header>
-      <h1>楚万斯基和安迪尔斯基的模拟天气</h1>
+      <h1 >楚万斯基和安迪尔斯基的模拟天气</h1>
       <div class="subtitle">三个时代: <strong>展示</strong> · <strong>2000万年前</strong> · <strong>1.2亿年前</strong>. 调整滑块，观察图表，并将变量控制在限度内，以获得高分。</div>
     </header><div class="periods" role="tablist" aria-label="Epochs">
   <button class="pill" id="p-now" aria-pressed="true">现今（始新世）</button>
@@ -197,14 +198,14 @@ a.btn{ text-decoration:none }
   <section class="panel pad scan" aria-live="polite">
     <div class="weather-head">
       <h2 style="margin:0">当前状况</h2>
-      <div class="weather-emoji" id="ico">🛰️</div>
+      <div class="weather-emoji" id="ico"></div>
     </div>
     <div class="metric"><div>
       <div class="label">温度</div>
       <span class="main" id="tmpv">—</span><span class="unit"> °C</span>
       <div class="minmax">
-        <span class="max">▲ <span id="h-tmpv">—</span> °F</span>
-        <span class="min">▼ <span id="l-tmpv">—</span> °F</span>
+        <span class="max">▲ <span id="h-tmpv">—</span> °C</span>
+        <span class="min">▼ <span id="l-tmpv">—</span> °C</span>
       </div>
     </div>
 
@@ -217,7 +218,7 @@ a.btn{ text-decoration:none }
       <div class="label">风速</div>
       <span class="main" id="windv">—</span><span class="unit"> km/h</span>
       <div class="minmax">
-        <span class="max">▲ <span id="h-wspdv">—</span> mph</span>
+        <span class="max">▲ <span id="h-wspdv">—</span> km/h</span>
       </div>
     </div>
 
@@ -229,6 +230,14 @@ a.btn{ text-decoration:none }
     <div class="metric">
       <div class="label">沉淀</div>
       <span class="main" id="rainv">—</span><span class="unit"> mm</span>
+    </div>
+    <div class="metric">
+      <div class="label">沉淀</div>
+      <span class="main" id="hour">—</span>
+    </div>
+    <div class="metric">
+      <div class="label">沉淀</div>
+      <span class="main" id="day">—</span>
     </div>
 
   </div></div>
