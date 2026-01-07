@@ -125,6 +125,7 @@ let ran = Math.random();let ran2 = Math.random();let ran3 = Math.random();let ra
              try{ pillWspd.innerText = `${dir.toFixed(0)} ° ${(wspd).toFixed(1)} km/h`;} catch{}
             pillPres.innerText = `${pressure.toFixed(1)} hPa`; 
             pillRain.innerText = `${rain.toFixed(1)} mm`;
+		   if(hum<0) hum=5;
              }, 1000);  
 	const daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];  let tacc = 1;
         setInterval(() => {  
