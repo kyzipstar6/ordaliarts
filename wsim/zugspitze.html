@@ -413,7 +413,9 @@ function exportLeaderboard(){
   a.href = url; a.download = 'wsim-leaderboard.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
 
-renderTasks(); attachListeners(); renderLeaderboard(); computeScore();
+renderTasks(); attachListeners();
+  //renderLeaderboard(); 
+  computeScore();
 </script>
 
 </body>
