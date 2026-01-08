@@ -299,16 +299,6 @@ const fmt = {
   pres: v => `${Math.round(Number(v))}`
 };
 
-// Updates the 4 “metric tiles” using existing IDs (tmp, hum, wind, pres)
-function updateCurrentConditions({ tempC, humidity, windKmh, pressure }) {
-  setMetric('tmp',  fmt.temp(tempC));
-  setMetric('hum',  fmt.hum(humidity));
-  setMetric('wind', fmt.wind(windKmh));
-  setMetric('pres', fmt.pres(pressure));
-  setThermalTheme(tempC); // flip colors for hot/cold
-}
-
-// minimal DOM writer that respects your existing IDs
 function setMetric(id, valueStr) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -327,6 +317,17 @@ function setThermalTheme(tempC) {
     else if (tempC <= coldThreshold) b.classList.add('theme-cold');
   }
 }
+
+function updateCurrentConditions({ tempC, humidity, windKmh, pressure }) {
+  setMetric('tmp',  fmt.temp(tempC));
+  setMetric('hum',  fmt.hum(humidity));
+  setMetric('wind', fmt.wind(windKmh));
+  setMetric('pres', fmt.pres(pressure));
+  setThermalTheme(tempC); // flip colors for hot/cold
+}
+
+// minimal DOM writer that respects your existing IDs
+
 
 // Optional: call this whenever your sim ticks or user hits "Set"/"Update"
 function syncFromInputs() {
@@ -499,10 +500,16 @@ function wsimBuildCurrentSnapshot() {
     savedAt: new Date().toISOString(),
 
     display: {
-      Temperatur: tempSpan ? tempSpan.textContent : null,
-      humidity: humSpan ? humSpan.textContent : null,
-      wind: windSpan ? windSpan.textContent : null,
-      pressure: presSpan ? presSpan.textContent : null
+      temp: temp,
+      hum: hum,
+      windspeed: wspd,
+      pressure: pressure,
+      hour: hour,
+      minute: minute,
+      day: day,
+      month: month,
+      year: year
+
     },
 
     time: {
@@ -561,7 +568,77 @@ function wsimGetCurrentUserSnapshots() {
   const allSnapshots = wsimLoadUserSnapshots();
   return allSnapshots[current.username] || [];
 }
+function wsimLoadLastSnapshot() {
+  const snaps = wsimGetCurrentUserSnapshots();
+  if (!snaps.length) {
+    return { ok: false, message: "No saved session found." };
+  }
 
+  const snap = snaps[snaps.length - 1];
+
+  // ---- restore inputs (source of truth) ----
+  const setVal = (id, v) => {
+    const el = document.getElementById(id);
+    if (el && v !== null && v !== undefined) el.value = v;
+  };
+
+  // ---- sync simulator variables ----
+  temp = parseFloat(snap.display.temp);
+  hum = parseFloat(snap.display.hum);
+  pressure = parseFloat(snap.display.pressure);
+  wspd = parseFloat(snap.display.windspeed);
+  hour = parseInt(snap.display.hour);
+  minute = parseInt(snap.display.minute);
+  day = parseInt(snap.display.day);
+  month = parseInt(snap.display.month);
+  year = parseInt(snap.display.year);
+
+	
+
+  setVal("tmpi", snap.inputs.tmpi);
+  setVal("humi", snap.inputs.humi);
+  setVal("presi", snap.inputs.presi);
+  setVal("windi", snap.inputs.windi);
+  setVal("houri", snap.inputs.houri);
+  setVal("moni", snap.inputs.moni);
+  setVal("yei", snap.inputs.yei);
+  setVal("titi", snap.inputs.title);
+
+  // ---- restore pills ----
+  const setText = (id, v) => {
+    const el = document.getElementById(id);
+    if (el && v != null) el.textContent = v;
+  };
+
+  setText("pillTmp", snap.pills.temp);
+  setText("pillHum", snap.pills.hum);
+  setText("pillPres", snap.pills.pres);
+  setText("pillWspd", snap.pills.wind);
+  setText("pillRain", snap.pills.rain);
+  setText("pillTrend", snap.pills.trend);
+
+  // ---- restore main displays ----
+  setText("tmpv", snap.display.Temperatur);
+  setText("humv", snap.display.humidity);
+  setText("windv", snap.display.wind);
+  setText("presv", snap.display.pressure);
+
+  setText("hour", snap.time.hourText);
+  setText("day", snap.time.dateText);
+
+  // ---- restore chart ----
+  const chartObj = wsimChartRef || window.varChart;
+  if (chartObj && snap.chart) {
+    chartObj.data.labels = snap.chart.labels.slice();
+    chartObj.data.datasets = snap.chart.datasets.map(ds => ({
+      ...ds,
+      data: ds.data.slice()
+    }));
+    chartObj.update();
+  }
+
+  return { ok: true, message: "Last session restored." };
+}
 // ======================================
 // WIRE EVERYTHING TO THE NEW HTML BUTTONS
 // ======================================
@@ -576,7 +653,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const statusSpan = document.getElementById("auth-status");
   const userPanel = document.getElementById("user-panel");
   const currentUserSpan = document.getElementById("current-username");
+ const btnLoadLast = document.getElementById("btn-load-last");
 
+if (btnLoadLast) {
+  btnLoadLast.addEventListener("click", function () {
+    const res = wsimLoadLastSnapshot();
+    if (res.message) {
+      document.getElementById("auth-status").textContent = res.message;
+    }
+  });
+}
   function updateAuthUI() {
     const current = wsimGetCurrentUser();
     if (current && current.username) {
@@ -629,6 +715,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial UI state
   updateAuthUI();
 });
+
+      
 tempM();  
 windrain();  
 presssure();   
