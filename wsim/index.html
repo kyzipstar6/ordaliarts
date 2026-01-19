@@ -46,10 +46,27 @@
             margin: 0 auto;
         }
         
-        .section {
+        .sectionh, .sectione, .sectiong, .sectionr {
             margin-bottom: 50px;
         }
-        
+        .sectiong, .sectione{ h2 {
+            color: rgb(65, 78, 177);
+            margin-bottom: 20px;
+            font-size: 1.8em;}
+            font-family: 'Impact', 'Arial Black', sans-serif;
+        }
+        .sectionr{ h2 {
+            color: rgb(196, 149, 48);
+            margin-bottom: 20px;
+            font-size: 1.8em;}
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .sectionh{ h2 {
+            color: rgb(22, 61, 24);
+            margin-bottom: 20px;
+            font-size: 1.8em;}
+            font-family: 'Times New Roman', Times, serif
+        }
         .section h2 {
             color: rgb(22, 61, 24);
             margin-bottom: 20px;
@@ -63,7 +80,7 @@
         }
         
         .card {
-            background: rgba(255, 255, 255, 0.514);
+            background: rgba(255, 255, 255, 0.701);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -115,7 +132,7 @@
     
     <div class="container">
         <!-- Real Locations -->
-        <div class="section">
+        <div class="sectionr">
             <h2 data-en="Real Locations" data-de="Echte Orte" data-zh="真实地点" data-es="Ubicaciones Reales" data-ja="実在の場所">Real Locations</h2>
             <div class="cards-grid" id="realLocations">
                 <a href="frankfurt.html">
@@ -209,6 +226,26 @@
                         <div>Humidity: 85%</div>
                         <div>Wind: 32 km/h</div>
                     </div>
+                </div></a>
+                <a href="zugspitze.html">
+                <div class="card">
+                    <h3>Germany's highest mountain</h3>
+                    <div class="card-weather">
+                        <div class="temp">-2°C</div>
+                        <div class="condition">Snowing</div>
+                        <div>Humidity: 85%</div>
+                        <div>Wind: 32 km/h</div>
+                    </div>
+                </div></a>
+                <a href="ushuaia.html">
+                <div class="card">
+                    <h3>Ushuaia</h3>
+                    <div class="card-weather">
+                        <div class="temp">11°C</div>
+                        <div class="condition">Cloudy</div>
+                        <div>Humidity: 85%</div>
+                        <div>Wind: 34km/h</div>
+                    </div>
                 </div></a><a href="glasgow.html">
                 <div class="card">
                     <h3>Glasgow</h3>
@@ -223,7 +260,7 @@
         </div>
         
         <!-- Generic Places -->
-        <div class="section">
+        <div class="sectiong">
             <h2 data-en="Generic Places" data-de="Generische Orte" data-zh="通用地点" data-es="Lugares Genéricos" data-ja="一般的な場所">Generic Places</h2>
             <div class="cards-grid"><a href="island.html">
                 <div class="card">
@@ -267,7 +304,7 @@
         </div>
         
         <!-- Extraterrestrial Weather -->
-        <div class="section">
+        <div class="sectione">
             <h2 data-en="Extraterrestrial Weather" data-de="Außerirdisches Wetter" data-zh="外星天气" data-es="Clima Extraterrestre" data-ja="地外の天気">Extraterrestrial Weather</h2>
             <div class="cards-grid"><a href="mars.html">
                 <div class="card">
@@ -306,6 +343,48 @@
                         <div>Wind: None</div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="sectionh">
+            <h2 data-en="Historical Weather" data-de="Historisches Wetter" data-zh="历史天气" data-es="Clima Histórico" data-ja="歴史的な天気">Historical Weather</h2>
+            <div class="cards-grid"><a href="ordovician.html">
+                <div class="card">
+                    <h3 data-en="Ordovician Weather" data-de="Ordovicum Wetter" data-zh="奥陶纪天气" data-es="Clima Ordovícico" data-ja="オルドビス紀の天気 ">Ordovician weather</h3>
+                    <div class="card-weather">
+                        <div class="temp">24°C</div>
+                        <div class="condition" data-en="Tropical" data-de="Tropisch" data-zh="热带" data-es="Tropical" data-ja="熱帯">Tropical</div>
+                        <div data-en="Humidity:" data-de="Luftfeuchtigkeit:" data-zh="湿度:" data-es="Humedad:" data-ja="湿度:">Humidity: 75%</div>
+                        <div data-en="Wind:" data-de="Wind:" data-zh="风:" data-es="Viento:" data-ja="風:">Wind: 20 km/h</div>
+                    </div>
+                </div></a><a href="jurassic.html">
+                <div class="card">
+                    <h3 data-en="Jurassic Weather" data-de="Jurassisches Wetter" data-zh="侏罗纪天气" data-es="Clima Jurásico" data-ja="ジュラ紀の天気">Jurassic Weather</h3>
+                    <div class="card-weather">
+                        <div class="temp">18°C</div>
+                        <div class="condition" data-en="Hot & Dry" data-de="Heiß & Trocken" data-zh="炎热干燥" data-es="Caluroso y Seco" data-ja="暑く乾燥">Hot & Dry</div>
+                        <div>Humidity: 43%</div>
+                        <div>Wind: 35 km/h</div>
+                    </div>
+                </div></a><a href="carboniferous.html">
+                <div class="card">
+                    <h3 data-en="Carboniferous Weather" data-de="Karbon Wetter" data-zh="石炭纪天气" data-es="Clima Carbonífero" data-ja="石炭紀の天気">Carboniferous Weather</h3>
+                    <div class="card-weather">
+                        <div class="temp">28°C</div>
+                        <div class="condition" data-en="Snowy" data-de="Verschneit" data-zh="下雪" data-es="Nevado" data-ja="雪">Sunny</div>
+                        <div>Humidity: 70%</div>
+                        <div>Wind: 31 km/h</div>
+                    </div>
+                </div>
+            </a><a href="silurian.html">
+                <div class="card">
+                    <h3 data-en="Silurian Weather" data-de="Silurisches Wetter" data-zh="志留纪天气" data-es="Clima Silúrico" data-ja="シルリア紀の天気">Silurian Weather</h3>
+                    <div class="card-weather">
+                        <div class="temp">16°C</div>
+                        <div class="condition" data-en="Foggy" data-de="Neblig" data-zh="多雾" data-es="Neblinoso" data-ja="霧">Scattered clouds</div>
+                        <div>Humidity: 85%</div>
+                        <div>Wind: 35 km/h</div>
+                    </div>
+                </div></a>
             </div>
         </div>
     </div>
