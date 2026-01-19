@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: url("pc/chuvanskoye.png");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: rgb(123, 39, 100);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+        }
+        
+        .language-selector {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            color: rgb(22, 61, 24);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.514);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .card-weather {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .temp {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .condition {
+            color: #764ba2;
+            font-weight: bold;
+        }
+        button { background-color: cadetblue; color: white; padding: 0.6rem 1.2rem; border: none; border-radius: 4px; margin: 0.5rem; cursor: pointer; }
+    button:hover { background-color: #46889c; }
+    
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 data-en="Weather Simulator" data-de="Wetter-Simulator" data-zh="天气模拟器" data-es="Simulador de Clima" data-ja="天気シミュレーター">Weather Simulator</h1>
+        <select class="language-selector" id="langSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="zh">中文</option>
+            <option value="es">Español</option>
+            <option value="ja">日本語</option>
+        </select>
+    </div>
+    
+    <div class="container">
+        <!-- Real Locations -->
+        <div class="section">
+            <h2 data-en="Real Locations" data-de="Echte Orte" data-zh="真实地点" data-es="Ubicaciones Reales" data-ja="実在の場所">Real Locations</h2>
+            <div class="cards-grid" id="realLocations">
+                <a href="frankfurt.html">
+                <div class="card">
+                    <h3>Frankfurt</h3>
+
+                    <div class="card-weather">
+                        <div class="temp">7°C</div>
+                        <div class="condition">Partly Cloudy</div>
+                        <div>Humidity: 65%</div>
+                        <div>Wind: 12 km/h</div>
+                    </div>
+                </div></a>
+                <a href="krasnoyarsk.html">
+                <div class="card">
+                    <h3>Krasnoyarsk</h3>
+                    <div class="card-weather"><a href="krasnoyarsk.html"></a>
+                        <div class="temp">-14°C</div>
+                        <div class="condition">Sunny</div>
+                        <div>Humidity: 80%</div>
+                        <div>Wind: 18 km/h</div>
+                    </div>
+                </div></a>
+                <a href="tokyo.html">
+                <div class="card">
+                    <h3>Tokyo</h3>
+                    <div class="card-weather">
+                        <div class="temp">2°C</div>
+                        <div class="condition">Sunny</div>
+                        <div>Humidity: 55%</div>
+                        <div>Wind: 8 km/h</div>
+                    </div>
+                </div></a>
+                <a href="barcelona.html">
+                <div class="card">
+                    <h3>Barcelona</h3>
+                    <div class="card-weather">
+                        <div class="temp">13°C</div>
+                        <div class="condition">Sunny</div>
+                        <div>Humidity: 55%</div>
+                        <div>Wind: 18 km/h</div>
+                    </div>
+                </div></a>
+                <a href="vladivostok.html">
+                <div class="card">
+                    <h3>Vladivostok</h3>
+                    <div class="card-weather">
+                        <div class="temp">-8°C</div>
+                        <div class="condition">Cloudy</div>
+                        <div>Humidity: 45%</div>
+                        <div>Wind: 20 km/h</div>
+                    </div>
+                </div></a>
+                <a href="helsinki.html">
+                <div class="card">
+                    <h3>Helsinki</h3>
+                    <div class="card-weather">
+                        <div class="temp">-6°C</div>
+                        <div class="condition">Cloudy</div>
+                        <div>Humidity: 75%</div>
+                        <div>Wind: 18 km/h</div>
+                    </div>
+                </div></a>
+                <a href="chuvanskoye.html">
+                <div class="card">
+                    <h3>Chuvanskoye</h3>
+                    <div class="card-weather">
+                        <div class="temp">-22°C</div>
+                        <div class="condition">Sunny</div>
+                        <div>Humidity: 45%</div>
+                        <div>Wind: 5 km/h</div>
+                    </div>
+                </div></a>
+                <a href="columbine.html">
+                <div class="card">
+                    <h3>Columbine</h3>
+                    <div class="card-weather">
+                        <div class="temp">5°C</div>
+                        <div class="condition">Clear</div>
+                        <div>Humidity: 45%</div>
+                        <div>Wind: 10 km/h</div>
+                    </div>
+                </div>
+            </a>
+            <a href="london.html">
+                <div class="card">
+                    <h3>London</h3>
+                    <div class="card-weather">
+                        <div class="temp">9°C</div>
+                        <div class="condition">Raining</div>
+                        <div>Humidity: 85%</div>
+                        <div>Wind: 32 km/h</div>
+                    </div>
+                </div></a><a href="glasgow.html">
+                <div class="card">
+                    <h3>Glasgow</h3>
+                    <div class="card-weather">
+                        <div class="temp">6°C</div>
+                        <div class="condition">Cloudy</div>
+                        <div>Humidity: 85%</div>
+                        <div>Wind: 40 km/h</div>
+                    </div>
+                </div></a>
+             </div>
+        </div>
+        
+        <!-- Generic Places -->
+        <div class="section">
+            <h2 data-en="Generic Places" data-de="Generische Orte" data-zh="通用地点" data-es="Lugares Genéricos" data-ja="一般的な場所">Generic Places</h2>
+            <div class="cards-grid"><a href="island.html">
+                <div class="card">
+                    <h3 data-en="Island" data-de="Insel" data-zh="岛屿" data-es="Isla" data-ja="島">Island</h3>
+                    <div class="card-weather">
+                        <div class="temp">24°C</div>
+                        <div class="condition" data-en="Tropical" data-de="Tropisch" data-zh="热带" data-es="Tropical" data-ja="熱帯">Tropical</div>
+                        <div data-en="Humidity:" data-de="Luftfeuchtigkeit:" data-zh="湿度:" data-es="Humedad:" data-ja="湿度:">Humidity: 75%</div>
+                        <div data-en="Wind:" data-de="Wind:" data-zh="风:" data-es="Viento:" data-ja="風:">Wind: 20 km/h</div>
+                    </div>
+                </div></a><a href="desert.html">
+                <div class="card">
+                    <h3 data-en="Desert" data-de="Wüste" data-zh="沙漠" data-es="Desierto" data-ja="砂漠">Desert</h3>
+                    <div class="card-weather">
+                        <div class="temp">38°C</div>
+                        <div class="condition" data-en="Hot & Dry" data-de="Heiß & Trocken" data-zh="炎热干燥" data-es="Caluroso y Seco" data-ja="暑く乾燥">Hot & Dry</div>
+                        <div>Humidity: 15%</div>
+                        <div>Wind: 35 km/h</div>
+                    </div>
+                </div></a>
+                <div class="card">
+                    <h3 data-en="Mountain" data-de="Berg" data-zh="山" data-es="Montaña" data-ja="山">Mountain</h3>
+                    <div class="card-weather">
+                        <div class="temp">5°C</div>
+                        <div class="condition" data-en="Snowy" data-de="Verschneit" data-zh="下雪" data-es="Nevado" data-ja="雪">Snowy</div>
+                        <div>Humidity: 70%</div>
+                        <div>Wind: 45 km/h</div>
+                    </div>
+                </div>
+            </a><a href="forest.html">
+                <div class="card">
+                    <h3 data-en="Forest" data-de="Wald" data-zh="森林" data-es="Bosque" data-ja="森">Forest</h3>
+                    <div class="card-weather">
+                        <div class="temp">16°C</div>
+                        <div class="condition" data-en="Foggy" data-de="Neblig" data-zh="多雾" data-es="Neblinoso" data-ja="霧">Foggy</div>
+                        <div>Humidity: 85%</div>
+                        <div>Wind: 5 km/h</div>
+                    </div>
+                </div></a>
+            </div>
+        </div>
+        
+        <!-- Extraterrestrial Weather -->
+        <div class="section">
+            <h2 data-en="Extraterrestrial Weather" data-de="Außerirdisches Wetter" data-zh="外星天气" data-es="Clima Extraterrestre" data-ja="地外の天気">Extraterrestrial Weather</h2>
+            <div class="cards-grid"><a href="mars.html">
+                <div class="card">
+                    <h3 data-en="Mars" data-de="Mars" data-zh="火星" data-es="Marte" data-ja="火星">Mars</h3>
+                    <div class="card-weather">
+                        <div class="temp">-65°C</div>
+                        <div class="condition" data-en="Dust Storm" data-de="Staubsturm" data-zh="沙尘暴" data-es="Tormenta de Polvo" data-ja="ダストストーム">Dust Storm</div>
+                        <div data-en="Pressure:" data-de="Druck:" data-zh="气压:" data-es="Presión:" data-ja="気圧:">Pressure: 636 Pa</div>
+                        <div>Wind: 60 km/h</div>
+                    </div>
+                </div></a>
+                <div class="card">
+                    <h3 data-en="Venus" data-de="Venus" data-zh="金星" data-es="Venus" data-ja="金星">Venus</h3>
+                    <div class="card-weather">
+                        <div class="temp">462°C</div>
+                        <div class="condition" data-en="Sulfuric Clouds" data-de="Schwefelsäurewolken" data-zh="硫酸云" data-es="Nubes de Ácido Sulfúrico" data-ja="硫酸雲">Sulfuric Clouds</div>
+                        <div data-en="Pressure:" data-de="Druck:" data-zh="气压:" data-es="Presión:" data-ja="気圧:">Pressure: 9.2 MPa</div>
+                        <div>Wind: 100 km/h</div>
+                    </div>
+                </div><a href="jupiter.html">
+                <div class="card">
+                    <h3 data-en="Jupiter" data-de="Jupiter" data-zh="木星" data-es="Júpiter" data-ja="木星">Jupiter</h3>
+                    <div class="card-weather">
+                        <div class="temp">-110°C</div>
+                        <div class="condition" data-en="Gas Giant Storms" data-de="Gasgigant-Stürme" data-zh="气态巨星风暴" data-es="Tormentas del Gigante Gaseoso" data-ja="ガス巨星嵐">Gas Giant Storms</div>
+                        <div>Pressure: Extreme</div>
+                        <div>Wind: 360 km/h</div>
+                    </div>
+                </div></a>
+                <div class="card">
+                    <h3 data-en="Moon" data-de="Mond" data-zh="月球" data-es="Luna" data-ja="月">Moon</h3>
+                    <div class="card-weather">
+                        <div class="temp">-50°C to 120°C</div>
+                        <div class="condition" data-en="No Atmosphere" data-de="Keine Atmosphäre" data-zh="无大气" data-es="Sin Atmósfera" data-ja="大気なし">No Atmosphere</div>
+                        <div>Pressure: Vacuum</div>
+                        <div>Wind: None</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+    <section id="getapp">
+  <h1>📦 Get the App</h1>
+  <p>For solar radiation, rainfall models, and more complex simulation scenarios, try the full-featured Windows version:</p>
+  <a href="https://kyzipstar6.github.io/ordaliarts/wsim/download-wsim.html" target="_blank"><button>Get Desktop Version</button></a>
+</section></div></body>
+    <script>
+        const translations = {
+            en: {},
+            de: {},
+            zh: {},
+            es: {},
+            ja: {}
+        };
+        
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+                if (el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
+                    el.textContent = el.getAttribute('data-' + lang);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
