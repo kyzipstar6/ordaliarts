@@ -94,7 +94,7 @@
 /* --- Wunderground-ish metric tiles --- */
 .metrics {
     background-color: #f6f9fc1b;
-      display: flex;
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 2px;
       margin-top: 1rem;
@@ -109,6 +109,7 @@
 
     .metric .label {
       font-size: 13px;
+      color: black;
       opacity: 0.75;
       margin-bottom: 4px;
     }
@@ -658,3 +659,4 @@ a.btn{ text-decoration:none }
   renderLeaderboard();
   </script></body>
 </html>
+
